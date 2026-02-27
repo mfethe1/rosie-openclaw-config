@@ -1,0 +1,880 @@
+{
+  "meta": {
+    "lastTouchedVersion": "2026.2.26",
+    "lastTouchedAt": "2026-02-27T04:29:21.345Z"
+  },
+  "wizard": {
+    "lastRunAt": "2026-02-27T04:29:21.308Z",
+    "lastRunVersion": "2026.2.26",
+    "lastRunCommand": "configure",
+    "lastRunMode": "local"
+  },
+  "update": {
+    "channel": "beta"
+  },
+  "auth": "REDACTED",
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-sonnet-4-6",
+        "fallbacks": [
+          "anthropic/claude-opus-4-6"
+        ]
+      },
+      "models": {
+        "anthropic/claude-opus-4-6": {
+          "alias": "opus"
+        },
+        "anthropic/claude-sonnet-4-6": {
+          "alias": "sonnet"
+        },
+        "openai-codex/gpt-5.3-codex-spark": {
+          "alias": "codex-spark"
+        },
+        "openai-codex/gpt-5.3-codex": {
+          "alias": "codex"
+        }
+      },
+      "memorySearch": {
+        "enabled": true,
+        "sources": [
+          "memory",
+          "sessions"
+        ],
+        "provider": "gemini",
+        "remote": {
+          "batch": {
+            "enabled": true,
+            "wait": false,
+            "concurrency": 2,
+            "pollIntervalMs": 2500,
+            "timeoutMinutes": 45
+          }
+        },
+        "fallback": "local",
+        "sync": {
+          "onSessionStart": false,
+          "onSearch": true,
+          "watch": false,
+          "watchDebounceMs": 3000,
+          "sessions": {
+            "deltaBytes": 150000,
+            "deltaMessages": 80
+          }
+        },
+        "query": {
+          "hybrid": {
+            "enabled": true
+          }
+        },
+        "cache": {
+          "enabled": true,
+          "maxEntries": 2000
+        }
+      },
+      "contextPruning": {
+        "mode": "cache-ttl",
+        "ttl": "24h"
+      },
+      "compaction": {
+        "mode": "safeguard",
+        "memoryFlush": {
+          "enabled": true,
+          "softThresholdTokens": "REDACTED"
+        }
+      },
+      "heartbeat": {
+        "every": "20m",
+        "suppressToolErrorWarnings": true
+      },
+      "maxConcurrent": 6,
+      "subagents": {
+        "maxConcurrent": 4,
+        "maxSpawnDepth": 2,
+        "maxChildrenPerAgent": 6,
+        "model": {
+          "primary": "openai-codex/gpt-5.3-codex-spark",
+          "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "anthropic/claude-sonnet-4-6",
+            "openai-codex/gpt-5.3-codex"
+          ]
+        }
+      }
+    },
+    "list": [
+      {
+        "id": "main",
+        "default": true,
+        "name": "Main",
+        "subagents": {
+          "allowAgents": [
+            "*"
+          ]
+        }
+      },
+      {
+        "id": "bug-fix_triager",
+        "name": "Triager",
+        "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/bug-fix/agents/triager",
+        "agentDir": "/Users/harrisonfethe/.openclaw/agents/bug-fix_triager/agent",
+        "model": {
+          "primary": "anthropic/claude-sonnet-4-6",
+          "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "openai-codex/gpt-5.3-codex-spark"
+          ]
+        },
+        "subagents": {
+          "allowAgents": []
+        },
+        "tools": {
+          "profile": "coding",
+          "deny": [
+            "gateway",
+            "cron",
+            "message",
+            "nodes",
+            "canvas",
+            "sessions_send",
+            "write",
+            "edit",
+            "apply_patch",
+            "image",
+            "tts",
+            "group:ui"
+          ]
+        }
+      },
+      {
+        "id": "bug-fix_investigator",
+        "name": "Investigator",
+        "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/bug-fix/agents/investigator",
+        "agentDir": "/Users/harrisonfethe/.openclaw/agents/bug-fix_investigator/agent",
+        "model": {
+          "primary": "anthropic/claude-sonnet-4-6",
+          "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "openai-codex/gpt-5.3-codex-spark"
+          ]
+        },
+        "subagents": {
+          "allowAgents": []
+        },
+        "tools": {
+          "profile": "coding",
+          "deny": [
+            "gateway",
+            "cron",
+            "message",
+            "nodes",
+            "canvas",
+            "sessions_send",
+            "write",
+            "edit",
+            "apply_patch",
+            "image",
+            "tts",
+            "group:ui"
+          ]
+        }
+      },
+      {
+        "id": "bug-fix_setup",
+        "name": "Setup",
+        "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/bug-fix/agents/setup",
+        "agentDir": "/Users/harrisonfethe/.openclaw/agents/bug-fix_setup/agent",
+        "model": {
+          "primary": "openai-codex/gpt-5.3-codex-spark",
+          "fallbacks": [
+            "openai-codex/gpt-5.3-codex",
+            "anthropic/claude-sonnet-4-6"
+          ]
+        },
+        "subagents": {
+          "allowAgents": []
+        },
+        "tools": {
+          "profile": "coding",
+          "deny": [
+            "gateway",
+            "cron",
+            "message",
+            "nodes",
+            "canvas",
+            "sessions_send",
+            "image",
+            "tts",
+            "group:ui"
+          ]
+        }
+      },
+      {
+        "id": "bug-fix_fixer",
+        "name": "Fixer",
+        "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/bug-fix/agents/fixer",
+        "agentDir": "/Users/harrisonfethe/.openclaw/agents/bug-fix_fixer/agent",
+        "model": {
+          "primary": "openai-codex/gpt-5.3-codex",
+          "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
+            "anthropic/claude-sonnet-4-6"
+          ]
+        },
+        "subagents": {
+          "allowAgents": []
+        },
+        "tools": {
+          "profile": "coding",
+          "deny": [
+            "gateway",
+            "cron",
+            "message",
+            "nodes",
+            "canvas",
+            "sessions_send",
+            "image",
+            "tts",
+            "group:ui"
+          ]
+        }
+      },
+      {
+        "id": "bug-fix_verifier",
+        "name": "Verifier",
+        "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/bug-fix/agents/verifier",
+        "agentDir": "/Users/harrisonfethe/.openclaw/agents/bug-fix_verifier/agent",
+        "model": {
+          "primary": "anthropic/claude-sonnet-4-6",
+          "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "openai-codex/gpt-5.3-codex-spark"
+          ]
+        },
+        "subagents": {
+          "allowAgents": []
+        },
+        "tools": {
+          "profile": "coding",
+          "deny": [
+            "gateway",
+            "cron",
+            "message",
+            "nodes",
+            "canvas",
+            "sessions_send",
+            "write",
+            "edit",
+            "apply_patch",
+            "image",
+            "tts",
+            "group:ui"
+          ]
+        }
+      },
+      {
+        "id": "bug-fix_pr",
+        "name": "PR Creator",
+        "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/bug-fix/agents/pr",
+        "agentDir": "/Users/harrisonfethe/.openclaw/agents/bug-fix_pr/agent",
+        "model": {
+          "primary": "anthropic/claude-sonnet-4-6",
+          "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "openai-codex/gpt-5.3-codex-spark"
+          ]
+        },
+        "subagents": {
+          "allowAgents": []
+        },
+        "tools": {
+          "profile": "coding",
+          "deny": [
+            "gateway",
+            "cron",
+            "message",
+            "nodes",
+            "canvas",
+            "sessions_send",
+            "write",
+            "edit",
+            "apply_patch",
+            "image",
+            "tts",
+            "group:ui"
+          ]
+        }
+      },
+      {
+        "id": "feature-dev_planner",
+        "name": "Planner",
+        "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/feature-dev/agents/planner",
+        "agentDir": "/Users/harrisonfethe/.openclaw/agents/feature-dev_planner/agent",
+        "model": {
+          "primary": "anthropic/claude-opus-4-6",
+          "fallbacks": [
+            "openai-codex/gpt-5.3-codex",
+            "anthropic/claude-sonnet-4-6"
+          ]
+        },
+        "subagents": {
+          "allowAgents": []
+        },
+        "tools": {
+          "profile": "coding",
+          "deny": [
+            "gateway",
+            "cron",
+            "message",
+            "nodes",
+            "canvas",
+            "sessions_send",
+            "write",
+            "edit",
+            "apply_patch",
+            "image",
+            "tts",
+            "group:ui"
+          ]
+        }
+      },
+      {
+        "id": "feature-dev_setup",
+        "name": "Setup",
+        "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/feature-dev/agents/setup",
+        "agentDir": "/Users/harrisonfethe/.openclaw/agents/feature-dev_setup/agent",
+        "model": {
+          "primary": "openai-codex/gpt-5.3-codex-spark",
+          "fallbacks": [
+            "openai-codex/gpt-5.3-codex",
+            "anthropic/claude-sonnet-4-6"
+          ]
+        },
+        "subagents": {
+          "allowAgents": []
+        },
+        "tools": {
+          "profile": "coding",
+          "deny": [
+            "gateway",
+            "cron",
+            "message",
+            "nodes",
+            "canvas",
+            "sessions_send",
+            "image",
+            "tts",
+            "group:ui"
+          ]
+        }
+      },
+      {
+        "id": "feature-dev_developer",
+        "name": "Developer",
+        "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/feature-dev/agents/developer",
+        "agentDir": "/Users/harrisonfethe/.openclaw/agents/feature-dev_developer/agent",
+        "model": {
+          "primary": "openai-codex/gpt-5.3-codex",
+          "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
+            "anthropic/claude-sonnet-4-6"
+          ]
+        },
+        "subagents": {
+          "allowAgents": []
+        },
+        "tools": {
+          "profile": "coding",
+          "deny": [
+            "gateway",
+            "cron",
+            "message",
+            "nodes",
+            "canvas",
+            "sessions_send",
+            "image",
+            "tts",
+            "group:ui"
+          ]
+        }
+      },
+      {
+        "id": "feature-dev_verifier",
+        "name": "Verifier",
+        "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/feature-dev/agents/verifier",
+        "agentDir": "/Users/harrisonfethe/.openclaw/agents/feature-dev_verifier/agent",
+        "model": {
+          "primary": "anthropic/claude-sonnet-4-6",
+          "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "openai-codex/gpt-5.3-codex-spark"
+          ]
+        },
+        "subagents": {
+          "allowAgents": []
+        },
+        "tools": {
+          "profile": "coding",
+          "deny": [
+            "gateway",
+            "cron",
+            "message",
+            "nodes",
+            "canvas",
+            "sessions_send",
+            "write",
+            "edit",
+            "apply_patch",
+            "image",
+            "tts",
+            "group:ui"
+          ]
+        }
+      },
+      {
+        "id": "feature-dev_tester",
+        "name": "Tester",
+        "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/feature-dev/agents/tester",
+        "agentDir": "/Users/harrisonfethe/.openclaw/agents/feature-dev_tester/agent",
+        "model": {
+          "primary": "anthropic/claude-sonnet-4-6",
+          "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "openai-codex/gpt-5.3-codex-spark"
+          ]
+        },
+        "subagents": {
+          "allowAgents": []
+        },
+        "tools": {
+          "profile": "coding",
+          "alsoAllow": [
+            "browser",
+            "web_search",
+            "web_fetch"
+          ],
+          "deny": [
+            "gateway",
+            "cron",
+            "message",
+            "nodes",
+            "canvas",
+            "sessions_send",
+            "write",
+            "edit",
+            "apply_patch",
+            "image",
+            "tts"
+          ]
+        }
+      },
+      {
+        "id": "feature-dev_reviewer",
+        "name": "Reviewer",
+        "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/feature-dev/agents/reviewer",
+        "agentDir": "/Users/harrisonfethe/.openclaw/agents/feature-dev_reviewer/agent",
+        "model": {
+          "primary": "anthropic/claude-sonnet-4-6",
+          "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "openai-codex/gpt-5.3-codex-spark"
+          ]
+        },
+        "subagents": {
+          "allowAgents": []
+        },
+        "tools": {
+          "profile": "coding",
+          "deny": [
+            "gateway",
+            "cron",
+            "message",
+            "nodes",
+            "canvas",
+            "sessions_send",
+            "write",
+            "edit",
+            "apply_patch",
+            "image",
+            "tts",
+            "group:ui"
+          ]
+        }
+      },
+      {
+        "id": "security-audit_scanner",
+        "name": "Scanner",
+        "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/security-audit/agents/scanner",
+        "agentDir": "/Users/harrisonfethe/.openclaw/agents/security-audit_scanner/agent",
+        "model": {
+          "primary": "anthropic/claude-sonnet-4-6",
+          "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "openai-codex/gpt-5.3-codex-spark"
+          ]
+        },
+        "subagents": {
+          "allowAgents": []
+        },
+        "tools": {
+          "profile": "coding",
+          "alsoAllow": [
+            "web_search",
+            "web_fetch"
+          ],
+          "deny": [
+            "gateway",
+            "cron",
+            "message",
+            "nodes",
+            "canvas",
+            "sessions_send",
+            "write",
+            "edit",
+            "apply_patch",
+            "image",
+            "tts",
+            "group:ui"
+          ]
+        }
+      },
+      {
+        "id": "security-audit_prioritizer",
+        "name": "Prioritizer",
+        "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/security-audit/agents/prioritizer",
+        "agentDir": "/Users/harrisonfethe/.openclaw/agents/security-audit_prioritizer/agent",
+        "model": {
+          "primary": "anthropic/claude-sonnet-4-6",
+          "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "openai-codex/gpt-5.3-codex-spark"
+          ]
+        },
+        "subagents": {
+          "allowAgents": []
+        },
+        "tools": {
+          "profile": "coding",
+          "deny": [
+            "gateway",
+            "cron",
+            "message",
+            "nodes",
+            "canvas",
+            "sessions_send",
+            "write",
+            "edit",
+            "apply_patch",
+            "image",
+            "tts",
+            "group:ui"
+          ]
+        }
+      },
+      {
+        "id": "security-audit_setup",
+        "name": "Setup",
+        "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/security-audit/agents/setup",
+        "agentDir": "/Users/harrisonfethe/.openclaw/agents/security-audit_setup/agent",
+        "model": {
+          "primary": "openai-codex/gpt-5.3-codex-spark",
+          "fallbacks": [
+            "openai-codex/gpt-5.3-codex",
+            "anthropic/claude-sonnet-4-6"
+          ]
+        },
+        "subagents": {
+          "allowAgents": []
+        },
+        "tools": {
+          "profile": "coding",
+          "deny": [
+            "gateway",
+            "cron",
+            "message",
+            "nodes",
+            "canvas",
+            "sessions_send",
+            "image",
+            "tts",
+            "group:ui"
+          ]
+        }
+      },
+      {
+        "id": "security-audit_fixer",
+        "name": "Fixer",
+        "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/security-audit/agents/fixer",
+        "agentDir": "/Users/harrisonfethe/.openclaw/agents/security-audit_fixer/agent",
+        "model": {
+          "primary": "openai-codex/gpt-5.3-codex",
+          "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
+            "anthropic/claude-sonnet-4-6"
+          ]
+        },
+        "subagents": {
+          "allowAgents": []
+        },
+        "tools": {
+          "profile": "coding",
+          "deny": [
+            "gateway",
+            "cron",
+            "message",
+            "nodes",
+            "canvas",
+            "sessions_send",
+            "image",
+            "tts",
+            "group:ui"
+          ]
+        }
+      },
+      {
+        "id": "security-audit_verifier",
+        "name": "Verifier",
+        "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/security-audit/agents/verifier",
+        "agentDir": "/Users/harrisonfethe/.openclaw/agents/security-audit_verifier/agent",
+        "model": {
+          "primary": "anthropic/claude-sonnet-4-6",
+          "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "openai-codex/gpt-5.3-codex-spark"
+          ]
+        },
+        "subagents": {
+          "allowAgents": []
+        },
+        "tools": {
+          "profile": "coding",
+          "deny": [
+            "gateway",
+            "cron",
+            "message",
+            "nodes",
+            "canvas",
+            "sessions_send",
+            "write",
+            "edit",
+            "apply_patch",
+            "image",
+            "tts",
+            "group:ui"
+          ]
+        }
+      },
+      {
+        "id": "security-audit_tester",
+        "name": "Tester",
+        "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/security-audit/agents/tester",
+        "agentDir": "/Users/harrisonfethe/.openclaw/agents/security-audit_tester/agent",
+        "model": {
+          "primary": "anthropic/claude-sonnet-4-6",
+          "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "openai-codex/gpt-5.3-codex-spark"
+          ]
+        },
+        "subagents": {
+          "allowAgents": []
+        },
+        "tools": {
+          "profile": "coding",
+          "alsoAllow": [
+            "browser",
+            "web_search",
+            "web_fetch"
+          ],
+          "deny": [
+            "gateway",
+            "cron",
+            "message",
+            "nodes",
+            "canvas",
+            "sessions_send",
+            "write",
+            "edit",
+            "apply_patch",
+            "image",
+            "tts"
+          ]
+        }
+      },
+      {
+        "id": "security-audit_pr",
+        "name": "PR Creator",
+        "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/security-audit/agents/pr",
+        "agentDir": "/Users/harrisonfethe/.openclaw/agents/security-audit_pr/agent",
+        "model": {
+          "primary": "anthropic/claude-sonnet-4-6",
+          "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "openai-codex/gpt-5.3-codex-spark"
+          ]
+        },
+        "subagents": {
+          "allowAgents": []
+        },
+        "tools": {
+          "profile": "coding",
+          "deny": [
+            "gateway",
+            "cron",
+            "message",
+            "nodes",
+            "canvas",
+            "sessions_send",
+            "write",
+            "edit",
+            "apply_patch",
+            "image",
+            "tts",
+            "group:ui"
+          ]
+        }
+      }
+    ]
+  },
+  "tools": {
+    "web": {
+      "search": {
+        "enabled": true,
+        "apiKey": "REDACTED"
+      },
+      "fetch": {
+        "enabled": true
+      }
+    },
+    "agentToAgent": {
+      "enabled": true,
+      "allow": [
+        "bug-fix_triager",
+        "bug-fix_investigator",
+        "bug-fix_setup",
+        "bug-fix_fixer",
+        "bug-fix_verifier",
+        "bug-fix_pr",
+        "feature-dev_planner",
+        "feature-dev_setup",
+        "feature-dev_developer",
+        "feature-dev_verifier",
+        "feature-dev_tester",
+        "feature-dev_reviewer",
+        "security-audit_scanner",
+        "security-audit_prioritizer",
+        "security-audit_setup",
+        "security-audit_fixer",
+        "security-audit_verifier",
+        "security-audit_tester",
+        "security-audit_pr"
+      ]
+    }
+  },
+  "messages": {
+    "ackReactionScope": "group-mentions"
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "session": {
+    "reset": {
+      "mode": "idle",
+      "idleMinutes": 1440
+    },
+    "maintenance": {
+      "mode": "enforce",
+      "pruneAfter": "7d",
+      "maxEntries": 5000,
+      "rotateBytes": "100mb"
+    }
+  },
+  "cron": {
+    "maxConcurrentRuns": 2,
+    "sessionRetention": "24h"
+  },
+  "channels": {
+    "whatsapp": {
+      "dmPolicy": "allowlist",
+      "allowFrom": [
+        "+18657192069"
+      ],
+      "groupPolicy": "allowlist",
+      "debounceMs": 600000,
+      "mediaMaxMb": 50
+    },
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "pairing",
+      "botToken": "REDACTED",
+      "groups": {
+        "*": {
+          "enabled": true,
+          "allowFrom": [
+            "7991290678",
+            "8037988152",
+            "8551261669",
+            "8346521030"
+          ]
+        }
+      },
+      "groupPolicy": "allowlist",
+      "streaming": "partial"
+    },
+    "imessage": {
+      "enabled": true,
+      "dmPolicy": "allowlist",
+      "allowFrom": [
+        "+18657192069"
+      ],
+      "groupPolicy": "allowlist"
+    }
+  },
+  "gateway": {
+    "mode": "local",
+    "auth": "REDACTED",
+    "trustedProxies": [
+      "127.0.0.1",
+      "::1"
+    ]
+  },
+  "skills": {
+    "install": {
+      "nodeManager": "npm"
+    },
+    "entries": {
+      "nano-banana-pro": {
+        "apiKey": "REDACTED"
+      },
+      "openai-image-gen": {
+        "apiKey": "REDACTED"
+      },
+      "openai-whisper-api": {
+        "apiKey": "REDACTED"
+      }
+    }
+  },
+  "plugins": {
+    "entries": {
+      "google-gemini-cli-auth": "REDACTED",
+      "whatsapp": {
+        "enabled": false
+      },
+      "telegram": {
+        "enabled": true
+      },
+      "imessage": {
+        "enabled": true
+      },
+      "memory-core": {
+        "enabled": true
+      }
+    }
+  }
+}
