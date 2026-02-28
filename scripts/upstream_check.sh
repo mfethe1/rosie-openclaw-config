@@ -47,11 +47,17 @@ fi
 
 log "Latest SHA: $LATEST_SHA | Pinned: ${PINNED_SHA:-first_run} | New: $NEW_COUNT commits"
 
+# Write commits to temp file to avoid heredoc interpolation issues
+COMMITS_TMP=$(mktemp)
+printf '%s' "$COMMITS" > "$COMMITS_TMP"
+trap 'rm -f "$COMMITS_TMP"' EXIT
+
 # Generate report
 python3 << PYEOF
 import json, sys
 
-commits = json.loads("""$COMMITS""")
+with open("$COMMITS_TMP") as f:
+    commits = json.load(f)
 pinned = "$PINNED_SHA"
 
 # Filter new commits
@@ -75,7 +81,7 @@ for c in new:
     else:
         watch.append(c)
 
-report = f"""# OpenClaw Upstream Diff — {json.loads(open('/dev/null','r').read() or '""')}
+report = f"""# OpenClaw Upstream Diff
 
 **Agent:** $AGENT  
 **Run:** $(date -u +%FT%TZ)  
