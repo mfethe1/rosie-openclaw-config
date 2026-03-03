@@ -36,9 +36,12 @@ VOTES_FILE = LOGS / "votes.jsonl"
 AGENTS = ["rosie", "mack", "winnie", "lenny"]
 
 QUERIES = [
+    # 5 daily Firecrawl searches (use full quota)
     "latest 2025 2026 research on LLM agent optimization and reliable tool use",
     "recent papers on agentic workflows, planning, and multi-agent coordination",
     "elegant systems approaches for AI tool routing, safety, and evaluation loops",
+    "new research on autonomous software engineering agents, code review agents, and CI/CD agent reliability",
+    "latest methods for multi-agent memory systems, retrieval quality, and consensus-based decision making",
 ]
 
 
@@ -109,12 +112,14 @@ def create_ballot(research_results: List[Dict], date_key: str) -> pathlib.Path:
             {"id": "opt1", "title": "Stability Track", "query": "fallback", "proposal": "Improve tool reliability and retry control."},
             {"id": "opt2", "title": "Cost Track", "query": "fallback", "proposal": "Improve budget guardrails and reduce failed retries."},
             {"id": "opt3", "title": "Workflow Track", "query": "fallback", "proposal": "Improve task decomposition and intent packet quality."},
+            {"id": "opt4", "title": "Automation Track", "query": "fallback", "proposal": "Improve autonomous loops and exception handling."},
+            {"id": "opt5", "title": "Memory Track", "query": "fallback", "proposal": "Improve memory retrieval quality and consistency."},
         ]
 
     ballot = {
         "ballot_id": f"research-{date_key}",
         "created_at": _now().isoformat(),
-        "options": options[:3],
+        "options": options[:5],
         "threshold": 0.82,
         "status": "open",
     }
@@ -125,12 +130,13 @@ def create_ballot(research_results: List[Dict], date_key: str) -> pathlib.Path:
 
 def publish_vote_requests(ballot_path: pathlib.Path) -> None:
     ballot = json.loads(ballot_path.read_text())
+    option_ids = "|".join([o.get("id", "") for o in ballot.get("options", []) if o.get("id")])
     payload = {
         "type": "vote_request",
         "ballot_id": ballot["ballot_id"],
         "options": ballot["options"],
         "deadline_utc": (_now() + dt.timedelta(hours=6)).isoformat(),
-        "how_to_vote": f"python3 {BASE}/daily_research_consensus.py vote --agent <agent> --ballot {ballot['ballot_id']} --option <opt1|opt2|opt3>",
+        "how_to_vote": f"python3 {BASE}/daily_research_consensus.py vote --agent <agent> --ballot {ballot['ballot_id']} --option <{option_ids}>",
     }
 
     nats_call("report", "rosie", "lane_lock", f"research_consensus_open:{ballot['ballot_id']}")
