@@ -1,0 +1,26 @@
+{
+  "ts": "2026-03-03T15:32:59.838965+00:00",
+  "root_found": "/Volumes/Edrive",
+  "mount_available": true,
+  "kpis": {
+    "status_freshness_under_12h_pct": null,
+    "three_identical_cron_pause_count": null,
+    "mount_mttr_minutes": null,
+    "blockers_over_24h_count": null,
+    "same_day_revenue_blocker_resolution_pct": null
+  },
+  "checks": {
+    "AGENTS.md": {
+      "exists": false,
+      "path": "/Volumes/Edrive/AGENTS.md"
+    },
+    "SOUL.md": {
+      "exists": false,
+      "path": "/Volumes/Edrive/SOUL.md"
+    },
+    "HEARTBEAT.md": {
+      "exists": false,
+      "path": "/Volumes/Edrive/HEARTBEAT.md"
+    }
+  }
+}
