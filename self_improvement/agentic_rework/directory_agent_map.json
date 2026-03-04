@@ -1,0 +1,52 @@
+{
+  "version": "1.0.0",
+  "resolution": "longest-prefix-wins",
+  "default_agent": "core-platform",
+  "mappings": [
+    {
+      "path": "/Users/harrisonfethe/.openclaw/workspace/self_improvement/agentic_rework",
+      "agent": "core-platform",
+      "reason": "governance and control-loop scripts"
+    },
+    {
+      "path": "/Users/harrisonfethe/.openclaw/workspace/self_improvement/pm_framework",
+      "agent": "marketing",
+      "reason": "persona, campaign, and engagement workflows"
+    },
+    {
+      "path": "/Users/harrisonfethe/.openclaw/workspace/self_improvement/consensus",
+      "agent": "core-platform",
+      "reason": "consensus and verification engines"
+    },
+    {
+      "path": "/Users/harrisonfethe/.openclaw/workspace/self_improvement/security",
+      "agent": "core-platform",
+      "reason": "guardrails and release gates"
+    },
+    {
+      "path": "/Users/harrisonfethe/.openclaw/workspace/marketing",
+      "agent": "marketing",
+      "reason": "campaign execution"
+    },
+    {
+      "path": "/Users/harrisonfethe/.openclaw/workspace/seo_automate",
+      "agent": "seo",
+      "reason": "SEO automations"
+    },
+    {
+      "path": "/Users/harrisonfethe/.openclaw/workspace/bid_estimator",
+      "agent": "business-sales",
+      "reason": "revenue ops and estimate flow"
+    },
+    {
+      "path": "/Users/harrisonfethe/.openclaw/workspace/sanger",
+      "agent": "pharma",
+      "reason": "biotech/pharma domain"
+    },
+    {
+      "path": "/Users/harrisonfethe/.openclaw/workspace/jiraflow",
+      "agent": "google-workflow",
+      "reason": "workflow automation and ads/sheets integrations"
+    }
+  ]
+}
