@@ -1,0 +1,214 @@
+{
+  "ok": true,
+  "model": "spark-1-mini",
+  "prompt": "Compare leading agent frameworks and low-code automation stacks for small businesses (n8n, Make, Zapier AI, LangGraph, CrewAI, AutoGen, OpenAI Assistants/API patterns) across ease of setup, cost, reliability, governance, and learning curve.",
+  "data": {
+    "technologies": [
+      {
+        "name": "n8n",
+        "description": "A 'fair-code' workflow automation tool that balances a visual interface with the power to write custom code and self-host for maximum privacy and cost-efficiency.",
+        "strengths": [
+          "Self-hosting for total data privacy",
+          "No per-task costs when self-hosted",
+          "Powerful built-in AI Agent and LangChain nodes",
+          "Highly extendable with JavaScript"
+        ],
+        "weaknesses": [
+          "Requires technical knowledge of APIs and JSON",
+          "Maintenance overhead for self-hosted instances",
+          "Steeper learning curve than Zapier"
+        ],
+        "best_for": "Privacy-conscious small businesses and technical founders who need high-volume automation without scaling costs.",
+        "production_readiness": "High. Widely used for complex ETL and agentic production workflows with robust error handling.",
+        "documentation_url": "https://docs.n8n.io/"
+      },
+      {
+        "name": "Make",
+        "description": "A highly visual automation platform (formerly Integromat) known for its 'scenario' builder that allows for granular control over data mapping and complex branching logic.",
+        "strengths": [
+          "Superior visual debugging and execution history",
+          "Powerful data manipulation tools",
+          "More cost-effective than Zapier for complex multi-step workflows",
+          "Massive library of pre-built integrations"
+        ],
+        "weaknesses": [
+          "'Operations' based pricing can be hard to predict",
+          "Large scenarios can become difficult to navigate visually",
+          "Interface has a learning curve for beginners"
+        ],
+        "best_for": "Operations teams and visual thinkers who need sophisticated workflows and granular control without writing code.",
+        "production_readiness": "High. A standard choice for SMB and mid-market automation with enterprise-grade security options.",
+        "documentation_url": "https://www.make.com/en/help"
+      },
+      {
+        "name": "Zapier AI",
+        "description": "The market leader in no-code automation, featuring 'Zapier Central' which allows users to build persistent, teachable AI agents that interact with 6,000+ apps.",
+        "strengths": [
+          "Easiest setup and lowest barrier to entry",
+          "Largest ecosystem of supported apps",
+          "Centralized AI agents that are easy to 'train' with natural language",
+          "Excellent security and compliance (SOC2)"
+        ],
+        "weaknesses": [
+          "Most expensive platform at scale",
+          "Limited debugging for complex 'black box' logic",
+          "Platform lock-in and less flexibility for custom code"
+        ],
+        "best_for": "Non-technical founders and teams who prioritize speed-to-market and ease of use over long-term cost efficiency.",
+        "production_readiness": "Very High. Enterprise-grade infrastructure with managed compliance and reliable delivery.",
+        "documentation_url": "https://zapier.com/help"
+      },
+      {
+        "name": "LangGraph",
+        "description": "A library for building stateful, multi-actor applications with LLMs, focusing on creating cyclical, graph-based reasoning loops for high reliability.",
+        "strengths": [
+          "Absolute control over agent logic and state",
+          "Built-in support for 'Human-in-the-loop' workflows",
+          "Deterministic execution makes it ideal for critical tasks",
+          "State persistence and checkpointing"
+        ],
+        "weaknesses": [
+          "Requires advanced Python/JS coding skills",
+          "Longest development time",
+          "High learning curve regarding graph theory and state management"
+        ],
+        "best_for": "Custom, mission-critical agent applications where reliability and fine-grained control are more important than development speed.",
+        "production_readiness": "High. Designed specifically for production-grade agentic systems with state recovery features.",
+        "documentation_url": "https://langchain-ai.github.io/langgraph/"
+      },
+      {
+        "name": "CrewAI",
+        "description": "A framework designed to orchestrate 'crews' of role-based AI agents that collaborate on complex tasks, mimicking a human team structure.",
+        "strengths": [
+          "Easy to define distinct agent roles and tasks",
+          "Excellent for collaborative creative and research work",
+          "Active community with many templates",
+          "Good balance of abstraction and control"
+        ],
+        "weaknesses": [
+          "Agentic loops can occasionally drift or enter infinite loops",
+          "Less deterministic than graph-based approaches",
+          "Scaling large crews can be token-expensive"
+        ],
+        "best_for": "Collaborative multi-agent workflows like content production, market research, and multi-stage analysis.",
+        "production_readiness": "Medium-High. Rapidly maturing with enterprise-focused features and monitoring tools.",
+        "documentation_url": "https://docs.crewai.com/"
+      },
+      {
+        "name": "AutoGen",
+        "description": "A Microsoft-backed framework for building multi-agent systems where agents solve tasks through conversational interactions and code execution.",
+        "strengths": [
+          "Superior code execution and debugging capabilities",
+          "Flexible conversational patterns",
+          "Backed by the Microsoft/Azure ecosystem",
+          "Strong multi-agent problem-solving logic"
+        ],
+        "weaknesses": [
+          "Complex setup compared to alternatives",
+          "Conversational nature can lead to high token consumption",
+          "Steep learning curve for framework-specific concepts"
+        ],
+        "best_for": "Technical teams building systems that require code generation, complex troubleshooting, or Azure integration.",
+        "production_readiness": "High. Strongly integrated into Azure AI Studio for enterprise deployment.",
+        "documentation_url": "https://microsoft.github.io/autogen/"
+      },
+      {
+        "name": "OpenAI Assistants API",
+        "description": "A fully managed API service that simplifies building agents with built-in tools like RAG (File Search), Code Interpreter, and Function Calling.",
+        "strengths": [
+          "Fastest way to build a functional agent with RAG",
+          "Managed infrastructure means no server maintenance",
+          "High-quality built-in tools (e.g., Code Interpreter)",
+          "Threads API handles session state automatically"
+        ],
+        "weaknesses": [
+          "Opaque session-based pricing can be expensive",
+          "Limited control over the underlying reasoning loop",
+          "Dependency on a single provider (OpenAI)"
+        ],
+        "best_for": "Simple agents that need high-quality tool use and RAG without the complexity of managing multi-agent frameworks.",
+        "production_readiness": "Very High. Fully managed, reliable, and scales automatically with OpenAI's infrastructure.",
+        "documentation_url": "https://platform.openai.com/docs/assistants/overview"
+      }
+    ],
+    "recommendation": "For most small businesses, n8n is the winner for those with some technical aptitude (or a technical founder), offering the best balance of cost, privacy, and power. If the team is non-technical and speed is the priority, Zapier AI (via Zapier Central) is the best choice for prototyping, though scaling costs should be watched. For businesses building a core AI product or highly reliable custom agents, LangGraph is the professional standard for deterministic control. CrewAI is recommended specifically for collaborative 'team-based' tasks like content pipelines where the role-based abstraction simplifies development.",
+    "decision_matrix": {
+      "criteria": [
+        {
+          "criterion": "Ease of Setup",
+          "weight": "high",
+          "scores": {
+            "Zapier AI": "Exceptional: Web-based UI with natural language configuration.",
+            "OpenAI Assistants API": "High: Standard API calls with managed state.",
+            "Make": "Medium-High: Visual drag-and-drop, though logic requires some thought.",
+            "n8n": "Medium: Requires Docker or Cloud setup; technical UI.",
+            "CrewAI": "Medium-Low: Requires Python environment and coding knowledge.",
+            "AutoGen": "Low: Complex environment configuration and orchestration logic.",
+            "LangGraph": "Low: Requires deep architectural planning and coding."
+          }
+        },
+        {
+          "criterion": "Cost (Efficiency for SMB)",
+          "weight": "high",
+          "scores": {
+            "n8n": "Best: Flat pricing or free self-hosting with no per-task fees.",
+            "Make": "Medium-High: Predictable tiered pricing based on operations.",
+            "CrewAI": "Medium: Standard token costs; open-source framework is free.",
+            "AutoGen": "Medium: High token usage due to conversational patterns.",
+            "LangGraph": "Medium: Framework is free; pay for tokens and hosting.",
+            "OpenAI Assistants API": "Medium-Low: Session-based fees can add up quickly.",
+            "Zapier AI": "Low: Premium pricing per task; most expensive at scale."
+          }
+        },
+        {
+          "criterion": "Reliability & Control",
+          "weight": "medium",
+          "scores": {
+            "LangGraph": "Exceptional: Deterministic graphs and human-in-the-loop controls.",
+            "OpenAI Assistants API": "High: Managed infrastructure with consistent performance.",
+            "n8n": "High: Robust workflow engine with clear error handling nodes.",
+            "Make": "High: Visual debugging allows for quick resolution of failures.",
+            "AutoGen": "Medium-High: Good error recovery through multi-agent collaboration.",
+            "Zapier AI": "Medium-High: Reliable, but 'black box' logic makes debugging hard.",
+            "CrewAI": "Medium: Agent drift can occur in open-ended 'crews'."
+          }
+        },
+        {
+          "criterion": "Governance & Privacy",
+          "weight": "medium",
+          "scores": {
+            "n8n": "Exceptional: Can be self-hosted behind own firewall/VPN.",
+            "LangGraph": "High: Full control over where code runs and how data flows.",
+            "Zapier AI": "High: Top-tier enterprise compliance (SOC2, HIPAA).",
+            "Make": "Medium-High: Strong security features and regional hosting.",
+            "AutoGen": "Medium: Leverages Azure enterprise security if deployed there.",
+            "CrewAI": "Medium: Standard open-source security profile.",
+            "OpenAI Assistants API": "Medium: Managed by OpenAI; data privacy depends on enterprise agreements."
+          }
+        },
+        {
+          "criterion": "Learning Curve",
+          "weight": "medium",
+          "scores": {
+            "Zapier AI": "Easiest: Accessible to any business user with no-code.",
+            "Make": "Moderate: Requires logical thinking but no code.",
+            "OpenAI Assistants API": "Moderate: Standard API skills required.",
+            "n8n": "Moderate-High: Best for users with basic technical/JSON knowledge.",
+            "CrewAI": "High: Requires Python and agentic design thinking.",
+            "AutoGen": "Very High: Requires advanced orchestration and coding.",
+            "LangGraph": "Very High: Requires understanding of state machines and graph theory."
+          }
+        }
+      ]
+    }
+  },
+  "sources": [],
+  "metadata": {
+    "status": "completed",
+    "job_id": "019cbba8-ff1b-7027-8c53-c3a045c99844",
+    "steps": [],
+    "total_sources": 0,
+    "elapsed_seconds": 55
+  },
+  "timestamp": "2026-03-05T01:43:20.061762+00:00"
+}

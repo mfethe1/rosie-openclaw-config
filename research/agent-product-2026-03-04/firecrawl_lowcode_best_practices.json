@@ -1,0 +1,83 @@
+{
+  "ok": true,
+  "model": "spark-1-mini",
+  "prompt": "Best practices for creating beginner-friendly low-code AI agent setup guides for non-technical users in 2025-2026, including tooling choices, onboarding steps, and common pitfalls.",
+  "data": {
+    "practices": [
+      {
+        "practice": "Start with Problem-Solution Framing (Use-Case First)",
+        "rationale": "Non-technical users often get overwhelmed by the capabilities of AI and fail to define a narrow enough scope for their first agent.",
+        "source": "Medium, Vellum AI (Beginner Guides 2025)",
+        "implementation_notes": "Begin the guide by asking the user to identify one repetitive task that takes >30 mins. Use a template like: 'I want my agent to [Action] whenever [Trigger] happens.'",
+        "pitfalls": "Starting with 'Build a general assistant' which leads to vague results and user frustration."
+      },
+      {
+        "practice": "Provide 'One-Click' Pre-built Templates",
+        "rationale": "Reducing 'time-to-value' is critical for adoption. Seeing a working example immediately builds confidence.",
+        "source": "Reddit (AI Agents Community), UiPath (Agent Onboarding)",
+        "implementation_notes": "Offer templates for common tasks (e.g., 'Lead Scraper', 'Email Draft Assistant'). Allow users to duplicate these and only change the 'API Key' or 'File Source'.",
+        "pitfalls": "Forcing users to start from a blank canvas, which often leads to 'blank page syndrome'."
+      },
+      {
+        "practice": "Use the 'Agent as an Employee' Analogy",
+        "rationale": "Abstract concepts like LLM logic and tool calling are easier to grasp when framed as a management task.",
+        "source": "Workday, NVIDIA (Onboarding AI Agents)",
+        "implementation_notes": "Explain the agent's system prompt as a 'Job Description' and its tools as its 'Office Equipment'. Use language like: 'Your agent is your new intern; tell it exactly where to find the data.'",
+        "pitfalls": "Using technical jargon like 'system instructions' or 'tool orchestration' which creates a mental barrier for non-coders."
+      },
+      {
+        "practice": "Visual Workflow Sketching",
+        "rationale": "Low-code platforms are inherently visual. Mapping the logic before building prevents architectural errors.",
+        "source": "StackAI, Voiceflow (Visual Builder Best Practices)",
+        "implementation_notes": "Encourage users to draw a flow chart (Trigger -> Thinking Step -> Action -> Result) on paper or a digital whiteboard before opening the builder.",
+        "pitfalls": "Diving straight into the tool and connecting nodes randomly, leading to infinite loops or logic errors."
+      },
+      {
+        "practice": "Incremental Testing and Iterative Feedback Loops",
+        "rationale": "AI is non-deterministic. Users need to learn that 'tuning' is part of the building process, not a sign of failure.",
+        "source": "Langflow, Practical Engineering Management",
+        "implementation_notes": "Include a 'Test After Every Step' section in the guide. Show users how to use the chat preview to debug small parts of the workflow before finalizing the whole agent.",
+        "pitfalls": "The 'Big Bang' deployment where the user builds the whole complex agent and then wonders why it doesn't work."
+      },
+      {
+        "practice": "Guardrails as 'Security Badges'",
+        "rationale": "Security and privacy are major concerns for non-technical users in 2026. Framing safety as a feature builds trust.",
+        "source": "Zenity, Oso (Authorization Best Practices)",
+        "implementation_notes": "Teach users to add 'Human-in-the-loop' steps for high-stakes actions (like sending an email or spending money). Explicitly explain where the data is stored.",
+        "pitfalls": "Oversimplifying security or ignoring data privacy warnings in the guide."
+      }
+    ],
+    "anti_patterns": [
+      {
+        "pattern": "The 'Swiss Army Knife' Agent",
+        "why_bad": "Giving an agent too many tools (10+) or a broad scope causes the LLM to hallucinate or choose the wrong tool for the job.",
+        "alternative": "Build a 'Specialist' agent for one specific workflow and use a 'Master' agent or router if needed."
+      },
+      {
+        "pattern": "Jargon-Heavy 'Help' Tooltips",
+        "why_bad": "Terms like 'RAG', 'Vector DB', 'Token limit', and 'Latency' mean nothing to a business user and cause friction.",
+        "alternative": "Use descriptive language: 'Knowledge Base' instead of 'Vector DB'; 'Memory' instead of 'Context Window'."
+      },
+      {
+        "pattern": "The 'Set and Forget' Promise",
+        "why_bad": "Leads to loss of trust when the agent eventually fails or behaves unexpectedly due to 'model drift' or API changes.",
+        "alternative": "Instruct users to set up a 'Weekly Performance Review' for their agent to check its outputs and refine prompts."
+      },
+      {
+        "pattern": "Ignoring 'Failure States' in Documentation",
+        "why_bad": "When an agent errors, the user assumes they 'broke' it and gives up.",
+        "alternative": "Include a 'What to do when your agent gets confused' section with troubleshooting tips for common error messages."
+      }
+    ],
+    "summary": "In 2025-2026, the key to successful AI agent setup for non-technical users is shifting from 'building' to 'management'. Best practices focus on use-case clarity, 'one-click' templates to reduce time-to-value, and analogy-driven instruction. Guides should emphasize iterative development and human-in-the-loop guardrails to manage the non-deterministic nature of AI. Common pitfalls include creating overly broad 'Swiss Army' agents and using technical jargon that alienates business users. Preferred tooling choices include Zapier Central for simple tasks, Relevance AI for workflow automation, and StackAI for robust, yet accessible, agentic builders."
+  },
+  "sources": [],
+  "metadata": {
+    "status": "completed",
+    "job_id": "019cbba3-c355-7259-b4c2-26d7728c6cdf",
+    "steps": [],
+    "total_sources": 0,
+    "elapsed_seconds": 315
+  },
+  "timestamp": "2026-03-05T01:42:20.438932+00:00"
+}
