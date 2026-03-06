@@ -52,9 +52,10 @@ PRIVATE_PAIRING_CODE = os.environ.get("MEMU_PRIVATE_PAIRING_CODE", "")
 PRIVATE_REQUIRE_IDENTITY = os.environ.get("MEMU_PRIVATE_REQUIRE_IDENTITY", "1") == "1"
 GROUP_REQUIRE_ALLOWLIST = os.environ.get("MEMU_GROUP_REQUIRE_ALLOWLIST", "1") == "1"
 SEMANTIC_SCANNER_MODEL = os.environ.get("MEMU_SEMANTIC_SCANNER_MODEL", "gpt-4o-mini")
+MEMU_COMPRESSION_ANTHROPIC_MODEL = os.environ.get("MEMU_COMPRESSION_ANTHROPIC_MODEL", "claude-3-5-haiku-latest")
 LOG_LEVEL = os.environ.get("MEMU_LOG_LEVEL", "INFO")
 MEMU_ASYNC_INGEST_ENABLED = os.environ.get("MEMU_ASYNC_INGEST_ENABLED", "1") == "1"
-MEMU_STRICT_SCHEMA_MODE = os.environ.get("MEMU_STRICT_SCHEMA_MODE", "0") == "1"
+MEMU_STRICT_SCHEMA_MODE = os.environ.get("MEMU_STRICT_SCHEMA_MODE", "1") == "1"
 
 log = logging.getLogger("memu")
 log.setLevel(getattr(logging, LOG_LEVEL))
@@ -115,7 +116,7 @@ SECRET_PATTERNS = [
     re.compile(r"(?i)(?:api[_-]?key|apikey|token|secret)[\s:=]+[a-z0-9._-]{16,}"),
     re.compile(r"Bearer\s+[A-Za-z0-9_\-\.=]{10,}"),
     re.compile(r"[Pp]assword\s*[:=]\s*[^\s]{4,}"),
-    re.compile(r"(?i)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"),
+    re.compile(r"(?i)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"),
     re.compile(r"\b\$\d{1,3}(?:,\d{3})*(?:\.\d{2})?\b"),
     re.compile(r"\b\+?1?[2-9]\d{2}[\s.-]?\d{3}[\s.-]?\d{4}\b"),
     re.compile(r"AKIA[0-9A-Z]{16}"),
@@ -350,7 +351,7 @@ def compress_stage1(content: str) -> tuple[str, bool, str | None]:
                     "anthropic-version": "2023-06-01",
                 },
                 payload={
-                    "model": "claude-haiku-4-5-20250514",
+                    "model": MEMU_COMPRESSION_ANTHROPIC_MODEL,
                     "max_tokens": 400,
                     "temperature": 0.2,
                     "system": _COMPRESSION_SYSTEM,
@@ -597,8 +598,8 @@ class MemUStore:
             INSERT OR IGNORE INTO memories (
                 id, agent_id, user_id, idempotency_key, key, content,
                 compressed_content, category, tags, auto_tags, metadata, compression,
-                stored_at, expires_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                stored_at, expires_at, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             entry.get("id") or str(uuid.uuid4()),
             entry.get("agent_id", "shared"),
@@ -614,6 +615,7 @@ class MemUStore:
             json.dumps(entry.get("compression", {})),
             entry.get("stored_at", datetime.now(timezone.utc).isoformat()),
             entry.get("expires_at"),  # None = no explicit expiry
+            entry.get("updated_at", entry.get("stored_at", datetime.now(timezone.utc).isoformat())),
         ))
 
     def _collect_garbage(self, force: bool = False):
@@ -785,9 +787,20 @@ class MemUStore:
         return entry, False
 
     def search(self, query: str, agent_id: str = None, limit: int = 20) -> list:
-        query_lower = f"%{query.lower()}%"
-        sql = "SELECT * FROM memories WHERE (key LIKE ? OR content LIKE ? OR compressed_content LIKE ? OR category LIKE ?)"
-        params = [query_lower, query_lower, query_lower, query_lower]
+        terms = [t.strip().lower() for t in re.split(r"\s+", query or "") if t.strip()]
+        if not terms:
+            return []
+
+        # Require each term to match at least one searchable field (AND across terms).
+        sql = "SELECT * FROM memories WHERE "
+        params: list[Any] = []
+        term_clauses = []
+        for term in terms:
+            like_term = f"%{term}%"
+            term_clauses.append("(key LIKE ? OR content LIKE ? OR compressed_content LIKE ? OR category LIKE ?)")
+            params.extend([like_term, like_term, like_term, like_term])
+
+        sql += " AND ".join(term_clauses)
 
         if agent_id and agent_id != "all":
             sql += " AND agent_id = ?"
@@ -825,6 +838,57 @@ class MemUStore:
                     d[key] = [] if key in ("tags", "auto_tags") else {}
         return d
 
+
+
+    def get_by_id(self, entry_id: str) -> dict | None:
+        conn = self._get_conn()
+        row = conn.execute("SELECT * FROM memories WHERE id = ?", (entry_id,)).fetchone()
+        return self._row_to_dict(row) if row else None
+
+    def update(self, entry_id: str, patch: dict) -> dict | None:
+        allowed = {"key", "content", "category", "tags", "metadata", "expires_at"}
+        fields = {k: v for k, v in patch.items() if k in allowed}
+        if not fields:
+            return self.get_by_id(entry_id)
+
+        set_parts = []
+        params: list[Any] = []
+        for key, value in fields.items():
+            if key in {"tags", "metadata"}:
+                value = json.dumps(value if value is not None else ([] if key == "tags" else {}))
+            set_parts.append(f"{key} = ?")
+            params.append(value)
+
+        now_iso = datetime.now(timezone.utc).isoformat()
+        set_parts.append("updated_at = ?")
+        params.append(now_iso)
+        params.append(entry_id)
+
+        conn = self._get_conn()
+        conn.execute(f"UPDATE memories SET {', '.join(set_parts)} WHERE id = ?", params)
+        conn.commit()
+        return self.get_by_id(entry_id)
+
+    def delete(self, entry_id: str) -> bool:
+        conn = self._get_conn()
+        res = conn.execute("DELETE FROM memories WHERE id = ?", (entry_id,))
+        conn.commit()
+        return res.rowcount > 0
+
+    def history(self, agent_id: str | None = None, key: str | None = None, limit: int = 50) -> list:
+        sql = "SELECT * FROM memories WHERE 1=1"
+        params: list[Any] = []
+        if agent_id and agent_id != "all":
+            sql += " AND agent_id = ?"
+            params.append(agent_id)
+        if key:
+            sql += " AND key LIKE ?"
+            params.append(f"%{key}%")
+        sql += " ORDER BY COALESCE(updated_at, stored_at) DESC LIMIT ?"
+        params.append(limit)
+        conn = self._get_conn()
+        rows = conn.execute(sql, params).fetchall()
+        return [self._row_to_dict(r) for r in rows]
     def get_all(self, agent_id: str = None) -> list:
         sql = "SELECT * FROM memories"
         params = []
@@ -894,6 +958,46 @@ def search_entries(query: str, agent_id: str = None, limit: int = 20) -> list:
 
 def list_entries(agent_id: str = None, limit: int = 50) -> list:
     return _STORE.list_recent(agent_id, limit)
+
+def update_entry(entry_id: str, patch: dict) -> dict | None:
+    return _STORE.update(entry_id, patch)
+
+def delete_entry(entry_id: str) -> bool:
+    return _STORE.delete(entry_id)
+
+def history_entries(agent_id: str | None = None, key: str | None = None, limit: int = 50) -> list:
+    return _STORE.history(agent_id=agent_id, key=key, limit=limit)
+
+def fused_search(query: str, agent_id: str = None, limit: int = 20) -> list:
+    lexical = search_entries(query=query, agent_id=agent_id, limit=max(limit * 2, limit))
+    semantic = tfidf_search(query=query, agent_id=agent_id, limit=max(limit * 2, limit))
+
+    rank: dict[str, dict] = {}
+    k = 60.0
+    for i, row in enumerate(lexical):
+        rid = row.get("id")
+        if not rid:
+            continue
+        rank.setdefault(rid, {"row": row, "score": 0.0, "sources": set()})
+        rank[rid]["score"] += 1.0 / (k + i + 1)
+        rank[rid]["sources"].add("lexical")
+    for i, row in enumerate(semantic):
+        rid = row.get("id")
+        if not rid:
+            continue
+        rank.setdefault(rid, {"row": row, "score": 0.0, "sources": set()})
+        rank[rid]["score"] += 1.0 / (k + i + 1)
+        rank[rid]["sources"].add("semantic")
+
+    fused = []
+    for item in rank.values():
+        out = dict(item["row"])
+        out["_fusion_score"] = round(item["score"], 6)
+        out["_sources"] = sorted(item["sources"])
+        out["_search_type"] = "hybrid-rrf"
+        fused.append(out)
+    fused.sort(key=lambda x: x.get("_fusion_score", 0), reverse=True)
+    return fused[:limit]
 
 # ── TF-IDF Semantic Search ────────────────────────────────────────────────────
 
@@ -1000,8 +1104,8 @@ class MemUHandler(BaseHTTPRequestHandler):
         self.wfile.write(data)
 
     def check_auth(self, path: str, body: dict | None = None) -> tuple[bool, str, str]:
-        write_paths = {"/api/v1/memu/store", "/api/v1/memu/log_event"}
-        read_paths = {"/api/v1/memu/search", "/api/v1/memu/semantic-search", "/api/v1/memu/list", "/api/v1/memu/pulse", "/api/v1/memu/health"}
+        write_paths = {"/api/v1/memu/store", "/api/v1/memu/log_event", "/api/v1/memu/update", "/api/v1/memu/delete"}
+        read_paths = {"/api/v1/memu/search", "/api/v1/memu/semantic-search", "/api/v1/memu/list", "/api/v1/memu/pulse", "/api/v1/memu/health", "/api/v1/memu/history"}
         auth = self.headers.get("Authorization", "")
         token = _parse_authorization(auth) if auth else ""
 
@@ -1068,6 +1172,8 @@ class MemUHandler(BaseHTTPRequestHandler):
             path = "/api/v1/memu/health"
         elif path == "/memories":
             path = "/api/v1/memu/list"
+        elif path == "/history":
+            path = "/api/v1/memu/history"
         elif path.startswith("/jobs/"):
             path = "/api/v1/memu/jobs/" + path.split("/jobs/", 1)[1]
 
@@ -1107,7 +1213,7 @@ class MemUHandler(BaseHTTPRequestHandler):
             self.send_json(200, {
                 "status": "ok",
                 "service": "memU bridge",
-                "version": "2.2.0",
+                "version": "2.3.0",
                 "features": [
                     "sqlite-storage", "like-and-tfidf-search", "tfidf-semantic-search",
                     "recency-decay", "use-count-boost", "idempotency",
@@ -1119,6 +1225,8 @@ class MemUHandler(BaseHTTPRequestHandler):
                     "health-triggered-checkpoint",
                     "expires-at-ttl", "event-log-rotation",
                     "connection-recovery",
+                    "lifecycle-endpoints",
+                    "hybrid-search-fusion",
                     "async-ingestion" if MEMU_ASYNC_INGEST_ENABLED else "async-ingestion-disabled",
                     "strict-schema-mode" if MEMU_STRICT_SCHEMA_MODE else "strict-schema-mode-disabled",
                 ],
@@ -1172,6 +1280,16 @@ class MemUHandler(BaseHTTPRequestHandler):
             agent_id = params.get("agent_id", [None])[0]
             limit = int(params.get("limit", [50])[0])
             entries = list_entries(agent_id=agent_id, limit=limit)
+            self.send_json(200, {"entries": entries, "count": len(entries)})
+            return
+
+        if path == "/api/v1/memu/history":
+            parsed = urlparse(self.path)
+            params = parse_qs(parsed.query)
+            agent_id = params.get("agent_id", [None])[0]
+            key = params.get("key", [None])[0]
+            limit = int(params.get("limit", [50])[0])
+            entries = history_entries(agent_id=agent_id, key=key, limit=limit)
             self.send_json(200, {"entries": entries, "count": len(entries)})
             return
 
@@ -1279,9 +1397,10 @@ class MemUHandler(BaseHTTPRequestHandler):
                     "deterministic_flags": flags,
                     "semantic_risk": semantic_risk,
                 }
-            if semantic_risk and semantic_risk != "high":
+            elif semantic_risk:
+                # Keep soft-risk signals in metadata only to avoid polluting stored content
+                # for benign writes (previous behavior prefixed nearly all content with [RISK]).
                 body = dict(body)
-                body["content"] = f"{HIGH_RISK_MARKER_PREFIX}({semantic_risk}) {content}"
                 body.setdefault("security_risk", {"semantic_risk": semantic_risk, "deterministic_flags": flags})
 
             prefer_header = (self.headers.get("Prefer") or "").lower()
@@ -1339,8 +1458,35 @@ class MemUHandler(BaseHTTPRequestHandler):
                 body["query_risk"] = {"deterministic_flags": qflags}
             agent_id = body.get("agent_id", None)
             limit = int(body.get("limit", 20))
-            results = search_entries(query=query, agent_id=agent_id, limit=limit)
-            self.send_json(200, {"results": results, "count": len(results), "query": query, "risk": bool(qflags)})
+            use_hybrid = bool(body.get("hybrid", True))
+            results = fused_search(query=query, agent_id=agent_id, limit=limit) if use_hybrid else search_entries(query=query, agent_id=agent_id, limit=limit)
+            self.send_json(200, {"results": results, "count": len(results), "query": query, "risk": bool(qflags), "method": "hybrid-rrf" if use_hybrid else "lexical"})
+            return
+
+
+        if path == "/api/v1/memu/update":
+            entry_id = str(body.get("id", "")).strip()
+            if not entry_id:
+                self.send_json(400, {"error": "Missing required field: id"})
+                return
+            patch = {k: v for k, v in body.items() if k in {"key", "content", "category", "tags", "metadata", "expires_at"}}
+            entry = update_entry(entry_id, patch)
+            if not entry:
+                self.send_json(404, {"error": "Entry not found", "id": entry_id})
+                return
+            self.send_json(200, {"ok": True, "id": entry_id, "entry": entry})
+            return
+
+        if path == "/api/v1/memu/delete":
+            entry_id = str(body.get("id", "")).strip()
+            if not entry_id:
+                self.send_json(400, {"error": "Missing required field: id"})
+                return
+            deleted = delete_entry(entry_id)
+            if not deleted:
+                self.send_json(404, {"error": "Entry not found", "id": entry_id})
+                return
+            self.send_json(200, {"ok": True, "id": entry_id, "deleted": True})
             return
 
         if path == "/api/v1/memu/semantic-search":
