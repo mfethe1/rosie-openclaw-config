@@ -34,12 +34,13 @@ from urllib.parse import urlparse, parse_qs
 from typing import Any, Optional
 
 # ── Config ──────────────────────────────────────────────────────────────────
-PORT = int(os.environ.get("MEMU_PORT", "8711"))
+PORT = int(os.environ.get("PORT") or os.environ.get("MEMU_PORT", "8711"))
 MEMORY_DIR = Path(os.environ.get("MEMU_MEMORY_DIR", "/Users/harrisonfethe/.openclaw/workspace/memory"))
 MEMU_DATA_DIR = MEMORY_DIR / "memu_store"
 MEMU_DB_PATH = MEMU_DATA_DIR / "memu.db"
 MEMU_TTL_DAYS = int(os.environ.get("MEMU_TTL_DAYS", "180"))
 MEMU_BIND_HOST = os.environ.get("MEMU_BIND_HOST", "127.0.0.1")
+MEMU_ALLOW_PUBLIC_BIND = os.environ.get("MEMU_ALLOW_PUBLIC_BIND", "0") == "1"
 SECURITY_AUDIT_MARKER = MEMU_DATA_DIR / "last_security_audit.json"
 API_KEY = os.environ.get("MEMU_API_KEY", "openclaw-memu-local-2026")
 # Optional explicit token allowlists for least-privilege access control
@@ -1860,7 +1861,7 @@ class MemUHandler(BaseHTTPRequestHandler):
 
 # ── Main ─────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    if MEMU_BIND_HOST not in {"127.0.0.1", "localhost", "::1"}:
+    if (not MEMU_ALLOW_PUBLIC_BIND) and MEMU_BIND_HOST not in {"127.0.0.1", "localhost", "::1"}:
         log.warning(f"Non-loopback bind requested ({MEMU_BIND_HOST}); forcing loopback for security.")
         MEMU_BIND_HOST = "127.0.0.1"
 
