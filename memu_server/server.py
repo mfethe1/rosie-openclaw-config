@@ -56,6 +56,10 @@ MEMU_COMPRESSION_ANTHROPIC_MODEL = os.environ.get("MEMU_COMPRESSION_ANTHROPIC_MO
 LOG_LEVEL = os.environ.get("MEMU_LOG_LEVEL", "INFO")
 MEMU_ASYNC_INGEST_ENABLED = os.environ.get("MEMU_ASYNC_INGEST_ENABLED", "1") == "1"
 MEMU_STRICT_SCHEMA_MODE = os.environ.get("MEMU_STRICT_SCHEMA_MODE", "1") == "1"
+MEMU_TYPED_CATEGORIES = {
+    "reflection", "lesson", "event", "task", "decision", "note", "eval", "conversation",
+    "working", "procedural", "factual", "experiential", "general"
+}
 
 log = logging.getLogger("memu")
 log.setLevel(getattr(logging, LOG_LEVEL))
@@ -226,11 +230,21 @@ def _validate_store_schema(body: dict, strict: bool = False) -> tuple[bool, str]
         return False, "Invalid schema: user_id must be a non-empty string"
 
     session_value = _extract_session_value(body)
+    category = str(body.get("category", "general")).strip().lower()
+    key = str(body.get("key", "")).strip()
+    content = str(body.get("content", "")).strip()
+
     if strict:
         if not isinstance(user_id, str) or not user_id.strip():
             return False, "Strict schema: user_id is required"
         if not session_value:
             return False, "Strict schema: one of session_id/thread_id/conversation_id is required"
+        if category not in MEMU_TYPED_CATEGORIES:
+            return False, f"Strict schema: category must be one of {sorted(MEMU_TYPED_CATEGORIES)}"
+        if not key:
+            return False, "Strict schema: key is required"
+        if len(content) < 8:
+            return False, "Strict schema: content must be at least 8 characters"
 
     if session_value and len(session_value) > 256:
         return False, "Invalid schema: session identifier too long"
@@ -535,17 +549,35 @@ class MemUStore:
         conn.execute("CREATE INDEX IF NOT EXISTS idx_memories_agent_id ON memories(agent_id);")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_memories_stored_at ON memories(stored_at);")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_memories_idem_key ON memories(idempotency_key);")
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS memory_audit (
+                id TEXT PRIMARY KEY,
+                memory_id TEXT,
+                action TEXT,
+                actor TEXT,
+                patch_json TEXT,
+                before_json TEXT,
+                after_json TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        """)
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_memory_audit_memory_id ON memory_audit(memory_id);")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_memory_audit_created_at ON memory_audit(created_at);")
         # Ensure quality_score / use_count / outcome columns exist (added by smoke_test)
         for col_def in [
             ("quality_score", "REAL DEFAULT 0.5"),
             ("use_count", "INT DEFAULT 0"),
             ("outcome", "TEXT"),
             ("expires_at", "TIMESTAMP"),  # explicit per-entry TTL
+            ("updated_at", "TIMESTAMP"),
+            ("is_deleted", "INT DEFAULT 0"),
+            ("deleted_at", "TIMESTAMP"),
         ]:
             try:
                 conn.execute(f"ALTER TABLE memories ADD COLUMN {col_def[0]} {col_def[1]};")
             except sqlite3.OperationalError:
                 pass  # column already exists
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_memories_deleted ON memories(is_deleted);")
         conn.commit()
 
     def _migrate_if_needed(self):
@@ -598,8 +630,8 @@ class MemUStore:
             INSERT OR IGNORE INTO memories (
                 id, agent_id, user_id, idempotency_key, key, content,
                 compressed_content, category, tags, auto_tags, metadata, compression,
-                stored_at, expires_at, updated_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                stored_at, expires_at, updated_at, is_deleted, deleted_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             entry.get("id") or str(uuid.uuid4()),
             entry.get("agent_id", "shared"),
@@ -616,6 +648,8 @@ class MemUStore:
             entry.get("stored_at", datetime.now(timezone.utc).isoformat()),
             entry.get("expires_at"),  # None = no explicit expiry
             entry.get("updated_at", entry.get("stored_at", datetime.now(timezone.utc).isoformat())),
+            int(entry.get("is_deleted", 0) or 0),
+            entry.get("deleted_at"),
         ))
 
     def _collect_garbage(self, force: bool = False):
@@ -778,7 +812,12 @@ class MemUStore:
 
             log.info(f"STORE id={entry['id']} agent={agent_id} idem={idem_key[:20]} key={entry['key'][:60]!r}")
 
-        # Trigger periodic maintenance OUTSIDE the lock (non-blocking)
+        # Audit + maintenance outside the lock (non-blocking)
+        try:
+            self._audit(entry["id"], "create", actor=agent_id, patch={}, before={}, after=entry)
+        except Exception:
+            pass
+
         try:
             self._periodic_maintenance()
         except Exception:
@@ -801,6 +840,7 @@ class MemUStore:
             params.extend([like_term, like_term, like_term, like_term])
 
         sql += " AND ".join(term_clauses)
+        sql += " AND COALESCE(is_deleted, 0) = 0"
 
         if agent_id and agent_id != "all":
             sql += " AND agent_id = ?"
@@ -814,10 +854,10 @@ class MemUStore:
         return [self._row_to_dict(r) for r in rows]
 
     def list_recent(self, agent_id: str = None, limit: int = 50) -> list:
-        sql = "SELECT * FROM memories"
+        sql = "SELECT * FROM memories WHERE COALESCE(is_deleted, 0) = 0"
         params = []
         if agent_id:
-            sql += " WHERE agent_id = ?"
+            sql += " AND agent_id = ?"
             params.append(agent_id)
         sql += " ORDER BY stored_at DESC LIMIT ?"
         params.append(limit)
@@ -845,11 +885,35 @@ class MemUStore:
         row = conn.execute("SELECT * FROM memories WHERE id = ?", (entry_id,)).fetchone()
         return self._row_to_dict(row) if row else None
 
-    def update(self, entry_id: str, patch: dict) -> dict | None:
+    def _audit(self, memory_id: str, action: str, actor: str | None = None, patch: dict | None = None,
+               before: dict | None = None, after: dict | None = None) -> None:
+        conn = self._get_conn()
+        conn.execute(
+            """
+            INSERT INTO memory_audit (id, memory_id, action, actor, patch_json, before_json, after_json, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                str(uuid.uuid4()),
+                memory_id,
+                action,
+                actor or "system",
+                json.dumps(patch or {}),
+                json.dumps(before or {}),
+                json.dumps(after or {}),
+                datetime.now(timezone.utc).isoformat(),
+            ),
+        )
+        conn.commit()
+
+    def update(self, entry_id: str, patch: dict, actor: str | None = None) -> dict | None:
         allowed = {"key", "content", "category", "tags", "metadata", "expires_at"}
         fields = {k: v for k, v in patch.items() if k in allowed}
+        before = self.get_by_id(entry_id)
+        if not before:
+            return None
         if not fields:
-            return self.get_by_id(entry_id)
+            return before
 
         set_parts = []
         params: list[Any] = []
@@ -867,13 +931,48 @@ class MemUStore:
         conn = self._get_conn()
         conn.execute(f"UPDATE memories SET {', '.join(set_parts)} WHERE id = ?", params)
         conn.commit()
-        return self.get_by_id(entry_id)
+        after = self.get_by_id(entry_id)
+        if after:
+            self._audit(entry_id, "update", actor=actor, patch=fields, before=before, after=after)
+        return after
 
-    def delete(self, entry_id: str) -> bool:
+    def delete(self, entry_id: str, actor: str | None = None, hard: bool = False) -> bool:
+        before = self.get_by_id(entry_id)
+        if not before:
+            return False
         conn = self._get_conn()
-        res = conn.execute("DELETE FROM memories WHERE id = ?", (entry_id,))
+        if hard:
+            res = conn.execute("DELETE FROM memories WHERE id = ?", (entry_id,))
+            conn.commit()
+            if res.rowcount > 0:
+                self._audit(entry_id, "delete-hard", actor=actor, patch={"hard": True}, before=before, after={})
+            return res.rowcount > 0
+        now_iso = datetime.now(timezone.utc).isoformat()
+        res = conn.execute(
+            "UPDATE memories SET is_deleted = 1, deleted_at = ?, updated_at = ? WHERE id = ?",
+            (now_iso, now_iso, entry_id),
+        )
         conn.commit()
+        if res.rowcount > 0:
+            after = self.get_by_id(entry_id)
+            self._audit(entry_id, "delete-soft", actor=actor, patch={"hard": False}, before=before, after=after or {})
         return res.rowcount > 0
+
+    def restore(self, entry_id: str, actor: str | None = None) -> dict | None:
+        before = self.get_by_id(entry_id)
+        if not before:
+            return None
+        conn = self._get_conn()
+        now_iso = datetime.now(timezone.utc).isoformat()
+        conn.execute(
+            "UPDATE memories SET is_deleted = 0, deleted_at = NULL, updated_at = ? WHERE id = ?",
+            (now_iso, entry_id),
+        )
+        conn.commit()
+        after = self.get_by_id(entry_id)
+        if after:
+            self._audit(entry_id, "restore", actor=actor, patch={}, before=before, after=after)
+        return after
 
     def history(self, agent_id: str | None = None, key: str | None = None, limit: int = 50) -> list:
         sql = "SELECT * FROM memories WHERE 1=1"
@@ -889,11 +988,28 @@ class MemUStore:
         conn = self._get_conn()
         rows = conn.execute(sql, params).fetchall()
         return [self._row_to_dict(r) for r in rows]
+
+    def audit_trail(self, memory_id: str, limit: int = 50) -> list:
+        conn = self._get_conn()
+        rows = conn.execute(
+            "SELECT * FROM memory_audit WHERE memory_id = ? ORDER BY created_at DESC LIMIT ?",
+            (memory_id, limit),
+        ).fetchall()
+        out = []
+        for row in rows:
+            d = dict(row)
+            for k in ("patch_json", "before_json", "after_json"):
+                try:
+                    d[k] = json.loads(d.get(k) or "{}")
+                except Exception:
+                    d[k] = {}
+            out.append(d)
+        return out
     def get_all(self, agent_id: str = None) -> list:
-        sql = "SELECT * FROM memories"
+        sql = "SELECT * FROM memories WHERE COALESCE(is_deleted, 0) = 0"
         params = []
         if agent_id and agent_id != "all":
-            sql += " WHERE agent_id = ?"
+            sql += " AND agent_id = ?"
             params.append(agent_id)
 
         conn = self._get_conn()
@@ -959,14 +1075,20 @@ def search_entries(query: str, agent_id: str = None, limit: int = 20) -> list:
 def list_entries(agent_id: str = None, limit: int = 50) -> list:
     return _STORE.list_recent(agent_id, limit)
 
-def update_entry(entry_id: str, patch: dict) -> dict | None:
-    return _STORE.update(entry_id, patch)
+def update_entry(entry_id: str, patch: dict, actor: str | None = None) -> dict | None:
+    return _STORE.update(entry_id, patch, actor=actor)
 
-def delete_entry(entry_id: str) -> bool:
-    return _STORE.delete(entry_id)
+def delete_entry(entry_id: str, actor: str | None = None, hard: bool = False) -> bool:
+    return _STORE.delete(entry_id, actor=actor, hard=hard)
+
+def restore_entry(entry_id: str, actor: str | None = None) -> dict | None:
+    return _STORE.restore(entry_id, actor=actor)
 
 def history_entries(agent_id: str | None = None, key: str | None = None, limit: int = 50) -> list:
     return _STORE.history(agent_id=agent_id, key=key, limit=limit)
+
+def audit_entries(memory_id: str, limit: int = 50) -> list:
+    return _STORE.audit_trail(memory_id=memory_id, limit=limit)
 
 def fused_search(query: str, agent_id: str = None, limit: int = 20) -> list:
     lexical = search_entries(query=query, agent_id=agent_id, limit=max(limit * 2, limit))
@@ -1104,8 +1226,8 @@ class MemUHandler(BaseHTTPRequestHandler):
         self.wfile.write(data)
 
     def check_auth(self, path: str, body: dict | None = None) -> tuple[bool, str, str]:
-        write_paths = {"/api/v1/memu/store", "/api/v1/memu/log_event", "/api/v1/memu/update", "/api/v1/memu/delete"}
-        read_paths = {"/api/v1/memu/search", "/api/v1/memu/semantic-search", "/api/v1/memu/list", "/api/v1/memu/pulse", "/api/v1/memu/health", "/api/v1/memu/history"}
+        write_paths = {"/api/v1/memu/store", "/api/v1/memu/log_event", "/api/v1/memu/update", "/api/v1/memu/delete", "/api/v1/memu/restore"}
+        read_paths = {"/api/v1/memu/search", "/api/v1/memu/semantic-search", "/api/v1/memu/list", "/api/v1/memu/pulse", "/api/v1/memu/health", "/api/v1/memu/history", "/api/v1/memu/audit"}
         auth = self.headers.get("Authorization", "")
         token = _parse_authorization(auth) if auth else ""
 
@@ -1174,6 +1296,8 @@ class MemUHandler(BaseHTTPRequestHandler):
             path = "/api/v1/memu/list"
         elif path == "/history":
             path = "/api/v1/memu/history"
+        elif path == "/audit":
+            path = "/api/v1/memu/audit"
         elif path.startswith("/jobs/"):
             path = "/api/v1/memu/jobs/" + path.split("/jobs/", 1)[1]
 
@@ -1213,7 +1337,7 @@ class MemUHandler(BaseHTTPRequestHandler):
             self.send_json(200, {
                 "status": "ok",
                 "service": "memU bridge",
-                "version": "2.3.0",
+                "version": "2.4.0",
                 "features": [
                     "sqlite-storage", "like-and-tfidf-search", "tfidf-semantic-search",
                     "recency-decay", "use-count-boost", "idempotency",
@@ -1226,6 +1350,9 @@ class MemUHandler(BaseHTTPRequestHandler):
                     "expires-at-ttl", "event-log-rotation",
                     "connection-recovery",
                     "lifecycle-endpoints",
+                    "soft-delete-restore",
+                    "audit-trail",
+                    "typed-schema-validation",
                     "hybrid-search-fusion",
                     "async-ingestion" if MEMU_ASYNC_INGEST_ENABLED else "async-ingestion-disabled",
                     "strict-schema-mode" if MEMU_STRICT_SCHEMA_MODE else "strict-schema-mode-disabled",
@@ -1293,6 +1420,18 @@ class MemUHandler(BaseHTTPRequestHandler):
             self.send_json(200, {"entries": entries, "count": len(entries)})
             return
 
+        if path == "/api/v1/memu/audit":
+            parsed = urlparse(self.path)
+            params = parse_qs(parsed.query)
+            memory_id = params.get("memory_id", [""])[0]
+            if not memory_id:
+                self.send_json(400, {"error": "Missing required query param: memory_id"})
+                return
+            limit = int(params.get("limit", [50])[0])
+            entries = audit_entries(memory_id=memory_id, limit=limit)
+            self.send_json(200, {"entries": entries, "count": len(entries), "memory_id": memory_id})
+            return
+
         self.send_json(404, {"error": f"Unknown endpoint: {path}"})
 
     def do_POST(self):
@@ -1304,6 +1443,8 @@ class MemUHandler(BaseHTTPRequestHandler):
             path = "/api/v1/memu/store"
         if path in {"/retrieve", "/search"}:
             path = "/api/v1/memu/search"
+        if path == "/restore":
+            path = "/api/v1/memu/restore"
 
         ok, reason, _ = self.check_auth(path, body=body)
         if not ok:
@@ -1375,6 +1516,14 @@ class MemUHandler(BaseHTTPRequestHandler):
                     body = dict(body)
                     body["content"] = "\n".join(parts)
                     body.setdefault("category", "conversation")
+
+            # Normalize required typed fields before strict schema validation
+            if not body.get("user_id"):
+                body = dict(body)
+                body["user_id"] = body.get("agent_id") or body.get("agent") or "shared"
+            if not _extract_session_value(body):
+                body = dict(body)
+                body["session_id"] = str(body.get("key") or body.get("idempotency_key") or "default-session")[:128]
 
             is_valid, schema_reason = _validate_store_schema(body, strict=MEMU_STRICT_SCHEMA_MODE)
             if not is_valid:
@@ -1470,7 +1619,8 @@ class MemUHandler(BaseHTTPRequestHandler):
                 self.send_json(400, {"error": "Missing required field: id"})
                 return
             patch = {k: v for k, v in body.items() if k in {"key", "content", "category", "tags", "metadata", "expires_at"}}
-            entry = update_entry(entry_id, patch)
+            actor = body.get("actor") or body.get("agent_id") or body.get("user_id") or "system"
+            entry = update_entry(entry_id, patch, actor=str(actor))
             if not entry:
                 self.send_json(404, {"error": "Entry not found", "id": entry_id})
                 return
@@ -1482,11 +1632,26 @@ class MemUHandler(BaseHTTPRequestHandler):
             if not entry_id:
                 self.send_json(400, {"error": "Missing required field: id"})
                 return
-            deleted = delete_entry(entry_id)
+            actor = body.get("actor") or body.get("agent_id") or body.get("user_id") or "system"
+            hard = bool(body.get("hard", False))
+            deleted = delete_entry(entry_id, actor=str(actor), hard=hard)
             if not deleted:
                 self.send_json(404, {"error": "Entry not found", "id": entry_id})
                 return
-            self.send_json(200, {"ok": True, "id": entry_id, "deleted": True})
+            self.send_json(200, {"ok": True, "id": entry_id, "deleted": True, "mode": "hard" if hard else "soft"})
+            return
+
+        if path == "/api/v1/memu/restore":
+            entry_id = str(body.get("id", "")).strip()
+            if not entry_id:
+                self.send_json(400, {"error": "Missing required field: id"})
+                return
+            actor = body.get("actor") or body.get("agent_id") or body.get("user_id") or "system"
+            restored = restore_entry(entry_id, actor=str(actor))
+            if not restored:
+                self.send_json(404, {"error": "Entry not found", "id": entry_id})
+                return
+            self.send_json(200, {"ok": True, "id": entry_id, "restored": True, "entry": restored})
             return
 
         if path == "/api/v1/memu/semantic-search":
@@ -1531,9 +1696,10 @@ if __name__ == "__main__":
     log.info("Endpoints:")
     log.info(f"  GET  http://localhost:{PORT}/api/v1/memu/health")
     log.info(f"  POST http://localhost:{PORT}/api/v1/memu/store")
-    log.info(f"  POST http://localhost:{PORT}/api/v1/memu/search          (SQLite LIKE match)")
+    log.info(f"  POST http://localhost:{PORT}/api/v1/memu/search          (hybrid lexical+TFIDF)")
     log.info(f"  POST http://localhost:{PORT}/api/v1/memu/semantic-search (TF-IDF ranked)")
-    log.info(f"  GET  http://localhost:{PORT}/api/v1/memu/list")
+    log.info(f"  POST http://localhost:{PORT}/api/v1/memu/update | /delete | /restore")
+    log.info(f"  GET  http://localhost:{PORT}/api/v1/memu/list | /history | /audit")
     try:
         server.serve_forever()
     except KeyboardInterrupt:
