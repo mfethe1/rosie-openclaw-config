@@ -245,6 +245,9 @@ def _validate_store_schema(body: dict, strict: bool = False) -> tuple[bool, str]
             return False, "Strict schema: key is required"
         if len(content) < 8:
             return False, "Strict schema: content must be at least 8 characters"
+        relation_type = str(body.get("relation_type", "")).strip().lower()
+        if relation_type and relation_type not in {"causes","blocks","depends_on","supersedes","references","relates_to"}:
+            return False, "Strict schema: relation_type invalid"
 
     if session_value and len(session_value) > 256:
         return False, "Invalid schema: session identifier too long"
@@ -563,6 +566,20 @@ class MemUStore:
         """)
         conn.execute("CREATE INDEX IF NOT EXISTS idx_memory_audit_memory_id ON memory_audit(memory_id);")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_memory_audit_created_at ON memory_audit(created_at);")
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS memory_events (
+                event_id TEXT PRIMARY KEY,
+                memory_id TEXT,
+                event_type TEXT,
+                supersedes_event_id TEXT,
+                reason TEXT,
+                actor TEXT,
+                snapshot_json TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        """)
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_memory_events_memory_id ON memory_events(memory_id);")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_memory_events_created_at ON memory_events(created_at);")
         # Ensure quality_score / use_count / outcome columns exist (added by smoke_test)
         for col_def in [
             ("quality_score", "REAL DEFAULT 0.5"),
@@ -572,6 +589,14 @@ class MemUStore:
             ("updated_at", "TIMESTAMP"),
             ("is_deleted", "INT DEFAULT 0"),
             ("deleted_at", "TIMESTAMP"),
+            ("event_time", "TIMESTAMP"),
+            ("subject", "TEXT"),
+            ("object", "TEXT"),
+            ("relation_type", "TEXT"),
+            ("relation_confidence", "REAL"),
+            ("supersedes_id", "TEXT"),
+            ("valid_from", "TIMESTAMP"),
+            ("valid_until", "TIMESTAMP"),
         ]:
             try:
                 conn.execute(f"ALTER TABLE memories ADD COLUMN {col_def[0]} {col_def[1]};")
@@ -630,8 +655,9 @@ class MemUStore:
             INSERT OR IGNORE INTO memories (
                 id, agent_id, user_id, idempotency_key, key, content,
                 compressed_content, category, tags, auto_tags, metadata, compression,
-                stored_at, expires_at, updated_at, is_deleted, deleted_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                stored_at, expires_at, updated_at, is_deleted, deleted_at,
+                event_time, subject, object, relation_type, relation_confidence, supersedes_id, valid_from, valid_until
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             entry.get("id") or str(uuid.uuid4()),
             entry.get("agent_id", "shared"),
@@ -650,6 +676,14 @@ class MemUStore:
             entry.get("updated_at", entry.get("stored_at", datetime.now(timezone.utc).isoformat())),
             int(entry.get("is_deleted", 0) or 0),
             entry.get("deleted_at"),
+            entry.get("event_time"),
+            entry.get("subject"),
+            entry.get("object"),
+            entry.get("relation_type"),
+            entry.get("relation_confidence"),
+            entry.get("supersedes_id"),
+            entry.get("valid_from"),
+            entry.get("valid_until"),
         ))
 
     def _collect_garbage(self, force: bool = False):
@@ -796,6 +830,14 @@ class MemUStore:
                     },
                     "stored_at": datetime.now(timezone.utc).isoformat(),
                     "expires_at": expires_at,
+                    "event_time": payload.get("event_time"),
+                    "subject": payload.get("subject"),
+                    "object": payload.get("object"),
+                    "relation_type": payload.get("relation_type"),
+                    "relation_confidence": payload.get("relation_confidence"),
+                    "supersedes_id": payload.get("supersedes_id"),
+                    "valid_from": payload.get("valid_from"),
+                    "valid_until": payload.get("valid_until"),
                 }
 
                 self._insert_entry_raw(conn, entry)
@@ -815,6 +857,7 @@ class MemUStore:
         # Audit + maintenance outside the lock (non-blocking)
         try:
             self._audit(entry["id"], "create", actor=agent_id, patch={}, before={}, after=entry)
+            self._event(entry["id"], "create", snapshot=entry, actor=agent_id, reason="initial write")
         except Exception:
             pass
 
@@ -906,8 +949,31 @@ class MemUStore:
         )
         conn.commit()
 
+    def _event(self, memory_id: str, event_type: str, snapshot: dict, actor: str | None = None,
+               reason: str | None = None, supersedes_event_id: str | None = None) -> str:
+        conn = self._get_conn()
+        event_id = str(uuid.uuid4())
+        conn.execute(
+            """
+            INSERT INTO memory_events (event_id, memory_id, event_type, supersedes_event_id, reason, actor, snapshot_json, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                event_id,
+                memory_id,
+                event_type,
+                supersedes_event_id,
+                reason or "",
+                actor or "system",
+                json.dumps(snapshot or {}),
+                datetime.now(timezone.utc).isoformat(),
+            ),
+        )
+        conn.commit()
+        return event_id
+
     def update(self, entry_id: str, patch: dict, actor: str | None = None) -> dict | None:
-        allowed = {"key", "content", "category", "tags", "metadata", "expires_at"}
+        allowed = {"key", "content", "category", "tags", "metadata", "expires_at", "event_time", "subject", "object", "relation_type", "relation_confidence", "supersedes_id", "valid_from", "valid_until"}
         fields = {k: v for k, v in patch.items() if k in allowed}
         before = self.get_by_id(entry_id)
         if not before:
@@ -934,6 +1000,7 @@ class MemUStore:
         after = self.get_by_id(entry_id)
         if after:
             self._audit(entry_id, "update", actor=actor, patch=fields, before=before, after=after)
+            self._event(entry_id, "update", snapshot=after, actor=actor, reason=str(patch.get("reason", "update")))
         return after
 
     def delete(self, entry_id: str, actor: str | None = None, hard: bool = False) -> bool:
@@ -946,6 +1013,7 @@ class MemUStore:
             conn.commit()
             if res.rowcount > 0:
                 self._audit(entry_id, "delete-hard", actor=actor, patch={"hard": True}, before=before, after={})
+                self._event(entry_id, "delete-hard", snapshot={}, actor=actor, reason="hard delete")
             return res.rowcount > 0
         now_iso = datetime.now(timezone.utc).isoformat()
         res = conn.execute(
@@ -956,6 +1024,7 @@ class MemUStore:
         if res.rowcount > 0:
             after = self.get_by_id(entry_id)
             self._audit(entry_id, "delete-soft", actor=actor, patch={"hard": False}, before=before, after=after or {})
+            self._event(entry_id, "delete-soft", snapshot=after or {}, actor=actor, reason="soft delete")
         return res.rowcount > 0
 
     def restore(self, entry_id: str, actor: str | None = None) -> dict | None:
@@ -972,6 +1041,7 @@ class MemUStore:
         after = self.get_by_id(entry_id)
         if after:
             self._audit(entry_id, "restore", actor=actor, patch={}, before=before, after=after)
+            self._event(entry_id, "restore", snapshot=after, actor=actor, reason="restore")
         return after
 
     def history(self, agent_id: str | None = None, key: str | None = None, limit: int = 50) -> list:
@@ -1005,6 +1075,53 @@ class MemUStore:
                     d[k] = {}
             out.append(d)
         return out
+
+
+    def event_trail(self, memory_id: str, limit: int = 50) -> list:
+        conn = self._get_conn()
+        rows = conn.execute(
+            "SELECT * FROM memory_events WHERE memory_id = ? ORDER BY created_at DESC LIMIT ?",
+            (memory_id, limit),
+        ).fetchall()
+        out = []
+        for row in rows:
+            d = dict(row)
+            try:
+                d["snapshot_json"] = json.loads(d.get("snapshot_json") or "{}")
+            except Exception:
+                d["snapshot_json"] = {}
+            out.append(d)
+        return out
+
+    def rollback(self, memory_id: str, to_event_id: str | None = None, steps: int = 1, actor: str | None = None, reason: str | None = None) -> dict | None:
+        events = self.event_trail(memory_id=memory_id, limit=200)
+        if not events:
+            return None
+        target = None
+        if to_event_id:
+            for e in events:
+                if e.get("event_id") == to_event_id:
+                    target = e
+                    break
+        else:
+            idx = min(max(int(steps), 1), len(events)-1)
+            target = events[idx] if len(events) > idx else events[-1]
+        if not target:
+            return None
+        snap = target.get("snapshot_json") or {}
+        if not snap:
+            # empty snapshot means deleted hard; keep soft-deleted marker
+            self.delete(memory_id, actor=actor, hard=False)
+            return self.get_by_id(memory_id)
+        current = self.get_by_id(memory_id)
+        if current:
+            patch = {k: v for k, v in snap.items() if k in {"key","content","category","tags","metadata","expires_at","event_time","subject","object","relation_type","relation_confidence","supersedes_id","valid_from","valid_until"}}
+            restored = self.update(memory_id, patch, actor=actor)
+            if restored:
+                self.restore(memory_id, actor=actor)
+                self._event(memory_id, "rollback", snapshot=restored, actor=actor, reason=reason or "rollback", supersedes_event_id=target.get("event_id"))
+            return restored
+        return None
     def get_all(self, agent_id: str = None) -> list:
         sql = "SELECT * FROM memories WHERE COALESCE(is_deleted, 0) = 0"
         params = []
@@ -1090,6 +1207,12 @@ def history_entries(agent_id: str | None = None, key: str | None = None, limit: 
 def audit_entries(memory_id: str, limit: int = 50) -> list:
     return _STORE.audit_trail(memory_id=memory_id, limit=limit)
 
+def events_entries(memory_id: str, limit: int = 50) -> list:
+    return _STORE.event_trail(memory_id=memory_id, limit=limit)
+
+def rollback_entry(memory_id: str, to_event_id: str | None = None, steps: int = 1, actor: str | None = None, reason: str | None = None) -> dict | None:
+    return _STORE.rollback(memory_id=memory_id, to_event_id=to_event_id, steps=steps, actor=actor, reason=reason)
+
 def fused_search(query: str, agent_id: str = None, limit: int = 20) -> list:
     lexical = search_entries(query=query, agent_id=agent_id, limit=max(limit * 2, limit))
     semantic = tfidf_search(query=query, agent_id=agent_id, limit=max(limit * 2, limit))
@@ -1120,6 +1243,26 @@ def fused_search(query: str, agent_id: str = None, limit: int = 20) -> list:
         fused.append(out)
     fused.sort(key=lambda x: x.get("_fusion_score", 0), reverse=True)
     return fused[:limit]
+
+def _compact_context(results: list[dict], max_chars: int = 2200, per_item_chars: int = 280) -> str:
+    seen = set()
+    chunks = []
+    total = 0
+    for row in results:
+        rid = row.get("id")
+        if rid in seen:
+            continue
+        seen.add(rid)
+        snippet = (row.get("compressed_content") or row.get("content") or "").strip().replace("\n", " ")
+        if not snippet:
+            continue
+        snippet = snippet[:per_item_chars]
+        line = f"[{row.get('key','')}] {snippet}"
+        if total + len(line) + 1 > max_chars:
+            break
+        chunks.append(line)
+        total += len(line) + 1
+    return "\n".join(chunks)
 
 # ── TF-IDF Semantic Search ────────────────────────────────────────────────────
 
@@ -1226,8 +1369,8 @@ class MemUHandler(BaseHTTPRequestHandler):
         self.wfile.write(data)
 
     def check_auth(self, path: str, body: dict | None = None) -> tuple[bool, str, str]:
-        write_paths = {"/api/v1/memu/store", "/api/v1/memu/log_event", "/api/v1/memu/update", "/api/v1/memu/delete", "/api/v1/memu/restore"}
-        read_paths = {"/api/v1/memu/search", "/api/v1/memu/semantic-search", "/api/v1/memu/list", "/api/v1/memu/pulse", "/api/v1/memu/health", "/api/v1/memu/history", "/api/v1/memu/audit"}
+        write_paths = {"/api/v1/memu/store", "/api/v1/memu/log_event", "/api/v1/memu/update", "/api/v1/memu/delete", "/api/v1/memu/restore", "/api/v1/memu/rollback"}
+        read_paths = {"/api/v1/memu/search", "/api/v1/memu/semantic-search", "/api/v1/memu/list", "/api/v1/memu/pulse", "/api/v1/memu/health", "/api/v1/memu/history", "/api/v1/memu/audit", "/api/v1/memu/events"}
         auth = self.headers.get("Authorization", "")
         token = _parse_authorization(auth) if auth else ""
 
@@ -1298,6 +1441,8 @@ class MemUHandler(BaseHTTPRequestHandler):
             path = "/api/v1/memu/history"
         elif path == "/audit":
             path = "/api/v1/memu/audit"
+        elif path == "/events":
+            path = "/api/v1/memu/events"
         elif path.startswith("/jobs/"):
             path = "/api/v1/memu/jobs/" + path.split("/jobs/", 1)[1]
 
@@ -1337,7 +1482,7 @@ class MemUHandler(BaseHTTPRequestHandler):
             self.send_json(200, {
                 "status": "ok",
                 "service": "memU bridge",
-                "version": "2.4.0",
+                "version": "2.5.0",
                 "features": [
                     "sqlite-storage", "like-and-tfidf-search", "tfidf-semantic-search",
                     "recency-decay", "use-count-boost", "idempotency",
@@ -1353,6 +1498,10 @@ class MemUHandler(BaseHTTPRequestHandler):
                     "soft-delete-restore",
                     "audit-trail",
                     "typed-schema-validation",
+                    "temporal-entity-projection",
+                    "versioned-memory-events",
+                    "rollback-endpoint",
+                    "context-compaction",
                     "hybrid-search-fusion",
                     "async-ingestion" if MEMU_ASYNC_INGEST_ENABLED else "async-ingestion-disabled",
                     "strict-schema-mode" if MEMU_STRICT_SCHEMA_MODE else "strict-schema-mode-disabled",
@@ -1429,6 +1578,18 @@ class MemUHandler(BaseHTTPRequestHandler):
                 return
             limit = int(params.get("limit", [50])[0])
             entries = audit_entries(memory_id=memory_id, limit=limit)
+            self.send_json(200, {"entries": entries, "count": len(entries), "memory_id": memory_id})
+            return
+
+        if path == "/api/v1/memu/events":
+            parsed = urlparse(self.path)
+            params = parse_qs(parsed.query)
+            memory_id = params.get("memory_id", [""])[0]
+            if not memory_id:
+                self.send_json(400, {"error": "Missing required query param: memory_id"})
+                return
+            limit = int(params.get("limit", [50])[0])
+            entries = events_entries(memory_id=memory_id, limit=limit)
             self.send_json(200, {"entries": entries, "count": len(entries), "memory_id": memory_id})
             return
 
@@ -1609,7 +1770,9 @@ class MemUHandler(BaseHTTPRequestHandler):
             limit = int(body.get("limit", 20))
             use_hybrid = bool(body.get("hybrid", True))
             results = fused_search(query=query, agent_id=agent_id, limit=limit) if use_hybrid else search_entries(query=query, agent_id=agent_id, limit=limit)
-            self.send_json(200, {"results": results, "count": len(results), "query": query, "risk": bool(qflags), "method": "hybrid-rrf" if use_hybrid else "lexical"})
+            compact = bool(body.get("compact_context", True))
+            compact_text = _compact_context(results) if compact else ""
+            self.send_json(200, {"results": results, "count": len(results), "query": query, "risk": bool(qflags), "method": "hybrid-rrf" if use_hybrid else "lexical", "compact_context": compact_text})
             return
 
 
@@ -1618,7 +1781,7 @@ class MemUHandler(BaseHTTPRequestHandler):
             if not entry_id:
                 self.send_json(400, {"error": "Missing required field: id"})
                 return
-            patch = {k: v for k, v in body.items() if k in {"key", "content", "category", "tags", "metadata", "expires_at"}}
+            patch = {k: v for k, v in body.items() if k in {"key", "content", "category", "tags", "metadata", "expires_at", "event_time", "subject", "object", "relation_type", "relation_confidence", "supersedes_id", "valid_from", "valid_until"}}
             actor = body.get("actor") or body.get("agent_id") or body.get("user_id") or "system"
             entry = update_entry(entry_id, patch, actor=str(actor))
             if not entry:
@@ -1652,6 +1815,22 @@ class MemUHandler(BaseHTTPRequestHandler):
                 self.send_json(404, {"error": "Entry not found", "id": entry_id})
                 return
             self.send_json(200, {"ok": True, "id": entry_id, "restored": True, "entry": restored})
+            return
+
+        if path == "/api/v1/memu/rollback":
+            memory_id = str(body.get("id", "")).strip()
+            if not memory_id:
+                self.send_json(400, {"error": "Missing required field: id"})
+                return
+            actor = body.get("actor") or body.get("agent_id") or body.get("user_id") or "system"
+            to_event_id = body.get("to_event_id")
+            steps = int(body.get("steps", 1))
+            reason = str(body.get("reason", "rollback"))
+            rolled = rollback_entry(memory_id=memory_id, to_event_id=to_event_id, steps=steps, actor=str(actor), reason=reason)
+            if not rolled:
+                self.send_json(404, {"error": "Rollback target not found", "id": memory_id})
+                return
+            self.send_json(200, {"ok": True, "id": memory_id, "rolled_back": True, "entry": rolled})
             return
 
         if path == "/api/v1/memu/semantic-search":
@@ -1698,8 +1877,8 @@ if __name__ == "__main__":
     log.info(f"  POST http://localhost:{PORT}/api/v1/memu/store")
     log.info(f"  POST http://localhost:{PORT}/api/v1/memu/search          (hybrid lexical+TFIDF)")
     log.info(f"  POST http://localhost:{PORT}/api/v1/memu/semantic-search (TF-IDF ranked)")
-    log.info(f"  POST http://localhost:{PORT}/api/v1/memu/update | /delete | /restore")
-    log.info(f"  GET  http://localhost:{PORT}/api/v1/memu/list | /history | /audit")
+    log.info(f"  POST http://localhost:{PORT}/api/v1/memu/update | /delete | /restore | /rollback")
+    log.info(f"  GET  http://localhost:{PORT}/api/v1/memu/list | /history | /audit | /events")
     try:
         server.serve_forever()
     except KeyboardInterrupt:
