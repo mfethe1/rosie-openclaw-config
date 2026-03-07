@@ -45,7 +45,9 @@ Before compaction erases context, a silent agentic turn saves durable notes to d
         reserveTokensFloor: 40000,  // <-- CRITICAL: must have headroom
         memoryFlush: {
           enabled: true,
-          softThresholdTokens: 4000
+          softThresholdTokens: 4000,
+          systemPrompt: "Session nearing compaction. Store durable memories now.",
+          prompt: "Write any lasting notes to memory/YYYY-MM-DD.md; reply with NO_REPLY if nothing to store."
         }
       }
     }
@@ -59,21 +61,49 @@ Before compaction erases context, a silent agentic turn saves durable notes to d
 
 ---
 
-## 4. Mandatory Memory Retrieval Before Action
+## 4. Three Failure Modes (Diagnostic Guide)
 
-Every agent MUST search memory before taking non-trivial action:
+When an agent "forgets" something, it's always one of these:
+
+| Failure | Symptom | Root Cause | Fix |
+|---------|---------|------------|-----|
+| **A: Never stored** | Forgot a preference or rule | Instruction only existed in chat, never written to file | Write to MEMORY.md or AGENTS.md |
+| **B: Compaction lossy** | Forgot conversation thread or nuance | Long session hit token limit, summary dropped details | Pre-compaction flush + manual saves |
+| **C: Pruning trimmed** | Forgot what a tool returned | Session pruning cleared old tool results | Re-run tool, write important outputs to memory |
+
+**Quick diagnostic:**
+- Forgot a preference? → Failure A (most common)
+- Forgot tool output? → Failure C
+- Forgot entire conversation thread? → Failure B
+
+---
+
+## 5. Mandatory Memory Protocol (add to AGENTS.md)
+
+Every agent MUST follow this protocol:
 
 ```
-Before answering anything about prior work, decisions, dates, people, preferences, or todos:
-run memory_search on MEMORY.md + memory/*.md;
-then use memory_get to pull only the needed lines.
+## Memory Protocol
+- Before answering questions about past work: search memory first
+- Before starting any new task: check memory/today's date for active context
+- When you learn something important: write it to the appropriate file immediately
+- When corrected on a mistake: add the correction as a rule to MEMORY.md
+- When a session is ending or context is large: summarize to memory/YYYY-MM-DD.md
+```
+
+**Retrieval before action:**
+```
+Before doing non-trivial work:
+1. memory_search for the project/topic/user preference
+2. memory_get the referenced file chunk if needed
+3. Then proceed with the task
 ```
 
 This is already in our system prompt. Enforcement: if an agent produces output that contradicts stored memory, it's a policy violation.
 
 ---
 
-## 5. Bootstrap File Discipline
+## 6. Bootstrap File Discipline
 
 | File | Purpose | Max Size | Update Policy |
 |------|---------|----------|---------------|
@@ -89,7 +119,7 @@ If a file exceeds `bootstrapMaxChars` (default 20,000), it gets truncated and th
 
 ---
 
-## 6. Session Pruning for Cost Control
+## 7. Session Pruning for Cost Control
 
 Pruning trims old tool results in-memory (doesn't rewrite disk). Reduces cacheWrite costs.
 
@@ -111,7 +141,7 @@ Pruning trims old tool results in-memory (doesn't rewrite disk). Reduces cacheWr
 
 ---
 
-## 7. Prompt Caching Optimization
+## 8. Prompt Caching Optimization
 
 Cache = reuse unchanged prompt prefix. Saves money and speeds up responses.
 
@@ -144,7 +174,7 @@ Cache = reuse unchanged prompt prefix. Saves money and speeds up responses.
 
 ---
 
-## 8. QMD Integration (Recommended — Phase 2)
+## 9. QMD Integration (Recommended — Phase 2)
 
 QMD (Tobi's local search engine) combines BM25 + vector + LLM reranking for high-quality retrieval across all memory files.
 
@@ -179,7 +209,7 @@ QMD (Tobi's local search engine) combines BM25 + vector + LLM reranking for high
 
 ---
 
-## 9. Memory Hygiene Schedule
+## 10. Memory Hygiene Schedule
 
 | Frequency | Action | Who |
 |-----------|--------|-----|
@@ -192,7 +222,7 @@ QMD (Tobi's local search engine) combines BM25 + vector + LLM reranking for high
 
 ---
 
-## 10. Cost Control Rules
+## 11. Cost Control Rules
 
 1. **Never let compaction invalidate cache unnecessarily** — use `/compact` proactively with focused instructions rather than waiting for auto-compaction
 2. **Set `cacheRetention: "long"` on primary models** — amortizes cache cost over 1h instead of 5m
@@ -202,7 +232,7 @@ QMD (Tobi's local search engine) combines BM25 + vector + LLM reranking for high
 
 ---
 
-## 11. Diagnostics Checklist
+## 12. Diagnostics Checklist
 
 When debugging memory/context issues:
 
