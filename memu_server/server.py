@@ -53,6 +53,11 @@ PRIVATE_PAIRING_CODE = os.environ.get("MEMU_PRIVATE_PAIRING_CODE", "")
 PRIVATE_REQUIRE_IDENTITY = os.environ.get("MEMU_PRIVATE_REQUIRE_IDENTITY", "1") == "1"
 GROUP_REQUIRE_ALLOWLIST = os.environ.get("MEMU_GROUP_REQUIRE_ALLOWLIST", "1") == "1"
 SEMANTIC_SCANNER_MODEL = os.environ.get("MEMU_SEMANTIC_SCANNER_MODEL", "gpt-4o-mini")
+
+# ── Feature Flags ───────────────────────────────────────────────────────────
+MEMU_FEATURE_FRESHNESS_FUSION = os.environ.get("MEMU_FEATURE_FRESHNESS_FUSION", "1") == "1"
+MEMU_FEATURE_AUTO_SUPERSEDE_ARCHIVE = os.environ.get("MEMU_FEATURE_AUTO_SUPERSEDE_ARCHIVE", "1") == "1"
+MEMU_FRESHNESS_WEIGHT = float(os.environ.get("MEMU_FRESHNESS_WEIGHT", "0.4"))  # 0.0–1.0 blending weight
 MEMU_COMPRESSION_ANTHROPIC_MODEL = os.environ.get("MEMU_COMPRESSION_ANTHROPIC_MODEL", "claude-3-5-haiku-latest")
 LOG_LEVEL = os.environ.get("MEMU_LOG_LEVEL", "INFO")
 MEMU_ASYNC_INGEST_ENABLED = os.environ.get("MEMU_ASYNC_INGEST_ENABLED", "1") == "1"
@@ -1215,11 +1220,14 @@ def rollback_entry(memory_id: str, to_event_id: str | None = None, steps: int = 
     return _STORE.rollback(memory_id=memory_id, to_event_id=to_event_id, steps=steps, actor=actor, reason=reason)
 
 def fused_search(query: str, agent_id: str = None, limit: int = 20) -> list:
-    lexical = search_entries(query=query, agent_id=agent_id, limit=max(limit * 2, limit))
-    semantic = tfidf_search(query=query, agent_id=agent_id, limit=max(limit * 2, limit))
+    pool_size = max(limit * 3, 60)
+    lexical = search_entries(query=query, agent_id=agent_id, limit=pool_size)
+    semantic = tfidf_search(query=query, agent_id=agent_id, limit=pool_size)
 
     rank: dict[str, dict] = {}
     k = 60.0
+
+    # Source 1: lexical
     for i, row in enumerate(lexical):
         rid = row.get("id")
         if not rid:
@@ -1227,6 +1235,8 @@ def fused_search(query: str, agent_id: str = None, limit: int = 20) -> list:
         rank.setdefault(rid, {"row": row, "score": 0.0, "sources": set()})
         rank[rid]["score"] += 1.0 / (k + i + 1)
         rank[rid]["sources"].add("lexical")
+
+    # Source 2: semantic (TF-IDF)
     for i, row in enumerate(semantic):
         rid = row.get("id")
         if not rid:
@@ -1235,15 +1245,56 @@ def fused_search(query: str, agent_id: str = None, limit: int = 20) -> list:
         rank[rid]["score"] += 1.0 / (k + i + 1)
         rank[rid]["sources"].add("semantic")
 
+    # Source 3: freshness (recency-sorted) — feature-flagged
+    if MEMU_FEATURE_FRESHNESS_FUSION:
+        # Build a freshness-sorted ranking from the union of candidates
+        candidates = list(rank.values())
+        for item in candidates:
+            item["_recency"] = _recency_factor(item["row"].get("stored_at", ""))
+        candidates.sort(key=lambda x: x["_recency"], reverse=True)
+        for i, item in enumerate(candidates):
+            rid = item["row"].get("id")
+            if not rid:
+                continue
+            rank[rid]["score"] += MEMU_FRESHNESS_WEIGHT * (1.0 / (k + i + 1))
+            rank[rid]["sources"].add("freshness")
+
     fused = []
     for item in rank.values():
         out = dict(item["row"])
         out["_fusion_score"] = round(item["score"], 6)
         out["_sources"] = sorted(item["sources"])
-        out["_search_type"] = "hybrid-rrf"
+        out["_search_type"] = "hybrid-rrf-v2" if MEMU_FEATURE_FRESHNESS_FUSION else "hybrid-rrf"
+        out["_recency_factor"] = round(item.get("_recency", _recency_factor(out.get("stored_at", ""))), 4)
         fused.append(out)
     fused.sort(key=lambda x: x.get("_fusion_score", 0), reverse=True)
     return fused[:limit]
+
+def auto_supersede_archive() -> dict:
+    """Archive memories that have been superseded by newer entries.
+    Scans for supersedes_id chains and soft-deletes stale ancestors."""
+    if not MEMU_FEATURE_AUTO_SUPERSEDE_ARCHIVE:
+        return {"archived": 0, "skipped": True, "reason": "feature-flag-off"}
+    all_entries = _STORE.get_all()
+    # Build set of superseded ids
+    superseded_ids = set()
+    for entry in all_entries:
+        sid = entry.get("supersedes_id")
+        if sid:
+            superseded_ids.add(sid)
+    # Archive any active entry whose id appears in superseded_ids
+    archived = 0
+    for entry in all_entries:
+        eid = entry.get("id")
+        if eid in superseded_ids and not entry.get("is_deleted"):
+            try:
+                _STORE.delete(eid, actor="auto-supersede-archive", hard=False)
+                archived += 1
+            except Exception as e:
+                log.warning(f"auto-supersede-archive failed for {eid}: {e}")
+    log.info(f"auto-supersede-archive: archived={archived} superseded_ids={len(superseded_ids)}")
+    return {"archived": archived, "superseded_ids_found": len(superseded_ids)}
+
 
 def _compact_context(results: list[dict], max_chars: int = 2200, per_item_chars: int = 280) -> str:
     seen = set()
@@ -1446,6 +1497,8 @@ class MemUHandler(BaseHTTPRequestHandler):
             path = "/api/v1/memu/events"
         elif path.startswith("/jobs/"):
             path = "/api/v1/memu/jobs/" + path.split("/jobs/", 1)[1]
+        elif path == "/feature-flags":
+            path = "/api/v1/memu/feature-flags"
 
         ok, reason, _ = self.check_auth(path)
         if not ok:
@@ -1483,7 +1536,7 @@ class MemUHandler(BaseHTTPRequestHandler):
             self.send_json(200, {
                 "status": "ok",
                 "service": "memU bridge",
-                "version": "2.5.0",
+                "version": "2.6.0",
                 "features": [
                     "sqlite-storage", "like-and-tfidf-search", "tfidf-semantic-search",
                     "recency-decay", "use-count-boost", "idempotency",
@@ -1504,6 +1557,9 @@ class MemUHandler(BaseHTTPRequestHandler):
                     "rollback-endpoint",
                     "context-compaction",
                     "hybrid-search-fusion",
+                    "freshness-rrf-fusion" if MEMU_FEATURE_FRESHNESS_FUSION else "freshness-rrf-fusion-disabled",
+                    "auto-supersede-archive" if MEMU_FEATURE_AUTO_SUPERSEDE_ARCHIVE else "auto-supersede-archive-disabled",
+                    "feature-flags",
                     "async-ingestion" if MEMU_ASYNC_INGEST_ENABLED else "async-ingestion-disabled",
                     "strict-schema-mode" if MEMU_STRICT_SCHEMA_MODE else "strict-schema-mode-disabled",
                 ],
@@ -1526,6 +1582,14 @@ class MemUHandler(BaseHTTPRequestHandler):
                 self.send_json(404, {"error": "Unknown job_id", "job_id": job_id})
                 return
             self.send_json(200, job)
+            return
+
+        if path == "/api/v1/memu/feature-flags":
+            self.send_json(200, {
+                "freshness_fusion": MEMU_FEATURE_FRESHNESS_FUSION,
+                "freshness_weight": MEMU_FRESHNESS_WEIGHT,
+                "auto_supersede_archive": MEMU_FEATURE_AUTO_SUPERSEDE_ARCHIVE,
+            })
             return
 
         if path == "/api/v1/memu/pulse":
@@ -1679,13 +1743,15 @@ class MemUHandler(BaseHTTPRequestHandler):
                     body["content"] = "\n".join(parts)
                     body.setdefault("category", "conversation")
 
-            # Normalize required typed fields before strict schema validation
-            if not body.get("user_id"):
-                body = dict(body)
-                body["user_id"] = body.get("agent_id") or body.get("agent") or "shared"
-            if not _extract_session_value(body):
-                body = dict(body)
-                body["session_id"] = str(body.get("key") or body.get("idempotency_key") or "default-session")[:128]
+            # Normalize required typed fields before strict schema validation.
+            # In strict mode, caller must provide explicit user/session identifiers.
+            if not MEMU_STRICT_SCHEMA_MODE:
+                if not body.get("user_id"):
+                    body = dict(body)
+                    body["user_id"] = body.get("agent_id") or body.get("agent") or "shared"
+                if not _extract_session_value(body):
+                    body = dict(body)
+                    body["session_id"] = str(body.get("key") or body.get("idempotency_key") or "default-session")[:128]
 
             is_valid, schema_reason = _validate_store_schema(body, strict=MEMU_STRICT_SCHEMA_MODE)
             if not is_valid:
@@ -1773,7 +1839,8 @@ class MemUHandler(BaseHTTPRequestHandler):
             results = fused_search(query=query, agent_id=agent_id, limit=limit) if use_hybrid else search_entries(query=query, agent_id=agent_id, limit=limit)
             compact = bool(body.get("compact_context", True))
             compact_text = _compact_context(results) if compact else ""
-            self.send_json(200, {"results": results, "count": len(results), "query": query, "risk": bool(qflags), "method": "hybrid-rrf" if use_hybrid else "lexical", "compact_context": compact_text})
+            method_label = ("hybrid-rrf-v2" if MEMU_FEATURE_FRESHNESS_FUSION else "hybrid-rrf") if use_hybrid else "lexical"
+            self.send_json(200, {"results": results, "count": len(results), "query": query, "risk": bool(qflags), "method": method_label, "compact_context": compact_text})
             return
 
 
@@ -1853,6 +1920,19 @@ class MemUHandler(BaseHTTPRequestHandler):
                 "method": "tfidf",
                 "risk": bool(qflags),
                 "note": "TF-IDF ranking (pure Python). Upgrade to fastembed/openai-embeddings for neural semantic search."
+            })
+            return
+
+        if path == "/api/v1/memu/consolidate-superseded":
+            result = auto_supersede_archive()
+            self.send_json(200, {"ok": True, **result})
+            return
+
+        if path == "/api/v1/memu/feature-flags":
+            self.send_json(200, {
+                "freshness_fusion": MEMU_FEATURE_FRESHNESS_FUSION,
+                "freshness_weight": MEMU_FRESHNESS_WEIGHT,
+                "auto_supersede_archive": MEMU_FEATURE_AUTO_SUPERSEDE_ARCHIVE,
             })
             return
 
