@@ -1,0 +1,3 @@
+0 3 * * * /Users/harrisonfethe/.local/bin/nightly-update.sh
+*/5 * * * * /Users/harrisonfethe/.openclaw/workspace/trading_exec/trading_watchdog.sh >> /Users/harrisonfethe/.openclaw/workspace/trading_exec/logs/trading_watchdog_cron.log 2>&1
+*/30 6-20 * * 1-5 UW_API_KEY=$(grep UW_API_KEY /Volumes/Edrive/Projects/agent-coordination/.secrets/tooling.env | cut -d= -f2) /Volumes/Edrive/Projects/agent-coordination/scripts/uw_fetcher_v3.sh >> /Volumes/Edrive/Projects/agent-coordination/research/uw_fetcher.log 2>&1

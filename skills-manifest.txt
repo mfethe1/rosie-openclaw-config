@@ -1,0 +1,5 @@
+agentic-research-routine
+antfarm-workflows
+firecrawl-agent
+openrouter-sonar
+prompt-optimizer

@@ -1,10 +1,10 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.2.26",
-    "lastTouchedAt": "2026-02-27T04:29:21.345Z"
+    "lastTouchedAt": "2026-03-01T04:48:36.511Z"
   },
   "wizard": {
-    "lastRunAt": "2026-02-27T04:29:21.308Z",
+    "lastRunAt": "2026-02-27T22:47:00.215Z",
     "lastRunVersion": "2026.2.26",
     "lastRunCommand": "configure",
     "lastRunMode": "local"
@@ -12,27 +12,83 @@
   "update": {
     "channel": "beta"
   },
-  "auth": "REDACTED",
+  "auth": {
+    "profiles": {
+      "openai-codex:default": {
+        "provider": "openai-codex",
+        "mode": "oauth"
+      },
+      "anthropic:default": {
+        "provider": "anthropic",
+        "mode": "token"
+      },
+      "google-antigravity:michael.fethe@protelynx.ai": {
+        "provider": "google-antigravity",
+        "mode": "oauth"
+      },
+      "opencode:default": {
+        "provider": "opencode",
+        "mode": "api_key"
+      },
+      "google-gemini-cli:michael.fethe@protelynx.ai": {
+        "provider": "google-gemini-cli",
+        "mode": "oauth",
+        "email": "michael.fethe@protelynx.ai"
+      },
+      "google:default": {
+        "provider": "google",
+        "mode": "api_key"
+      },
+      "anthropic:2": {
+        "provider": "anthropic",
+        "mode": "token"
+      }
+    }
+  },
   "agents": {
     "defaults": {
       "model": {
-        "primary": "anthropic/claude-sonnet-4-6",
+        "primary": "openai-codex/gpt-5.4-codex",
         "fallbacks": [
-          "anthropic/claude-opus-4-6"
+          "anthropic/claude-opus-4-6",
+          "anthropic/claude-sonnet-4-6",
+          "openai-codex/gpt-5.3-codex-spark",
+          "openai-codex/gpt-5.3-codex",
+          "google/gemini-3.1-pro-preview-customtools",
+          "google/gemini-3.1-pro-preview"
         ]
       },
       "models": {
         "anthropic/claude-opus-4-6": {
-          "alias": "opus"
+          "alias": "opus",
+          "params": {
+            "cacheRetention": "long"
+          }
         },
         "anthropic/claude-sonnet-4-6": {
-          "alias": "sonnet"
+          "alias": "sonnet",
+          "params": {
+            "cacheRetention": "long"
+          }
         },
         "openai-codex/gpt-5.3-codex-spark": {
           "alias": "codex-spark"
         },
         "openai-codex/gpt-5.3-codex": {
           "alias": "codex"
+        },
+        "google/gemini-3.1-pro-preview": {
+          "alias": "gemini"
+        },
+        "google/gemini-3.1-pro-preview-customtools": {
+          "alias": "gemini-ct"
+        },
+        "google-gemini-cli/gemini-3.1-pro-preview": {},
+        "openai-codex/gpt-5.4-codex": {
+          "alias": "codex-5-4"
+        },
+        "openai-codex/gpt-5.4-codex-spark": {
+          "alias": "codex-spark-5-4"
         }
       },
       "memorySearch": {
@@ -74,23 +130,25 @@
       },
       "contextPruning": {
         "mode": "cache-ttl",
-        "ttl": "24h"
+        "ttl": "1h"
       },
       "compaction": {
-        "mode": "safeguard",
         "memoryFlush": {
           "enabled": true,
-          "softThresholdTokens": "REDACTED"
-        }
+          "softThresholdTokens": "<REDACTED>",
+          "systemPrompt": "Session nearing compaction. Store durable memories now.",
+          "prompt": "Write any lasting notes to memory/YYYY-MM-DD.md; reply with NO_REPLY if nothing to store."
+        },
+        "reserveTokensFloor": "<REDACTED>"
       },
       "heartbeat": {
-        "every": "20m",
-        "suppressToolErrorWarnings": true
+        "every": "5m",
+        "suppressToolErrorWarnings": false
       },
-      "maxConcurrent": 6,
+      "maxConcurrent": 12,
       "subagents": {
-        "maxConcurrent": 4,
-        "maxSpawnDepth": 2,
+        "maxConcurrent": 8,
+        "maxSpawnDepth": 3,
         "maxChildrenPerAgent": 6,
         "model": {
           "primary": "openai-codex/gpt-5.3-codex-spark",
@@ -111,6 +169,17 @@
           "allowAgents": [
             "*"
           ]
+        },
+        "model": {
+          "primary": "openai-codex/gpt-5.4-codex",
+          "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "anthropic/claude-sonnet-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
+            "openai-codex/gpt-5.3-codex",
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
+          ]
         }
       },
       {
@@ -119,10 +188,14 @@
         "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/bug-fix/agents/triager",
         "agentDir": "/Users/harrisonfethe/.openclaw/agents/bug-fix_triager/agent",
         "model": {
-          "primary": "anthropic/claude-sonnet-4-6",
+          "primary": "openai-codex/gpt-5.4-codex",
           "fallbacks": [
             "anthropic/claude-opus-4-6",
-            "openai-codex/gpt-5.3-codex-spark"
+            "anthropic/claude-sonnet-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
+            "openai-codex/gpt-5.3-codex",
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
           ]
         },
         "subagents": {
@@ -152,10 +225,14 @@
         "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/bug-fix/agents/investigator",
         "agentDir": "/Users/harrisonfethe/.openclaw/agents/bug-fix_investigator/agent",
         "model": {
-          "primary": "anthropic/claude-sonnet-4-6",
+          "primary": "openai-codex/gpt-5.4-codex",
           "fallbacks": [
             "anthropic/claude-opus-4-6",
-            "openai-codex/gpt-5.3-codex-spark"
+            "anthropic/claude-sonnet-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
+            "openai-codex/gpt-5.3-codex",
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
           ]
         },
         "subagents": {
@@ -185,10 +262,14 @@
         "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/bug-fix/agents/setup",
         "agentDir": "/Users/harrisonfethe/.openclaw/agents/bug-fix_setup/agent",
         "model": {
-          "primary": "openai-codex/gpt-5.3-codex-spark",
+          "primary": "openai-codex/gpt-5.4-codex",
           "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "anthropic/claude-sonnet-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
             "openai-codex/gpt-5.3-codex",
-            "anthropic/claude-sonnet-4-6"
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
           ]
         },
         "subagents": {
@@ -215,11 +296,14 @@
         "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/bug-fix/agents/fixer",
         "agentDir": "/Users/harrisonfethe/.openclaw/agents/bug-fix_fixer/agent",
         "model": {
-          "primary": "openai-codex/gpt-5.3-codex",
+          "primary": "openai-codex/gpt-5.4-codex",
           "fallbacks": [
             "anthropic/claude-opus-4-6",
+            "anthropic/claude-sonnet-4-6",
             "openai-codex/gpt-5.3-codex-spark",
-            "anthropic/claude-sonnet-4-6"
+            "openai-codex/gpt-5.3-codex",
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
           ]
         },
         "subagents": {
@@ -246,10 +330,14 @@
         "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/bug-fix/agents/verifier",
         "agentDir": "/Users/harrisonfethe/.openclaw/agents/bug-fix_verifier/agent",
         "model": {
-          "primary": "anthropic/claude-sonnet-4-6",
+          "primary": "openai-codex/gpt-5.4-codex",
           "fallbacks": [
             "anthropic/claude-opus-4-6",
-            "openai-codex/gpt-5.3-codex-spark"
+            "anthropic/claude-sonnet-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
+            "openai-codex/gpt-5.3-codex",
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
           ]
         },
         "subagents": {
@@ -279,10 +367,14 @@
         "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/bug-fix/agents/pr",
         "agentDir": "/Users/harrisonfethe/.openclaw/agents/bug-fix_pr/agent",
         "model": {
-          "primary": "anthropic/claude-sonnet-4-6",
+          "primary": "openai-codex/gpt-5.4-codex",
           "fallbacks": [
             "anthropic/claude-opus-4-6",
-            "openai-codex/gpt-5.3-codex-spark"
+            "anthropic/claude-sonnet-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
+            "openai-codex/gpt-5.3-codex",
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
           ]
         },
         "subagents": {
@@ -312,10 +404,14 @@
         "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/feature-dev/agents/planner",
         "agentDir": "/Users/harrisonfethe/.openclaw/agents/feature-dev_planner/agent",
         "model": {
-          "primary": "anthropic/claude-opus-4-6",
+          "primary": "openai-codex/gpt-5.4-codex",
           "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "anthropic/claude-sonnet-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
             "openai-codex/gpt-5.3-codex",
-            "anthropic/claude-sonnet-4-6"
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
           ]
         },
         "subagents": {
@@ -345,10 +441,14 @@
         "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/feature-dev/agents/setup",
         "agentDir": "/Users/harrisonfethe/.openclaw/agents/feature-dev_setup/agent",
         "model": {
-          "primary": "openai-codex/gpt-5.3-codex-spark",
+          "primary": "openai-codex/gpt-5.4-codex",
           "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "anthropic/claude-sonnet-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
             "openai-codex/gpt-5.3-codex",
-            "anthropic/claude-sonnet-4-6"
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
           ]
         },
         "subagents": {
@@ -375,11 +475,14 @@
         "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/feature-dev/agents/developer",
         "agentDir": "/Users/harrisonfethe/.openclaw/agents/feature-dev_developer/agent",
         "model": {
-          "primary": "openai-codex/gpt-5.3-codex",
+          "primary": "openai-codex/gpt-5.4-codex",
           "fallbacks": [
             "anthropic/claude-opus-4-6",
+            "anthropic/claude-sonnet-4-6",
             "openai-codex/gpt-5.3-codex-spark",
-            "anthropic/claude-sonnet-4-6"
+            "openai-codex/gpt-5.3-codex",
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
           ]
         },
         "subagents": {
@@ -406,10 +509,14 @@
         "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/feature-dev/agents/verifier",
         "agentDir": "/Users/harrisonfethe/.openclaw/agents/feature-dev_verifier/agent",
         "model": {
-          "primary": "anthropic/claude-sonnet-4-6",
+          "primary": "openai-codex/gpt-5.4-codex",
           "fallbacks": [
             "anthropic/claude-opus-4-6",
-            "openai-codex/gpt-5.3-codex-spark"
+            "anthropic/claude-sonnet-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
+            "openai-codex/gpt-5.3-codex",
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
           ]
         },
         "subagents": {
@@ -439,10 +546,14 @@
         "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/feature-dev/agents/tester",
         "agentDir": "/Users/harrisonfethe/.openclaw/agents/feature-dev_tester/agent",
         "model": {
-          "primary": "anthropic/claude-sonnet-4-6",
+          "primary": "openai-codex/gpt-5.4-codex",
           "fallbacks": [
             "anthropic/claude-opus-4-6",
-            "openai-codex/gpt-5.3-codex-spark"
+            "anthropic/claude-sonnet-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
+            "openai-codex/gpt-5.3-codex",
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
           ]
         },
         "subagents": {
@@ -476,10 +587,14 @@
         "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/feature-dev/agents/reviewer",
         "agentDir": "/Users/harrisonfethe/.openclaw/agents/feature-dev_reviewer/agent",
         "model": {
-          "primary": "anthropic/claude-sonnet-4-6",
+          "primary": "openai-codex/gpt-5.4-codex",
           "fallbacks": [
             "anthropic/claude-opus-4-6",
-            "openai-codex/gpt-5.3-codex-spark"
+            "anthropic/claude-sonnet-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
+            "openai-codex/gpt-5.3-codex",
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
           ]
         },
         "subagents": {
@@ -509,10 +624,14 @@
         "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/security-audit/agents/scanner",
         "agentDir": "/Users/harrisonfethe/.openclaw/agents/security-audit_scanner/agent",
         "model": {
-          "primary": "anthropic/claude-sonnet-4-6",
+          "primary": "openai-codex/gpt-5.4-codex",
           "fallbacks": [
             "anthropic/claude-opus-4-6",
-            "openai-codex/gpt-5.3-codex-spark"
+            "anthropic/claude-sonnet-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
+            "openai-codex/gpt-5.3-codex",
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
           ]
         },
         "subagents": {
@@ -546,10 +665,14 @@
         "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/security-audit/agents/prioritizer",
         "agentDir": "/Users/harrisonfethe/.openclaw/agents/security-audit_prioritizer/agent",
         "model": {
-          "primary": "anthropic/claude-sonnet-4-6",
+          "primary": "openai-codex/gpt-5.4-codex",
           "fallbacks": [
             "anthropic/claude-opus-4-6",
-            "openai-codex/gpt-5.3-codex-spark"
+            "anthropic/claude-sonnet-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
+            "openai-codex/gpt-5.3-codex",
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
           ]
         },
         "subagents": {
@@ -579,10 +702,14 @@
         "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/security-audit/agents/setup",
         "agentDir": "/Users/harrisonfethe/.openclaw/agents/security-audit_setup/agent",
         "model": {
-          "primary": "openai-codex/gpt-5.3-codex-spark",
+          "primary": "openai-codex/gpt-5.4-codex",
           "fallbacks": [
+            "anthropic/claude-opus-4-6",
+            "anthropic/claude-sonnet-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
             "openai-codex/gpt-5.3-codex",
-            "anthropic/claude-sonnet-4-6"
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
           ]
         },
         "subagents": {
@@ -609,11 +736,14 @@
         "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/security-audit/agents/fixer",
         "agentDir": "/Users/harrisonfethe/.openclaw/agents/security-audit_fixer/agent",
         "model": {
-          "primary": "openai-codex/gpt-5.3-codex",
+          "primary": "openai-codex/gpt-5.4-codex",
           "fallbacks": [
             "anthropic/claude-opus-4-6",
+            "anthropic/claude-sonnet-4-6",
             "openai-codex/gpt-5.3-codex-spark",
-            "anthropic/claude-sonnet-4-6"
+            "openai-codex/gpt-5.3-codex",
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
           ]
         },
         "subagents": {
@@ -640,10 +770,14 @@
         "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/security-audit/agents/verifier",
         "agentDir": "/Users/harrisonfethe/.openclaw/agents/security-audit_verifier/agent",
         "model": {
-          "primary": "anthropic/claude-sonnet-4-6",
+          "primary": "openai-codex/gpt-5.4-codex",
           "fallbacks": [
             "anthropic/claude-opus-4-6",
-            "openai-codex/gpt-5.3-codex-spark"
+            "anthropic/claude-sonnet-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
+            "openai-codex/gpt-5.3-codex",
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
           ]
         },
         "subagents": {
@@ -673,10 +807,14 @@
         "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/security-audit/agents/tester",
         "agentDir": "/Users/harrisonfethe/.openclaw/agents/security-audit_tester/agent",
         "model": {
-          "primary": "anthropic/claude-sonnet-4-6",
+          "primary": "openai-codex/gpt-5.4-codex",
           "fallbacks": [
             "anthropic/claude-opus-4-6",
-            "openai-codex/gpt-5.3-codex-spark"
+            "anthropic/claude-sonnet-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
+            "openai-codex/gpt-5.3-codex",
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
           ]
         },
         "subagents": {
@@ -710,10 +848,14 @@
         "workspace": "/Users/harrisonfethe/.openclaw/workspaces/workflows/security-audit/agents/pr",
         "agentDir": "/Users/harrisonfethe/.openclaw/agents/security-audit_pr/agent",
         "model": {
-          "primary": "anthropic/claude-sonnet-4-6",
+          "primary": "openai-codex/gpt-5.4-codex",
           "fallbacks": [
             "anthropic/claude-opus-4-6",
-            "openai-codex/gpt-5.3-codex-spark"
+            "anthropic/claude-sonnet-4-6",
+            "openai-codex/gpt-5.3-codex-spark",
+            "openai-codex/gpt-5.3-codex",
+            "google/gemini-3.1-pro-preview-customtools",
+            "google/gemini-3.1-pro-preview"
           ]
         },
         "subagents": {
@@ -743,7 +885,7 @@
     "web": {
       "search": {
         "enabled": true,
-        "apiKey": "REDACTED"
+        "apiKey": "<REDACTED>"
       },
       "fetch": {
         "enabled": true
@@ -812,15 +954,24 @@
     "telegram": {
       "enabled": true,
       "dmPolicy": "pairing",
-      "botToken": "REDACTED",
+      "botToken": "<REDACTED>",
+      "groupAllowFrom": [
+        "7991290678",
+        "8346521030",
+        "8037988152",
+        "8551261669",
+        "8330733602"
+      ],
       "groups": {
         "*": {
+          "requireMention": true,
           "enabled": true,
           "allowFrom": [
             "7991290678",
+            "8346521030",
             "8037988152",
             "8551261669",
-            "8346521030"
+            "8330733602"
           ]
         }
       },
@@ -828,9 +979,12 @@
       "streaming": "partial"
     },
     "imessage": {
-      "enabled": true,
+      "enabled": false,
       "dmPolicy": "allowlist",
       "allowFrom": [
+        "+18657192069"
+      ],
+      "groupAllowFrom": [
         "+18657192069"
       ],
       "groupPolicy": "allowlist"
@@ -838,7 +992,11 @@
   },
   "gateway": {
     "mode": "local",
-    "auth": "REDACTED",
+    "auth": {
+      "mode": "password",
+      "token": "<REDACTED>",
+      "password": "<REDACTED>"
+    },
     "trustedProxies": [
       "127.0.0.1",
       "::1"
@@ -850,19 +1008,21 @@
     },
     "entries": {
       "nano-banana-pro": {
-        "apiKey": "REDACTED"
+        "apiKey": "<REDACTED>"
       },
       "openai-image-gen": {
-        "apiKey": "REDACTED"
+        "apiKey": "<REDACTED>"
       },
       "openai-whisper-api": {
-        "apiKey": "REDACTED"
+        "apiKey": "<REDACTED>"
       }
     }
   },
   "plugins": {
     "entries": {
-      "google-gemini-cli-auth": "REDACTED",
+      "google-gemini-cli-auth": {
+        "enabled": true
+      },
       "whatsapp": {
         "enabled": false
       },
