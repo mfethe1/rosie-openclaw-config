@@ -12,6 +12,18 @@
 ## 1.5) Git Workflow & Agent Isolation (STRICT — loaded from standards)
 **All agents MUST read and comply with:** `agent-coordination/standards/git-workflow-policy.md`
 
+## 1.6) Context, Memory & Cost Optimization (STRICT — loaded from standards)
+**All agents MUST read and comply with:** `agent-coordination/standards/context-memory-cost-policy.md`
+
+Key hard rules (summary):
+- If it matters, it goes in a file — chat instructions are ephemeral and WILL be lost on compaction
+- Memory flush must trigger before compaction (reserveTokensFloor: 40000)
+- Mandatory memory_search before any non-trivial action
+- Bootstrap files stay lean (<100 lines each)
+- Session pruning TTL must align with cache retention TTL
+- Weekly memory hygiene: promote durable rules from daily logs to MEMORY.md
+- Expertise TTL: tactical 14d, observational 30d
+
 Key hard rules (summary — full policy in the file above):
 - Work in isolated git worktrees, never shared directories
 - Pull latest before any work (`git fetch origin && git rebase origin/main`)
