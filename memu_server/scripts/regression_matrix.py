@@ -50,6 +50,10 @@ def main() -> None:
     stamp = str(int(time.time()))
     key = f"matrix-{stamp}-{uuid.uuid4().hex[:8]}"
 
+    # Contract discoverability
+    status, capabilities = call("GET", "/api/v1/memu/capabilities")
+    assert_ok("capabilities", status == 200 and isinstance(capabilities, dict) and capabilities.get("version") == "2.6.0", str(capabilities)[:180])
+
     # Route matrix: health
     for p in ("/health", "/api/v1/memu/health"):
         status, body = call("GET", p)
@@ -57,9 +61,9 @@ def main() -> None:
 
     # Route matrix: write aliases
     payloads = [
-        ("/store", {"agent": "regression", "key": key + "-direct", "value": "direct route write"}),
-        ("/api/v1/memu/store", {"agent_id": "regression", "key": key + "-bridge", "content": "bridge route write"}),
-        ("/memorize", {"agent_id": "regression", "key": key + "-canonical", "content": "canonical route write"}),
+        ("/store", {"agent": "regression", "user_id": "regression", "session_id": "s-regression", "category": "general", "key": key + "-direct", "value": "direct route write"}),
+        ("/api/v1/memu/store", {"agent_id": "regression", "user_id": "regression", "session_id": "s-regression", "category": "general", "key": key + "-bridge", "content": "bridge route write"}),
+        ("/memorize", {"agent_id": "regression", "user_id": "regression", "session_id": "s-regression", "category": "general", "key": key + "-canonical", "content": "canonical route write"}),
     ]
     for path, payload in payloads:
         status, body = call("POST", path, payload)
@@ -77,6 +81,9 @@ def main() -> None:
         "/api/v1/memu/store",
         {
             "agent_id": "regression",
+            "user_id": "regression",
+            "session_id": "s-regression",
+            "category": "general",
             "key": key + "-async",
             "content": "async route write",
             "async": True,
@@ -111,6 +118,7 @@ def main() -> None:
                 "user_id": "u-regression",
                 "session_id": "s-regression",
                 "content": "strict accepted",
+                "category": "general",
                 "key": key + "-strict",
             },
         )

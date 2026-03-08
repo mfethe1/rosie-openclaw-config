@@ -57,6 +57,7 @@ SEMANTIC_SCANNER_MODEL = os.environ.get("MEMU_SEMANTIC_SCANNER_MODEL", "gpt-4o-m
 # ── Feature Flags ───────────────────────────────────────────────────────────
 MEMU_FEATURE_FRESHNESS_FUSION = os.environ.get("MEMU_FEATURE_FRESHNESS_FUSION", "1") == "1"
 MEMU_FEATURE_AUTO_SUPERSEDE_ARCHIVE = os.environ.get("MEMU_FEATURE_AUTO_SUPERSEDE_ARCHIVE", "1") == "1"
+MEMU_FEATURE_LEGACY_ALIASES = os.environ.get("MEMU_FEATURE_LEGACY_ALIASES", "1") == "1"
 MEMU_FRESHNESS_WEIGHT = float(os.environ.get("MEMU_FRESHNESS_WEIGHT", "0.4"))  # 0.0–1.0 blending weight
 MEMU_COMPRESSION_ANTHROPIC_MODEL = os.environ.get("MEMU_COMPRESSION_ANTHROPIC_MODEL", "claude-3-5-haiku-latest")
 LOG_LEVEL = os.environ.get("MEMU_LOG_LEVEL", "INFO")
@@ -1410,19 +1411,25 @@ class MemUHandler(BaseHTTPRequestHandler):
     def log_message(self, format, *args):
         pass  # suppress default access log (we use our own)
 
-    def send_json(self, status: int, body: dict):
+    def send_json(self, status: int, body: dict, extra_headers: dict[str, str] | None = None):
         safe_body = _redact_payload(body)
         data = json.dumps(safe_body, indent=2).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(data)))
         self.send_header("Access-Control-Allow-Origin", "*")
+        if getattr(self, "_legacy_alias_used", False):
+            self.send_header("Deprecation", "true")
+            self.send_header("Warning", "299 - \"legacy alias in use; migrate to /api/v1/memu/*\"")
+        if extra_headers:
+            for key, value in extra_headers.items():
+                self.send_header(str(key), str(value))
         self.end_headers()
         self.wfile.write(data)
 
     def check_auth(self, path: str, body: dict | None = None) -> tuple[bool, str, str]:
         write_paths = {"/api/v1/memu/store", "/api/v1/memu/log_event", "/api/v1/memu/update", "/api/v1/memu/delete", "/api/v1/memu/restore", "/api/v1/memu/rollback"}
-        read_paths = {"/api/v1/memu/search", "/api/v1/memu/semantic-search", "/api/v1/memu/list", "/api/v1/memu/pulse", "/api/v1/memu/health", "/api/v1/memu/history", "/api/v1/memu/audit", "/api/v1/memu/events"}
+        read_paths = {"/api/v1/memu/search", "/api/v1/memu/semantic-search", "/api/v1/memu/list", "/api/v1/memu/pulse", "/api/v1/memu/health", "/api/v1/memu/history", "/api/v1/memu/audit", "/api/v1/memu/events", "/api/v1/memu/capabilities", "/api/v1/memu/feature-flags"}
         auth = self.headers.get("Authorization", "")
         token = _parse_authorization(auth) if auth else ""
 
@@ -1483,26 +1490,40 @@ class MemUHandler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         parsed = urlparse(self.path)
         params = parse_qs(parsed.query)
+        self._legacy_alias_used = False
 
         # Resolve canonical/direct aliases
         if path == "/health":
             path = "/api/v1/memu/health"
+            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
+        elif path == "/capabilities":
+            path = "/api/v1/memu/capabilities"
+            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
         elif path == "/memories":
             path = "/api/v1/memu/list"
+            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
         elif path == "/history":
             path = "/api/v1/memu/history"
+            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
         elif path == "/audit":
             path = "/api/v1/memu/audit"
+            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
         elif path == "/events":
             path = "/api/v1/memu/events"
+            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
         elif path.startswith("/jobs/"):
             path = "/api/v1/memu/jobs/" + path.split("/jobs/", 1)[1]
         elif path == "/feature-flags":
             path = "/api/v1/memu/feature-flags"
+            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
 
         ok, reason, _ = self.check_auth(path)
         if not ok:
             self.send_json(401 if reason in {"missing", "invalid-token", "invalid-scope", "read-only-token"} else 403, {"error": f"Unauthorized: {reason}"})
+            return
+
+        if self._legacy_alias_used and not MEMU_FEATURE_LEGACY_ALIASES:
+            self.send_json(410, {"error": "Legacy aliases are deprecated. Use /api/v1/memu/*"})
             return
 
         if path == "/api/v1/memu/health":
@@ -1584,11 +1605,55 @@ class MemUHandler(BaseHTTPRequestHandler):
             self.send_json(200, job)
             return
 
+        if path == "/api/v1/memu/capabilities":
+            canonical_aliases = ["/store", "/search", "/list", "/update", "/delete", "/restore", "/rollback", "/history", "/audit", "/events", "/jobs/{job_id}", "/health", "/feature-flags", "/pulse"]
+            self.send_json(200, {
+                "service": "memU bridge",
+                "version": "2.6.0",
+                "canonical_base": "/api/v1/memu",
+                "canonical_endpoints": {
+                    "store": "/store",
+                    "search": "/search",
+                    "semantic_search": "/semantic-search",
+                    "list": "/list",
+                    "update": "/update",
+                    "delete": "/delete",
+                    "restore": "/restore",
+                    "rollback": "/rollback",
+                    "history": "/history",
+                    "audit": "/audit",
+                    "events": "/events",
+                    "jobs": "/jobs/{job_id}",
+                    "health": "/health",
+                    "feature_flags": "/feature-flags",
+                    "pulse": "/pulse",
+                },
+                "capability": {
+                    "strict_schema_enabled": MEMU_STRICT_SCHEMA_MODE,
+                    "typed_categories": sorted(MEMU_TYPED_CATEGORIES),
+                    "legacy_aliases_enabled": MEMU_FEATURE_LEGACY_ALIASES,
+                    "legacy_aliases": canonical_aliases if MEMU_FEATURE_LEGACY_ALIASES else [],
+                    "async_ingest_enabled": MEMU_ASYNC_INGEST_ENABLED,
+                    "audit_events_enabled": True,
+                    "rollback_enabled": True,
+                    "soft_delete_restore_enabled": True,
+                    "freshness_fusion_enabled": MEMU_FEATURE_FRESHNESS_FUSION,
+                },
+                "auth": {
+                    "scope_model": ["read", "write"],
+                    "read_endpoints": ["/search", "/history", "/audit", "/events", "/jobs/{job_id}", "/list", "/pulse", "/health", "/semantic-search", "/capabilities", "/feature-flags"],
+                    "write_endpoints": ["/store", "/update", "/delete", "/restore", "/rollback", "/log_event"],
+                },
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+            })
+            return
+
         if path == "/api/v1/memu/feature-flags":
             self.send_json(200, {
                 "freshness_fusion": MEMU_FEATURE_FRESHNESS_FUSION,
                 "freshness_weight": MEMU_FRESHNESS_WEIGHT,
                 "auto_supersede_archive": MEMU_FEATURE_AUTO_SUPERSEDE_ARCHIVE,
+                "legacy_aliases_enabled": MEMU_FEATURE_LEGACY_ALIASES,
             })
             return
 
@@ -1665,18 +1730,28 @@ class MemUHandler(BaseHTTPRequestHandler):
         body = self.read_body()
 
         # Resolve canonical/direct aliases
+        self._legacy_alias_used = False
         if path in {"/memorize", "/memories", "/store"}:
             path = "/api/v1/memu/store"
+            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
         if path in {"/retrieve", "/search"}:
             path = "/api/v1/memu/search"
+            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
         if path == "/restore":
             path = "/api/v1/memu/restore"
+            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
+        if path == "/rollback" or path == "/recover":
+            path = "/api/v1/memu/rollback"
+            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
 
         ok, reason, _ = self.check_auth(path, body=body)
         if not ok:
             self.send_json(401 if reason in {"missing", "invalid-token", "invalid-scope", "read-only-token"} else 403, {"error": f"Unauthorized: {reason}"})
             return
 
+        if self._legacy_alias_used and not MEMU_FEATURE_LEGACY_ALIASES:
+            self.send_json(410, {"error": "Legacy aliases are deprecated. Use /api/v1/memu/*"})
+            return
 
         if path == "/api/v1/memu/log_event":
             # Immutable event stream — atomic append with fsync + rotation
@@ -1960,6 +2035,7 @@ if __name__ == "__main__":
     log.info(f"  POST http://localhost:{PORT}/api/v1/memu/semantic-search (TF-IDF ranked)")
     log.info(f"  POST http://localhost:{PORT}/api/v1/memu/update | /delete | /restore | /rollback")
     log.info(f"  GET  http://localhost:{PORT}/api/v1/memu/list | /history | /audit | /events")
+    log.info(f"  GET  http://localhost:{PORT}/api/v1/memu/capabilities")
     try:
         server.serve_forever()
     except KeyboardInterrupt:
