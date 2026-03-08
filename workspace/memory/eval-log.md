@@ -3793,3 +3793,133 @@ bash /Users/harrisonfethe/.openclaw/workspace/memu_server/smoke_test.sh <agent_n
 - **Output file:** /tmp/memu_sweep_out.txt
 - **Action:** REVERTED — see issues.md
 - **Notes:** auto-generated
+
+## [2026-03-07 08:03 EST] | Agent: unknown | Task: unspecified
+- **Status:** PASS
+- **Contract:** bridge
+- **Store:** method=POST path=/api/v1/memu/store status=200 id=f7c93538-5cab-4861-bed9-302e4ffba19b
+- **Search:** method=POST path=/api/v1/memu/search count=4
+- **Test run:** smoke_test.sh checks: memU health/store/search, output file freshness, CHANGELOG update, shared-state JSON validity
+- **Result:** PASS
+- **memU ID:** f7c93538-5cab-4861-bed9-302e4ffba19b
+- **memU client key:** local-default
+- **Output file:** not specified
+- **Action:** MARKED_DONE
+- **Notes:** auto-generated
+
+## [2026-03-07 11:02 EST] | Agent: rosie | Task: memu-health-sweep-24h
+- **Status:** PASS
+- **Contract:** bridge
+- **Store:** method=POST path=/api/v1/memu/store status=200 id=0647215d-0504-428c-ab4b-1e484922c907
+- **Search:** method=POST path=/api/v1/memu/search count=10
+- **Test run:** smoke_test.sh checks: memU health/store/search, output file freshness, CHANGELOG update, shared-state JSON validity
+- **Result:** PASS
+- **memU ID:** 0647215d-0504-428c-ab4b-1e484922c907
+- **memU client key:** local-default
+- **Output file:** /Users/harrisonfethe/.openclaw/workspace/status/memu-health-sweep-20260307T110245Z.md
+- **Action:** MARKED_DONE
+- **Notes:** 24h contract+smoke+canonical+competitor comparison
+
+## [2026-03-07 17:02 EST] | Agent: rosie | Task: memu-health-sweep-24h
+- **Status:** FAIL
+- **Contract:** bridge
+- **Store:** method=POST path=/api/v1/memu/store status=skipped id=n/a
+- **Search:** method=POST path=/api/v1/memu/search count=0
+- **Test run:** smoke_test.sh checks: memU health/store/search, output file freshness, CHANGELOG update, shared-state JSON validity
+- **Result:** FAIL | FAIL: Output file missing: /Users/harrisonfethe/.openclaw/workspace/status/memu-health-sweep-20260307T170235Z.md | FAIL: CHANGELOG.md not updated recently (32390s ago)
+- **memU ID:** n/a
+- **memU client key:** local-default
+- **Output file:** /Users/harrisonfethe/.openclaw/workspace/status/memu-health-sweep-20260307T170235Z.md
+- **Action:** REVERTED — see issues.md
+- **Notes:** auto-generated
+
+## [2026-03-07 17:02 EST] | Agent: rosie | Task: memu-health-sweep-24h
+- **Status:** FAIL
+- **Contract:** bridge
+- **Store:** method=POST path=/api/v1/memu/store status=skipped id=n/a
+- **Search:** method=POST path=/api/v1/memu/search count=0
+- **Test run:** smoke_test.sh checks: memU health/store/search, output file freshness, CHANGELOG update, shared-state JSON validity
+- **Result:** FAIL | FAIL: Output file missing: /Users/harrisonfethe/.openclaw/workspace/status/memu-health-sweep-20260307T170249Z.md | FAIL: CHANGELOG.md not updated recently (32404s ago)
+- **memU ID:** n/a
+- **memU client key:** local-default
+- **Output file:** /Users/harrisonfethe/.openclaw/workspace/status/memu-health-sweep-20260307T170249Z.md
+- **Action:** REVERTED — see issues.md
+- **Notes:** auto-generated
+
+## [2026-03-07 20:03 EST] | Agent: unknown | Task: unspecified
+- **Status:** FAIL
+- **Contract:** bridge
+- **Store:** method=POST path=/api/v1/memu/store status=skipped id=n/a
+- **Search:** method=POST path=/api/v1/memu/search count=0
+- **Test run:** smoke_test.sh checks: memU health/store/search, output file freshness, CHANGELOG update, shared-state JSON validity
+- **Result:** FAIL | FAIL: CHANGELOG.md not updated recently (43254s ago)
+- **memU ID:** n/a
+- **memU client key:** local-default
+- **Output file:** not specified
+- **Action:** REVERTED — see issues.md
+- **Notes:** auto-generated
+
+## [2026-03-07 23:02 EST] | Agent: unknown | Task: unspecified
+- **Status:** FAIL
+- **Contract:** bridge
+- **Store:** method=POST path=/api/v1/memu/store status=skipped id=n/a
+- **Search:** method=POST path=/api/v1/memu/search count=0
+- **Test run:** smoke_test.sh checks: memU health/store/search, output file freshness, CHANGELOG update, shared-state JSON validity
+- **Result:** FAIL | FAIL: CHANGELOG.md not updated recently (53987s ago)
+- **memU ID:** n/a
+- **memU client key:** local-default
+- **Output file:** not specified
+- **Action:** REVERTED — see issues.md
+- **Notes:** auto-generated
+
+## [2026-03-07 23:02 EST] | Agent: rosie | Task: memu-health-sweep-20260307
+- **Status:** FAIL
+- **Contract:** bridge
+- **Store:** method=POST path=/api/v1/memu/store status=skipped id=n/a
+- **Search:** method=POST path=/api/v1/memu/search count=0
+- **Test run:** smoke_test.sh checks: memU health/store/search, output file freshness, CHANGELOG update, shared-state JSON validity
+- **Result:** FAIL | FAIL: Output file missing: /Users/harrisonfethe/.openclaw/workspace/status/memu-health-sweep-20260307.txt
+- **memU ID:** n/a
+- **memU client key:** local-default
+- **Output file:** /Users/harrisonfethe/.openclaw/workspace/status/memu-health-sweep-20260307.txt
+- **Action:** REVERTED — see issues.md
+- **Notes:** cron health sweep
+
+## [2026-03-07 23:03 EST] | Agent: rosie | Task: memu-health-sweep-20260307
+- **Status:** PASS
+- **Contract:** bridge
+- **Store:** method=POST path=/api/v1/memu/store status=200 id=abb7d5d0-169e-4216-99e5-9925eb179a3a
+- **Search:** method=POST path=/api/v1/memu/search count=10
+- **Test run:** smoke_test.sh checks: memU health/store/search, output file freshness, CHANGELOG update, shared-state JSON validity
+- **Result:** PASS
+- **memU ID:** abb7d5d0-169e-4216-99e5-9925eb179a3a
+- **memU client key:** local-default
+- **Output file:** /Users/harrisonfethe/.openclaw/workspace/status/memu-health-sweep-20260307.txt
+- **Action:** MARKED_DONE
+- **Notes:** cron health sweep
+
+## [2026-03-07 23:05 EST] | Agent: rosie | Task: memu-health-sweep-fixcheck
+- **Status:** PASS
+- **Contract:** bridge
+- **Store:** method=POST path=/api/v1/memu/store status=200 id=3c7b036c-3135-4045-b9e5-19b69d3534e1
+- **Search:** method=POST path=/api/v1/memu/search count=10
+- **Test run:** smoke_test.sh checks: memU health/store/search, output file freshness, CHANGELOG update, shared-state JSON validity
+- **Result:** PASS
+- **memU ID:** 3c7b036c-3135-4045-b9e5-19b69d3534e1
+- **memU client key:** local-default
+- **Output file:** /Users/harrisonfethe/.openclaw/workspace/status/memu-health-sweep-fixcheck.txt
+- **Action:** MARKED_DONE
+- **Notes:** verify auto-create+skip changelog
+
+## [2026-03-08 02:02 EST] | Agent: rosie | Task: memu-health-sweep-20260307
+- **Status:** PASS
+- **Contract:** bridge
+- **Store:** method=POST path=/api/v1/memu/store status=200 id=04493210-1ab4-4994-a301-3c8bf4776427
+- **Search:** method=POST path=/api/v1/memu/search count=10
+- **Test run:** smoke_test.sh checks: memU health/store/search, output file freshness, CHANGELOG update, shared-state JSON validity
+- **Result:** PASS
+- **memU ID:** 04493210-1ab4-4994-a301-3c8bf4776427
+- **memU client key:** local-default
+- **Output file:** status/memu-health-sweep-20260308T0202Z.md
+- **Action:** MARKED_DONE
+- **Notes:** 24h contract+smoke+canonical+competitor
