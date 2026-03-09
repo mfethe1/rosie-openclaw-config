@@ -25,6 +25,7 @@ TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M EST")
 TIMESTAMP_SHORT=$(date -u +"%Y-%m-%dT%H:%M:%S")
 
 STATUS="PASS"
+MEMU_HEALTHY="YES"
 FAILURES=()
 
 MEMU_STORE_METHOD="POST"
@@ -129,6 +130,7 @@ if [ "$STATUS" = "PASS" ]; then
       else
         FAILURES+=("memU bridge health check failed")
         STATUS="FAIL"
+        MEMU_HEALTHY="NO"
       fi
     fi
   fi
@@ -198,7 +200,7 @@ else
 fi
 
 echo "  [5/6] memU store check ($MEMU_ROUTE_STYLE)..."
-if [ "$STATUS" = "PASS" ]; then
+if [ "$MEMU_HEALTHY" = "YES" ]; then
   if [ "$MEMU_ROUTE_STYLE" = "direct" ]; then
     STORE_PAYLOAD='{"key":"eval-'$TASK_KEY'-'$TIMESTAMP_SHORT'","value":"Smoke test '$STATUS' for task='$TASK_KEY'.","agent":"'$AGENT'","user_id":"'$AGENT'","session_id":"smoke-'$TASK_KEY'","category":"eval"}'
   else
@@ -222,7 +224,7 @@ else
 fi
 
 echo "  [6/6] memU search check..."
-if [ "$STATUS" = "PASS" ]; then
+if [ "$MEMU_HEALTHY" = "YES" ]; then
   if [ "$MEMU_ROUTE_STYLE" = "direct" ]; then
     SEARCH_PAYLOAD='{"query":"eval-'$TASK_KEY'","limit":10,"agent":"'$AGENT'"}'
   else
