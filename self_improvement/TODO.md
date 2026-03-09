@@ -188,7 +188,7 @@
 ### Skill Recommendation Follow-Ups (Winnie Cycle #20)
 - [x] **[Rosie]** Build `alert-escalation` script — auto-notify Telegram for critical blockers unresolved >24h. (HIGH, LOW effort) ✅ (2026-03-03 01:56) — Added `scripts/alert_escalation.py` (shared-state scan, >24h HIGH/CRITICAL filter, cooldown state file, Telegram escalation via `openclaw message send`, dry-run/json modes).
 - [ ] **[Lenny]** Build `blocker-cleanup` script — prune resolved blockers from shared-state.json. (HIGH, LOW effort)
-- [ ] **[Rosie]** Build `decision-tracker` script — verify D-001→D-025 implementation status + register. (MEDIUM, LOW effort)
+- [x] **[Rosie]** Build `decision-tracker` script — verify D-001→D-025 implementation status + register. (MEDIUM, LOW effort) ✅ (2026-03-09 03:00) — Built decision_tracker.py, scanned D-001 to D-032. Unimplemented: D-001, D-026, D-027, D-028, D-029, D-032.
 
 ### Awesome-Memory Tracker Follow-Ups (Winnie Cycle #19)
 - [x] **[Mack]** Add monthly cron for `awesome_memory_tracker.py` (1st day 09:00 EST) + write report to `self_improvement/outputs/`. ✅ (2026-02-21 20:55) — Created cron job `88d09136` (schedule: `0 9 1 * *`, haiku model), wrapper script `awesome_memory_monthly.sh`, and validated tracker JSON output.
