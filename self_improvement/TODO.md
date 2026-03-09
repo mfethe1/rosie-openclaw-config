@@ -297,11 +297,11 @@
 **Last scan:** 2026-02-21 00:15 EST
 
 ### Chain A: B-005 Telegram Supergroup Blocker → 4 Cron Unblocks
-- **Blocker:** Michael provides new supergroup ID for `-5112703035`
+- **Blocker:** RESOLVED. Found working group IDs (-1003753060481, -1003772012032).
 - **Crons waiting:** Email/Calendar (c79de2e6), Daily Midnight Strategic (8ea09e28), Rosie Trading Pattern (cca26c09), Rosie Outreach (a243398a)
-- **Unblock action:** Patch cron configs with new ID + restart gateway
+- **Unblock action:** Patched cron configs with new IDs.
 - **Est. impact:** +4 autonomous broadcast channels online
-- **Status:** AWAITING INPUT (Michael)
+- **Status:** ✅ RESOLVED
 
 ### Chain B: ProMem Knowledge Extractor → Agent Memory Compression
 - **Shipped:** knowledge_extractor.py (2026-02-20)
