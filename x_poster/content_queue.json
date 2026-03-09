@@ -342,9 +342,11 @@
       "SaaS"
     ],
     "angle": "thought-leadership",
-    "posted": false,
+    "posted": true,
     "generated_at": "2026-03-01T13:01:16.933453+00:00",
-    "source": "campaign_improve"
+    "source": "campaign_improve",
+    "tweet_id": "2030055883741225073",
+    "posted_at": "2026-03-06T23:00:14.170952+00:00"
   },
   {
     "id": 24,
@@ -356,9 +358,11 @@
       "AI"
     ],
     "angle": "thought-leadership",
-    "posted": false,
+    "posted": true,
     "generated_at": "2026-03-01T13:01:16.933456+00:00",
-    "source": "campaign_improve"
+    "source": "campaign_improve",
+    "tweet_id": "2030282357983314403",
+    "posted_at": "2026-03-07T14:00:09.747087+00:00"
   },
   {
     "id": 25,
@@ -370,9 +374,11 @@
       "GrowthMarketing"
     ],
     "angle": "build-in-public",
-    "posted": false,
+    "posted": true,
     "generated_at": "2026-03-01T13:01:16.933457+00:00",
-    "source": "campaign_improve"
+    "source": "campaign_improve",
+    "tweet_id": "2030418263612481689",
+    "posted_at": "2026-03-07T23:00:12.189305+00:00"
   },
   {
     "id": 26,
@@ -384,9 +390,11 @@
       "Startups"
     ],
     "angle": "build-in-public",
-    "posted": false,
+    "posted": true,
     "generated_at": "2026-03-01T13:01:16.933459+00:00",
-    "source": "campaign_improve"
+    "source": "campaign_improve",
+    "tweet_id": "2030629899451453451",
+    "posted_at": "2026-03-08T13:01:10.217529+00:00"
   },
   {
     "id": 27,
@@ -417,6 +425,110 @@
     "angle": "cta",
     "posted": false,
     "generated_at": "2026-03-01T13:01:16.933462+00:00",
+    "source": "campaign_improve"
+  },
+  {
+    "id": 29,
+    "text": "Your engineers aren't slow. They're buried in issue triage, status updates, and ticket shuffling.\n\nIssuesFlow automates the workflow so your team ships, not manages.\n\nissuesflow.ai #DevTools #EngineeringTeams",
+    "tags": [
+      "product",
+      "devtools",
+      "engineering"
+    ],
+    "angle": "product",
+    "posted": false,
+    "generated_at": "2026-03-08T12:00:23.503427+00:00",
+    "source": "campaign_improve"
+  },
+  {
+    "id": 30,
+    "text": "The best engineering teams in 2026 don't manage issues manually.\n\nThey set rules. AI handles the rest.\n\nIssuesFlow routes, prioritizes, and closes the loop \u2014 automatically.\n\nTry it free \u2192 issuesflow.ai #IssuesFlow #B2BSaaS",
+    "tags": [
+      "product",
+      "automation",
+      "saas"
+    ],
+    "angle": "product",
+    "posted": false,
+    "generated_at": "2026-03-08T12:00:23.503448+00:00",
+    "source": "campaign_improve"
+  },
+  {
+    "id": 31,
+    "text": "Unpopular opinion: most AI productivity tools just add another inbox.\n\nReal AI leverage = eliminating the decision entirely.\n\nThe future of dev tooling isn't assistance. It's automation. #AITrends #FutureOfWork",
+    "tags": [
+      "thought-leadership",
+      "ai",
+      "futureofwork"
+    ],
+    "angle": "thought-leadership",
+    "posted": false,
+    "generated_at": "2026-03-08T12:00:23.503452+00:00",
+    "source": "campaign_improve"
+  },
+  {
+    "id": 32,
+    "text": "By 2027, the average dev team will have 3 AI agents running in the background full-time.\n\nThe winners won't be the teams with the best engineers.\n\nThey'll be the teams who automated the most busywork first. #AI #DevTeams #FutureOfWork",
+    "tags": [
+      "thought-leadership",
+      "ai",
+      "devteams"
+    ],
+    "angle": "thought-leadership",
+    "posted": false,
+    "generated_at": "2026-03-08T12:00:23.503455+00:00",
+    "source": "campaign_improve"
+  },
+  {
+    "id": 33,
+    "text": "6 months ago I thought the hardest part of building Protelynx would be the AI.\n\nIt was actually the messaging.\n\n'AI-powered issue workflow' means nothing. 'We kill ticket busywork' gets replies.\n\nLesson: clarity beats cleverness every time. #BuildInPublic #FounderLife",
+    "tags": [
+      "build-in-public",
+      "founder",
+      "saas"
+    ],
+    "angle": "build-in-public",
+    "posted": false,
+    "generated_at": "2026-03-08T12:00:23.503458+00:00",
+    "source": "campaign_improve"
+  },
+  {
+    "id": 34,
+    "text": "We shipped 34 AI-reviewed posts and averaged an 8.3/10 engagement score internally.\n\nReal impressions? Near zero.\n\nHard truth: quality without distribution is a tree falling in an empty forest.\n\nFixing distribution now. #BuildInPublic #GrowthLessons",
+    "tags": [
+      "build-in-public",
+      "growthhacking",
+      "saas"
+    ],
+    "angle": "build-in-public",
+    "posted": false,
+    "generated_at": "2026-03-08T12:00:23.503461+00:00",
+    "source": "campaign_improve"
+  },
+  {
+    "id": 35,
+    "text": "Engineering teams using IssuesFlow report spending 60%+ less time on manual issue triage in the first week.\n\nNot months. One week.\n\nBecause the busywork was always automatable \u2014 nobody just built the tool yet.\n\nissuesflow.ai #DevTools #Automation",
+    "tags": [
+      "social-proof",
+      "devtools",
+      "automation"
+    ],
+    "angle": "social-proof",
+    "posted": false,
+    "generated_at": "2026-03-08T12:00:23.503463+00:00",
+    "source": "campaign_improve"
+  },
+  {
+    "id": 36,
+    "text": "If your team closes 10+ issues a week, you're leaving hours on the table.\n\nIssuesFlow automates triage, routing, and follow-ups \u2014 free to try, no CC required.\n\nKill the busywork this week \u2192 issuesflow.ai #DevTools #IssuesFlow",
+    "tags": [
+      "cta",
+      "devtools",
+      "saas"
+    ],
+    "angle": "cta",
+    "posted": false,
+    "generated_at": "2026-03-08T12:00:23.503466+00:00",
     "source": "campaign_improve"
   }
 ]

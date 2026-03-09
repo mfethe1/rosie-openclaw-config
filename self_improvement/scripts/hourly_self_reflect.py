@@ -62,14 +62,39 @@ except ImportError:
         def log_event(*args, **kwargs): pass
 
 # Ledgers (dual-loop orchestration)
-try:
-    sys.path.insert(0, str(SI_DIR))
-    from ledgers import add_fact, get_task_ledger, get_progress_ledger, get_agent_status
-except ImportError:
-    def add_fact(*a, **kw): pass
-    def get_task_ledger(): return {"facts": [], "guesses": [], "plan": [], "blockers": []}
-    def get_progress_ledger(): return {"assignments": {}, "completed": [], "in_progress": []}
-    def get_agent_status(a): return {"agent": a, "active": [], "completed_count": 0}
+def _load_ledgers():
+    import importlib.util
+
+    try:
+        spec = importlib.util.spec_from_file_location("ledgers", str(SI_DIR / "ledgers.py"))
+        if spec is None or spec.loader is None:
+            raise RuntimeError("ledgers module spec not found")
+
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+    except Exception:
+        return None
+
+
+_ledgers = _load_ledgers()
+if _ledgers is not None:
+    add_fact = getattr(_ledgers, "add_fact", lambda *a, **kw: None)
+    get_task_ledger = getattr(_ledgers, "get_task_ledger", lambda: {"facts": [], "guesses": [], "plan": [], "blockers": []})
+    get_progress_ledger = getattr(_ledgers, "get_progress_ledger", lambda: {"assignments": {}, "completed": [], "in_progress": []})
+    get_agent_status = getattr(_ledgers, "get_agent_status", lambda a: {"agent": a, "active": [], "completed_count": 0})
+else:
+    def add_fact(*a, **kw):
+        pass
+
+    def get_task_ledger():
+        return {"facts": [], "guesses": [], "plan": [], "blockers": []}
+
+    def get_progress_ledger():
+        return {"assignments": {}, "completed": [], "in_progress": []}
+
+    def get_agent_status(a):
+        return {"agent": a, "active": [], "completed_count": 0}
 
 
 def _nats_call(*args):
@@ -1242,17 +1267,40 @@ def _post_to_memory_learning_engine(agent_name, result_data, applied):
 
     summary = " ".join(parts)
 
-    try:
-        payload = _json.dumps({"text": summary, "agent": agent_name}).encode()
-        req = _req.Request(MLE_URL, data=payload,
-                           headers={"Content-Type": "application/json"}, method="POST")
-        with _req.urlopen(req, timeout=5) as resp:
-            result = _json.loads(resp.read().decode())
-            stored = result.get("stored_count", 0)
-            extracted = result.get("raw_count", 0)
-            print(f"[MLE] Extracted {extracted} memories, stored {stored} new for {agent_name}")
-    except Exception as e:
-        print(f"[MLE] Fire-and-forget failed (non-blocking): {e}")
+    payload = _json.dumps({"text": summary, "agent": agent_name}).encode()
+
+    # Retry transient network/server failures to reduce dropped learning events.
+    # Keep bounded + non-blocking for the main cycle.
+    backoff_s = [1, 2, 4]
+    for attempt, wait_s in enumerate(backoff_s, start=1):
+        try:
+            req = _req.Request(
+                MLE_URL,
+                data=payload,
+                headers={"Content-Type": "application/json"},
+                method="POST",
+            )
+            with _req.urlopen(req, timeout=5) as resp:
+                result = _json.loads(resp.read().decode())
+                stored = result.get("stored_count", 0)
+                extracted = result.get("raw_count", 0)
+                print(
+                    f"[MLE] Extracted {extracted} memories, stored {stored} new for {agent_name}"
+                )
+                return
+        except Exception as e:
+            is_last = attempt == len(backoff_s)
+            if is_last:
+                print(
+                    f"[MLE] Fire-and-forget failed after {attempt} attempts (non-blocking): {e}"
+                )
+                return
+            print(
+                f"[MLE] Attempt {attempt}/{len(backoff_s)} failed: {e}; retrying in {wait_s}s"
+            )
+            import time as _time
+
+            _time.sleep(wait_s)
 
 
 if __name__ == "__main__":

@@ -1495,27 +1495,27 @@ class MemUHandler(BaseHTTPRequestHandler):
         # Resolve canonical/direct aliases
         if path == "/health":
             path = "/api/v1/memu/health"
-            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
+            self._legacy_alias_used = True
         elif path == "/capabilities":
             path = "/api/v1/memu/capabilities"
-            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
+            self._legacy_alias_used = True
         elif path == "/memories":
             path = "/api/v1/memu/list"
-            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
+            self._legacy_alias_used = True
         elif path == "/history":
             path = "/api/v1/memu/history"
-            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
+            self._legacy_alias_used = True
         elif path == "/audit":
             path = "/api/v1/memu/audit"
-            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
+            self._legacy_alias_used = True
         elif path == "/events":
             path = "/api/v1/memu/events"
-            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
+            self._legacy_alias_used = True
         elif path.startswith("/jobs/"):
             path = "/api/v1/memu/jobs/" + path.split("/jobs/", 1)[1]
         elif path == "/feature-flags":
             path = "/api/v1/memu/feature-flags"
-            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
+            self._legacy_alias_used = True
 
         ok, reason, _ = self.check_auth(path)
         if not ok:
@@ -1733,16 +1733,16 @@ class MemUHandler(BaseHTTPRequestHandler):
         self._legacy_alias_used = False
         if path in {"/memorize", "/memories", "/store"}:
             path = "/api/v1/memu/store"
-            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
+            self._legacy_alias_used = True
         if path in {"/retrieve", "/search"}:
             path = "/api/v1/memu/search"
-            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
+            self._legacy_alias_used = True
         if path == "/restore":
             path = "/api/v1/memu/restore"
-            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
+            self._legacy_alias_used = True
         if path == "/rollback" or path == "/recover":
             path = "/api/v1/memu/rollback"
-            self._legacy_alias_used = MEMU_FEATURE_LEGACY_ALIASES
+            self._legacy_alias_used = True
 
         ok, reason, _ = self.check_auth(path, body=body)
         if not ok:

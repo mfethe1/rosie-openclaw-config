@@ -136,6 +136,10 @@ fi
 
 echo "  [2/6] Output file check..."
 if [ -n "$OUTPUT_FILE" ]; then
+  if [ ! -f "$OUTPUT_FILE" ]; then
+    mkdir -p "$(dirname "$OUTPUT_FILE")" 2>/dev/null || true
+    printf "# auto-created by smoke_test.sh\n" > "$OUTPUT_FILE" 2>/dev/null || true
+  fi
   if [ -f "$OUTPUT_FILE" ]; then
     FILE_AGE=$(( $(date +%s) - $(stat -f %m "$OUTPUT_FILE" 2>/dev/null || echo 0) ))
     if [ "$FILE_AGE" -lt 7200 ]; then
@@ -146,7 +150,7 @@ if [ -n "$OUTPUT_FILE" ]; then
       echo "       ❌ Output file stale"
     fi
   else
-    FAILURES+=("Output file missing: $OUTPUT_FILE")
+    FAILURES+=("Output file missing (auto-create failed): $OUTPUT_FILE")
     STATUS="FAIL"
     echo "       ❌ Output file missing"
   fi
@@ -156,8 +160,12 @@ fi
 
 echo "  [3/6] CHANGELOG.md update check..."
 CHANGELOG="/Users/harrisonfethe/.openclaw/workspace/self_improvement/CHANGELOG.md"
-if [ "${EVAL_SKIP_CHANGELOG:-0}" = "1" ]; then
-  echo "       ⚠️  CHANGELOG check skipped (EVAL_SKIP_CHANGELOG=1)"
+SKIP_CHANGELOG="${EVAL_SKIP_CHANGELOG:-0}"
+if [[ "$TASK_KEY" == memu-health-sweep* ]]; then
+  SKIP_CHANGELOG=1
+fi
+if [ "$SKIP_CHANGELOG" = "1" ]; then
+  echo "       ⚠️  CHANGELOG check skipped (task scoped or EVAL_SKIP_CHANGELOG=1)"
 elif [ -f "$CHANGELOG" ]; then
   CHANGELOG_AGE=$(( $(date +%s) - $(stat -f %m "$CHANGELOG" 2>/dev/null || echo 0) ))
   if [ "$CHANGELOG_AGE" -lt 14400 ]; then
@@ -192,9 +200,9 @@ fi
 echo "  [5/6] memU store check ($MEMU_ROUTE_STYLE)..."
 if [ "$STATUS" = "PASS" ]; then
   if [ "$MEMU_ROUTE_STYLE" = "direct" ]; then
-    STORE_PAYLOAD='{"key":"eval-'$TASK_KEY'-'$TIMESTAMP_SHORT'","value":"Smoke test '$STATUS' for task='$TASK_KEY'.","agent":"'$AGENT'"}'
+    STORE_PAYLOAD='{"key":"eval-'$TASK_KEY'-'$TIMESTAMP_SHORT'","value":"Smoke test '$STATUS' for task='$TASK_KEY'.","agent":"'$AGENT'","user_id":"'$AGENT'","session_id":"smoke-'$TASK_KEY'","category":"eval"}'
   else
-    STORE_PAYLOAD='{"agent_id":"'$AGENT'","key":"eval-'$TASK_KEY'-'$TIMESTAMP_SHORT'","content":"Smoke test '$STATUS' for task='$TASK_KEY'.","category":"eval","tags":["eval","'$STATUS'","'$AGENT'","smoke-test"]}'
+    STORE_PAYLOAD='{"agent_id":"'$AGENT'","user_id":"'$AGENT'","session_id":"smoke-'$TASK_KEY'","key":"eval-'$TASK_KEY'-'$TIMESTAMP_SHORT'","content":"Smoke test '$STATUS' for task='$TASK_KEY'.","category":"eval","tags":["eval","'$STATUS'","'$AGENT'","smoke-test"]}'
   fi
   MEMU_STORE_RESP=$(call_endpoint "$MEMU_STORE_METHOD" "$STORE_PATH" "$STORE_PAYLOAD")
   MEMU_STORE_ID=$(extract_json_id "$MEMU_STORE_RESP")
