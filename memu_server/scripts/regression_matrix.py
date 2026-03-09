@@ -126,6 +126,43 @@ def main() -> None:
     else:
         print("ℹ️ strict-schema-mode disabled; strict validation checks skipped")
 
+    # Events and rollback matrix
+    store_for_rollback = {
+        "agent_id": "regression",
+        "user_id": "u-regression",
+        "session_id": "s-regression",
+        "content": "to be rolled back",
+        "category": "general",
+        "key": key + "-rollback",
+    }
+    s3, b3 = call("POST", "/api/v1/memu/store", store_for_rollback)
+    assert_ok("store for rollback", s3 in (200, 202))
+    
+    memory_id = None
+    if s3 == 200:
+        memory_id = b3.get("id")
+    elif s3 == 202:
+        time.sleep(1)
+        sr, br = call("POST", "/api/v1/memu/search", {"query": key + "-rollback", "limit": 1})
+        if br.get("results"):
+            memory_id = br["results"][0].get("id")
+
+    if memory_id:
+        s4, b4 = call("GET", f"/api/v1/memu/events?memory_id={memory_id}")
+        assert_ok("events retrieval", s4 == 200 and isinstance(b4.get("entries"), list) and len(b4["entries"]) >= 1)
+        
+        # Rollback positive case
+        s5, b5 = call("POST", "/api/v1/memu/rollback", {"id": memory_id})
+        assert_ok("rollback positive", s5 == 200, str(b5)[:180])
+
+        # Rollback negative case (invalid id)
+        s6, b6 = call("POST", "/api/v1/memu/rollback", {"id": "invalid-id-xyz"})
+        assert_ok("rollback negative (invalid id)", s6 == 404 or s6 == 400, f"Got {s6}: {b6}")
+
+        # Events negative case (missing memory_id)
+        s7, b7 = call("GET", "/api/v1/memu/events")
+        assert_ok("events negative (missing id)", s7 == 400)
+
     print("\nPASS: regression matrix complete")
 
 
