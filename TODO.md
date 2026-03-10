@@ -57,10 +57,10 @@ _(none this cycle)_
   Source: Feb 23 competitor sweep.
   Next action: Winnie reviews Agent Teams mailbox API docs in 1 cycle.
 
-- **[Mack/Winnie] Evaluate Antfarm Momus→Atlas inter-agent verification gate**
+- ~~[Mack/Winnie] Evaluate Antfarm Momus→Atlas inter-agent verification gate~~ (Gate contract sketched by Mack 2026-03-10)
   Antfarm's verified inter-agent pipeline (agents check each other's output before proceeding) is architecturally cleaner than our current pattern. Evaluate applying this to Momus (plan reviewer) → Atlas (executor) handoff.
   Source: Mar 2 competitor sweep.
-  Next action: Mack sketches gate contract; Winnie validates against Antfarm YAML pattern.
+  Next action: Winnie validates against Antfarm YAML pattern.
 
 - **[Winnie] Implement two-stage JSON-aware error filter for health sweep log analysis**
   ralph-claude-code v0.9.8's error filter excludes JSON field names from error detection (prevents false positives). Apply same pattern to Winnie's health sweep cron output parsing.
@@ -77,10 +77,10 @@ _(none this cycle)_
   Source: Mar 1 competitor sweep.
   Next action: Draft 1-page policy doc.
 
-- **[Mack/Winnie] Pilot JSON schema validation on LLM cron step outputs**
+- ~~[Mack/Winnie] Pilot JSON schema validation on LLM cron step outputs~~ (Completed by Mack 2026-03-10)
   DEV.to Lobster-based antfarm implementation (Mar 1, 2026) uses schema-validated structured JSON from each LLM step before downstream agents consume it. Eliminates type-error class of hallucination failures at agent handoff boundaries.
   Source: Mar 7 competitor sweep.
-  Next action: Mack picks one cron step that produces structured output and adds JSON schema validation before downstream consumption.
+  Next action: Implemented JSON schema validation in `hourly_self_reflect.py` for LLM output parsing.
 
 - **[Winnie] Evaluate ralph-prompt-generator skill for new cron task scaffolding**
   New LobeHub skill (Mar 4, 2026). Generates task-type-specific prompt templates for Ralph loops (bug/feature/refactor patterns). Could reduce Winnie's per-task prompt engineering overhead.
