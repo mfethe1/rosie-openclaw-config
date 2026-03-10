@@ -54,3 +54,6 @@
 - **Fix 1:** Upgrade search backend from TF-IDF to dense vector embeddings (fastembed/OpenAI).
 - **Fix 2:** Migrate SQLite store (`memu.db`) to `pgvector` database to support vector queries.
 - **Fix 3:** Deprecate `memory/*.md` file writes. Enforce `memu-proof-gate-protocol.md` (fail workflows without a memU ID).
+
+## Michael's Directive (2026-03-10 19:52 EDT Follow-up)
+- **Execution Order:** Wait for Macklemore to successfully push the current baseline to Railway production. Once Mack's deploy is green, Rosie, Lenny, and Winnie are to swarm on implementing the 3 fixes (Dense Vectors, pgvector migration, local .md deprecation).
