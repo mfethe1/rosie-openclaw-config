@@ -2036,3 +2036,18 @@
 - Applied: 2/2
   - Create ROSIE_EXECUTION_CHECKLIST.md with auditable pre-submission gates
   - Wire post_change_verify gate into PRE-SUBMISSION EXECUTION with explicit blocking rule
+
+## 2026-03-10 18:15 — Rosie Self-Improvement v2
+- Applied: 2/2
+  - Wire post_change_verify gate into PRE-SUBMISSION EXECUTION flow
+  - Create ROSIE_EXECUTION_CHECKLIST.md with auditable gate definitions
+
+## 2026-03-10 18:16 — Rosie Self-Improvement v2
+- Applied: 2/2
+  - Wire post_change_verify gate into PRE-SUBMISSION VALIDATION section with explicit blocking decision tree
+  - Create ROSIE_EXECUTION_CHECKLIST.md with auditable gates 1-5 and pass/fail criteria
+
+## 2026-03-10 18:20 — Rosie Self-Improvement v2
+- Applied: 2/2
+  - Create ROSIE_EXECUTION_CHECKLIST.md with all 5 gates + mechanical blocking
+  - Wire post_change_verify gate into PRE-SUBMISSION VALIDATION section of agents/rosie.md

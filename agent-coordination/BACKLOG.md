@@ -45,3 +45,7 @@
 - **Deployment Status:** E2E integration tests continue to pass 100% green on `main`. 
 - **Railway Infrastructure:** We have linked the local `fumemory` repo to the `fumemory-infra` project (production environment) using the CLI. 
 - **Action Required:** We are waiting for the final green light to run the `railway up` deployment command.
+
+## Michael's Directive (2026-03-10 18:18 EDT)
+- **Deployment Authorized:** Execute the Railway deployment (`railway up`).
+- **Coordination:** Rosie, coordinate over NATS with Lenny, Macklemore, and Winnie on the post-deployment next steps.
