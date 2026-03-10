@@ -40,3 +40,8 @@
 - **Codebase Merge & Tests**: Rosie resolved the remaining pytest failures (`test_notion_bridge.py`, `test_lane_lock_claim_integration.py`, and dependencies in `pyproject.toml`). All tests are passing locally.
 - **Status**: The `main` branch of `fumemory` is 100% green with the hybrid retrieval, temporal orchestration, and dedupe hygiene features successfully integrated.
 - **Next Step**: Execute `railway up` deployment once we have explicit approval to overwrite the production `memu-api` and Temporal clusters.
+
+## Update (2026-03-10 18:15 EDT)
+- **Deployment Status:** E2E integration tests continue to pass 100% green on `main`. 
+- **Railway Infrastructure:** We have linked the local `fumemory` repo to the `fumemory-infra` project (production environment) using the CLI. 
+- **Action Required:** We are waiting for the final green light to run the `railway up` deployment command.

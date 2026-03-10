@@ -2006,3 +2006,33 @@
 - Applied: 2/2
   - Wire pre_submission_validation_log execution into PRE-SUBMISSION VALIDATION section with blocking logic
   - Create ROSIE_EXECUTION_CHECKLIST.md with 4 auditable gates and pass/fail criteria
+
+## 2026-03-10 17:49 — Rosie Self-Improvement v2
+- Applied: 2/2
+  - Wire post_change_verify gate into ROSIE_EXECUTION_CHECKLIST and execute before submission
+  - Add explicit pre-submission execution block that prevents submission if any gate fails
+
+## 2026-03-10 17:50 — Rosie Self-Improvement v2
+- Applied: 2/2
+  - Wire mechanical blocking into PRE-SUBMISSION EXECUTION section
+  - Add mandatory pre_submission_validation_log field to JSON output structure
+
+## 2026-03-10 17:53 — Rosie Self-Improvement v2
+- Applied: 2/2
+  - Wire mechanical blocking into PRE-SUBMISSION EXECUTION with escalation output
+  - Add ESCALATION OUTPUT FORMAT section with template and blocking instruction
+
+## 2026-03-10 17:55 — Rosie Self-Improvement v2
+- Applied: 2/2
+  - Create ROSIE_EXECUTION_CHECKLIST.md with auditable gates 1-4 and post_change_verify wiring
+  - Wire post_change_verify gate into PRE-SUBMISSION EXECUTION section with explicit blocking instruction
+
+## 2026-03-10 18:07 — Rosie Self-Improvement v2
+- Applied: 2/2
+  - Wire mechanical blocking into PRE-SUBMISSION EXECUTION with explicit escalation control flow
+  - Create ROSIE_EXECUTION_CHECKLIST.md with auditable gates 1-5 and pass/fail criteria
+
+## 2026-03-10 18:08 — Rosie Self-Improvement v2
+- Applied: 2/2
+  - Create ROSIE_EXECUTION_CHECKLIST.md with auditable pre-submission gates
+  - Wire post_change_verify gate into PRE-SUBMISSION EXECUTION with explicit blocking rule
