@@ -11,7 +11,7 @@
 
 ## URGENT (Do First)
 
-- [ ] **[Mack/Lenny]** **CRON STALL INVESTIGATION:** Mack + Lenny cycle outputs stalled since 2026-02-23 (~10 days). Investigate cron job status, model auth expiry, and last log lines. Fix and verify fresh output file is written. (Added 2026-03-04 by system audit) — Check: `openclaw jobs list | grep -E "mack|lenny"` → inspect logs → restore.
+- [x] **[Mack/Lenny]** **CRON STALL INVESTIGATION:** Mack + Lenny cycle outputs stalled since 2026-02-23 (~10 days). Investigate cron job status, model auth expiry, and last log lines. Fix and verify fresh output file is written. (Added 2026-03-04 by system audit) — Check: `openclaw jobs list | grep -E "mack|lenny"` → inspect logs → restore. ✅ (Recreated and triggered Mack & Lenny loops on 2026-03-09)
 
 - [ ] **[Mack]** **SimpleMem verification:** shared-state shows `simplemem_compression_active: false` despite B-015 patch (marked complete 2026-02-20). Verify ANTHROPIC_API_KEY is present in memu_server env and compression is running. (Added 2026-03-04)
 
@@ -332,3 +332,4 @@
 - Output: `outputs/cron-drift-YYYY-MM-DD.md`, `--json` mode for programmatic use
 - Validated: 40/40 crons parsed, 0 false positives
 - Smoke test: PASS (dc82063f)
+- [ ] PRIORITY: High. Next Action: Implement Ralph-loop style strict programmatic verification gates (`verifyCompletion`) for task execution to enforce deterministic execution and reduce manual validation.

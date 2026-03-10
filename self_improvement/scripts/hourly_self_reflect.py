@@ -226,7 +226,8 @@ def memu_request(method, endpoint, data=None):
         except Exception as e:
             if attempt == 0:
                 # Self-heal: try restarting memU
-                print(f"[SELF-HEAL] memU request failed ({e}), attempting restart...")
+                error_body = e.read().decode() if hasattr(e, "read") else ""
+                print(f"[SELF-HEAL] memU request failed ({e}) {error_body}, attempting restart...")
                 try:
                     subprocess.run(
                         ["bash", str(MEMU_SERVER / "start.sh")],
@@ -264,6 +265,8 @@ def memu_store(agent_name, key, content, category="reflection", tags=None):
             "key": key,
             "value": content,
             "agent": agent_name,
+            "user_id": "michael",
+            "session_id": f"{agent_name}-si-cycle",
             "category": category,
             "metadata": {
                 "tags": tags or [agent_name, "self-improve"],
@@ -1112,11 +1115,28 @@ def main():
     )
     raw_response = call_model(prompt, agent_name)
 
+    def validate_schema(data):
+        if not isinstance(data, dict): return False
+        required = {"reflection": str, "improvements": list, "score": dict}
+        for k, t in required.items():
+            if k not in data or not isinstance(data[k], t): return False
+        for imp in data.get("improvements", []):
+            if not isinstance(imp, dict): return False
+            for req_imp in ["title", "file", "action", "content"]:
+                if req_imp not in imp: return False
+        return True
+
     # 4. Parse response
     result_data = extract_json(raw_response)
+    
+    # Pilot JSON schema validation
+    if result_data and not validate_schema(result_data):
+        print(f"[{agent_name.upper()}] JSON schema validation failed")
+        result_data = None
+
     if not result_data:
         print(
-            f"[{agent_name.upper()}] JSON parse failed — saving raw response for debug"
+            f"[{agent_name.upper()}] JSON parse or schema validation failed — saving raw response for debug"
         )
         debug_file = (
             OUTPUTS_DIR
@@ -1129,6 +1149,10 @@ def main():
         repair_prompt = f"The following text should be valid JSON but isn't. Extract and fix it into valid JSON. Return ONLY the fixed JSON:\n\n{raw_response[:2000]}"
         repair_response = call_model(repair_prompt, agent_name)
         result_data = extract_json(repair_response)
+
+        if result_data and not validate_schema(result_data):
+            print(f"[{agent_name.upper()}] Repair pass JSON schema validation failed")
+            result_data = None
 
         if not result_data:
             result_data = {

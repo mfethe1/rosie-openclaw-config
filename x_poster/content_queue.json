@@ -423,9 +423,11 @@
       "Automation"
     ],
     "angle": "cta",
-    "posted": false,
+    "posted": true,
     "generated_at": "2026-03-01T13:01:16.933462+00:00",
-    "source": "campaign_improve"
+    "source": "campaign_improve",
+    "tweet_id": "2031355703458247053",
+    "posted_at": "2026-03-10T13:05:15.264770+00:00"
   },
   {
     "id": 29,
