@@ -1911,3 +1911,8 @@
 - Applied: 2/2
   - Wire execution_capability_audit as blocking gate — force explicit yes/no on immediate execution vs. delegation
   - Create DELEGATION_CLOSURE_TRACKER.md with mandatory deadline + verification_command for every delegated task
+
+## 2026-03-10 16:25 — Mack Self-Improvement v2
+- Applied: 2/2
+  - Wire post_change_verify gate into reflection template as mandatory JSON field
+  - Create DELEGATION_CLOSURE_TRACKER.md with post_change_verify gate wiring task

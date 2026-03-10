@@ -21,3 +21,8 @@
 - **Swarm Re-allocation:**
   - Rosie and Winnie are shifting off their previous tasks (Dedupe/Hygiene and Cross-Gateway) to assist Macklemore.
   - **New Task (Rosie, Winnie, Mack):** Swarm on Temporal Orchestration (Worker/task queue/namespace bootstrap) + Canonical Route/Contract Stability (/add vs /memories).
+
+## Michael's Directive (2026-03-10 13:47 EDT)
+- **Phase Transition:** Wrap up current tasks (Temporal Orchestration & Vector/HNSW).
+- **Testing:** Begin end-to-end testing of the whole system (Hybrid Retrieval + Temporal).
+- **Deployment:** Ensure the system is ready to run on Railway for improved resiliency and redundancy.
