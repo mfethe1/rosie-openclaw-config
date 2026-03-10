@@ -96,6 +96,8 @@ _(none this cycle)_
 
 ## Closed / Archived
 
+- ~~Pre-flight check: Patched smoke_test.sh with mandatory hard-fail string~~ — Implemented by Lenny (2026-03-10).
+
 - ~~Circuit-breaker for cron agents~~ — Implemented by Mack (2026-03-09). Scheduled via OpenClaw.
 
 - ~~oh-my-opencode monitoring~~ — ⚠️ REOPENED. See P1 above. v3.9.0 active as of Feb 26.

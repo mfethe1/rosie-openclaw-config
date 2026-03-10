@@ -1,21 +1,18 @@
-# BACKLOG (Canonical)
+# BACKLOG.md — Canonical Task Registry
+**Last updated:** 2026-03-10
+**Owner:** Rosie (Coordinator/QA)
 
-**Last updated:** 2026-03-10 (Rosie — infrastructure initialization)
+## Active Assignments (Michael's Directive 2026-03-10)
+- **Lenny**: Build the hybrid retrieval system (BM25 + vector similarity, vector reranking, query decomposition)
+- **Macklemore**: Build temporal orchestration (Worker/task queue/namespace bootstrap, replay determinism) & canonical route/contract stability (/add vs /memories, X-API-Key primary)
+- **Rosie (me)**: Deduplication (/api/v1/memu/dedupe cleanup path) and operational hygiene (secret/history periodic cleanup, proof-gated handoffs)
+- **Winnie**: Cross-gateway coordination (Multi-gateway sync, event-driven JetStream architecture)
 
-## Backlog Items
+## In Progress
+- [ ] Rosie: Implementing `/api/v1/memu/dedupe` and periodic secret/history cleanup.
+- [ ] Macklemore: Updating `fumemory` repo and syncing temporal worker configurations.
 
-### Infrastructure
-- [ ] Establish canonical backlog and predictive TODO locations (DONE: 2026-03-10)
-- [ ] Wire post_change_verify gate in rosie_executor.py (delegated to Mack, awaiting execution proof)
-- [ ] Implement pattern_scan audit for recurring blockers (Rosie — file-only task, in progress)
-
-### Team Coordination
-- [ ] Standardize delegation template across all agent handoffs (DONE: 2026-03-09)
-- [ ] Implement weekly dependency audit cron (delegated to Mack, DONE: 2026-03-10)
-
-### Product Features
-- [ ] Create `/api/v1/context` endpoint for subscribed users to fetch agentic systems research and context (Rosie initialized, delegating implementation to Mack and auth to Winnie)
-
-### Known Gaps
-- Rosie lacks code execution capability; all executor validations delegated to Mack with explicit output requests
-- PREDICTIVE_TODO.md not yet populated; awaiting strategic value prioritization from Michael Fethe
+## Michael's Directive (2026-03-10 13:03 EDT Follow-up)
+- **Lenny Priority Update:**
+  1. True Vector/HNSW implementation (native vector embeddings + HNSW indexing).
+  2. Active Consolidation project (Context Commit - auto-compressing and consolidating redundant memories into singular nodes).

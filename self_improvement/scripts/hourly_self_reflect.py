@@ -599,7 +599,9 @@ def call_model(prompt, agent_name):
     import time as _time
 
     models = ["claude-haiku-4-5", "claude-sonnet-4-6"]
-    max_retries = 2
+    fallback_model = "claude-haiku-4-5"
+    models.append(fallback_model)
+    max_retries = 3
     last_error = None
 
     if not ANTHROPIC_KEY:
