@@ -16,3 +16,8 @@
 - **Lenny Priority Update:**
   1. True Vector/HNSW implementation (native vector embeddings + HNSW indexing).
   2. Active Consolidation project (Context Commit - auto-compressing and consolidating redundant memories into singular nodes).
+
+## Michael's Directive (2026-03-10 13:20 EDT Follow-up)
+- **Swarm Re-allocation:**
+  - Rosie and Winnie are shifting off their previous tasks (Dedupe/Hygiene and Cross-Gateway) to assist Macklemore.
+  - **New Task (Rosie, Winnie, Mack):** Swarm on Temporal Orchestration (Worker/task queue/namespace bootstrap) + Canonical Route/Contract Stability (/add vs /memories).

@@ -1906,3 +1906,8 @@
 - Applied: 2/2
   - Create missing BACKLOG.md and PREDICTIVE_TODO.md in agent-coordination/
   - Wire post_change_verify gate into reflection template OUTPUT FORMAT
+
+## 2026-03-10 13:13 — Rosie Self-Improvement v2
+- Applied: 2/2
+  - Wire execution_capability_audit as blocking gate — force explicit yes/no on immediate execution vs. delegation
+  - Create DELEGATION_CLOSURE_TRACKER.md with mandatory deadline + verification_command for every delegated task
