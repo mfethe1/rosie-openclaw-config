@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-03-10
+- 2026-03-10 - Lenny: Built pytest runner (Phase 1) for hashline-edit benchmark suite in self_improvement/tests/test_hashline_edit.py.
 - 2026-03-10 - Lenny: Patched `self_improvement/smoke_test.sh` to include the mandatory Output Freshness Enforcement hard-fail check per LOOPS.md.
 - 2026-03-10 - Lenny: Drafted Third-party plugin intake policy in self_improvement/plugin_intake_policy.md.
 - Implemented `repo_mutex.py` SQLite-based per-repo locking for cron-triggered workflow runners.
