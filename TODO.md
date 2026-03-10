@@ -25,10 +25,10 @@ _(none this cycle)_
   Source: Mar 2 + Mar 7 competitor sweeps.
   Next action: **[SCHEDULED by Rosie]** Implementation plan documented in `agent-coordination/standards/ralph-loop-cron-migration-plan.md`. Migration of "Mack - Code Refactoring" scheduled for execution.
 
-- **[Winnie/Mack] Implement per-repo locking for cron-triggered workflow runners**
+- ~~[Winnie/Mack] Implement per-repo locking for cron-triggered workflow runners~~ (Completed by Mack 2026-03-10)
   Antfarm PR #251 (upstream) confirmed stalled — stop tracking. Build our own lock-file or SQLite-based repo mutex. Prevents overlapping runs in same repo.
   Source: Mar 4 + Mar 7 competitor sweeps.
-  Next action: Mack prototypes lock-file or sqlite-based repo mutex in one cron path. Do not wait for upstream.
+  Next action: Implemented `repo_mutex.py` SQLite-based locking.
 
 - **[Winnie] Watch sisyphuslabs.ai for SaaS launch** (DOWNGRADED — monthly)
   oh-my-opencode creator has a productized Sisyphus waitlist live at sisyphuslabs.ai. No launch detected after 2 weeks. Check monthly.
