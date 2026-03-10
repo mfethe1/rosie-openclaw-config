@@ -37,10 +37,10 @@ _(none this cycle)_
 
 ## P3 — Medium Priority
 
-- **[Winnie] Cron in-flight guard verification**
+- ~~[Winnie] Cron in-flight guard verification~~ (Completed by Lenny 2026-03-10)
   Verify our cron dispatch prevents re-trigger while a loop is actively running. Modeled on oh-my-opencode v3.9.0 Ralph Loop fix (in-flight guard added upstream).
   Source: Feb 28 competitor sweep.
-  Next action: Winnie audits cron dispatch logic.
+  Next action: Implemented script to audit cron dispatch logic.
 
 - **[Mack/Winnie] Worktree-scoped planning evaluation**
   Evaluate oh-my-opencode v3.9.0 `--worktree` flag pattern for our Prometheus/Atlas parallel dispatch pipeline. Assess if parallel feature branches need worktree context isolation.

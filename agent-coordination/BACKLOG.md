@@ -34,7 +34,7 @@
   - [ ] **Mack**: Build async job queue (Upstash/Redis or Railway worker), `/api/jobs` endpoints, and Stripe subscription logic in the `rare-agent-work` repo.
 - **Phase 3: Pipeline & Testing**
   - [x] **Rosie**: Orchestrate the cache routing logic (Cache -> Tavily -> LLM). Execute 3-query test pipeline (Paper-to-Code Oracle) using Tavily to verify it correctly finds Arxiv and GitHub implementations. (Done)
-  - [ ] **Rosie**: Implement Layer 2 (GitHub code extraction) and Layer 3 (Claude 3.5 Sonnet processing) of the Paper-to-Code Oracle pipeline.
+  - [x] **Rosie**: Implement Layer 2 (GitHub code extraction) and Layer 3 (Claude 3.5 Sonnet processing) of the Paper-to-Code Oracle pipeline. (Done)
   - [ ] **Winnie**: Push the tasks to the GitHub repo issues, monitor test metrics, and summarize the validation results.
 ## Update (2026-03-10 17:45 EDT)
 - **Codebase Merge & Tests**: Rosie resolved the remaining pytest failures (`test_notion_bridge.py`, `test_lane_lock_claim_integration.py`, and dependencies in `pyproject.toml`). All tests are passing locally.
@@ -49,3 +49,8 @@
 ## Michael's Directive (2026-03-10 18:18 EDT)
 - **Deployment Authorized:** Execute the Railway deployment (`railway up`).
 - **Coordination:** Rosie, coordinate over NATS with Lenny, Macklemore, and Winnie on the post-deployment next steps.
+
+## Michael's Directive (2026-03-10 19:50 EDT)
+- **Fix 1:** Upgrade search backend from TF-IDF to dense vector embeddings (fastembed/OpenAI).
+- **Fix 2:** Migrate SQLite store (`memu.db`) to `pgvector` database to support vector queries.
+- **Fix 3:** Deprecate `memory/*.md` file writes. Enforce `memu-proof-gate-protocol.md` (fail workflows without a memU ID).
