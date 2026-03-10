@@ -7,7 +7,7 @@ _(none this cycle)_
 
 ## P2 — High Priority
 
-- **[Rosie/Lenny/Mack] Rare Agent Work website release hardening**
+- ~~[Rosie/Lenny/Mack] Rare Agent Work website release hardening~~ (Freshness guardrail by Lenny 2026-03-10)
   Compare main/branch variants for offer competitiveness and merge best; keep only production-ready pages visible and add freshness guardrails for any benchmark surface.
 
 - **[Winnie/Mack] Provider-failover verification drill for long-running automations**
@@ -20,7 +20,7 @@ _(none this cycle)_
   Source: Mar 2 competitor sweep.
   Next action: Winnie benchmarks 3 representative tasks at low vs medium effort.
 
-- **[Rosie/Winnie] Adopt Ralph Loop iteration model for long-running cron tasks** ⬆️ ESCALATED — schedule now
+- ~~[Rosie/Winnie] Adopt Ralph Loop iteration model for long-running cron tasks~~ (Completed by Mack 2026-03-10)
   Ralph Loop (fresh context + persistent progress JSON per iteration) is superior to single-context long cron runs. Prevents hallucination accumulation and enables natural circuit-breaking. ralph-prompt-generator skill (LobeHub, Mar 4) now available to accelerate adoption.
   Source: Mar 2 + Mar 7 competitor sweeps.
   Next action: **[SCHEDULED by Rosie]** Implementation plan documented in `agent-coordination/standards/ralph-loop-cron-migration-plan.md`. Migration of "Mack - Code Refactoring" scheduled for execution.
@@ -72,10 +72,10 @@ _(none this cycle)_
   Source: Mar 4 competitor sweep.
   Next action: Winnie adds a guard wrapper spec for one long-running cron job.
 
-- **[All] Third-party plugin intake policy**
+- ~~[All] Third-party plugin intake policy~~ (Drafted by Lenny 2026-03-10)
   Document internal policy on when/how to accept new MCPs, models, and agent plugins. Antfarm's curated-only model is useful reference. Differentiates security posture from oh-my-opencode open ecosystem.
   Source: Mar 1 competitor sweep.
-  Next action: Draft 1-page policy doc.
+  Next action: Drafted 1-page policy doc in `self_improvement/plugin_intake_policy.md`.
 
 - ~~[Mack/Winnie] Pilot JSON schema validation on LLM cron step outputs~~ (Completed by Mack 2026-03-10)
   DEV.to Lobster-based antfarm implementation (Mar 1, 2026) uses schema-validated structured JSON from each LLM step before downstream agents consume it. Eliminates type-error class of hallucination failures at agent handoff boundaries.
