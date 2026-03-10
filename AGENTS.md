@@ -25,11 +25,13 @@ Key hard rules (summary):
 - Expertise TTL: tactical 14d, observational 30d
 
 ## 1.7) Memory Protocol (STRICT — all agents)
-- Before answering questions about past work: search memory first
-- Before starting any new task: check memory/today's date for active context
-- When you learn something important: write it to the appropriate file immediately
-- When corrected on a mistake: add the correction as a rule to MEMORY.md
-- When a session is ending or context is large: summarize to memory/YYYY-MM-DD.md
+- All new memories MUST be stored in `memU`. Local `memory/*.md` files are strictly DEPRECATED for writing.
+- Every task completion MUST satisfy the `memu-proof-gate-protocol.md` and fail the workflow if it does not output a valid memU ID.
+- Before answering questions about past work: search memU first.
+- Before starting any new task: search memU for active context.
+- When you learn something important: write it to memU immediately.
+- When corrected on a mistake: add the correction as a rule to memU.
+- When a session is ending or context is large: summarize to memU.
 - Sub-agents only get AGENTS.md + TOOLS.md — other bootstrap files are filtered out
 
 Key hard rules (summary — full policy in the file above):
