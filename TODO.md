@@ -47,10 +47,10 @@ _(none this cycle)_
   Source: Feb 28 competitor sweep.
   Next action: Review oh-my-opencode v3.9.0 worktree implementation notes.
 
-- **[Lenny/Winnie] Hashline-edit benchmark suite**
+- ~~[Lenny/Winnie] Hashline-edit benchmark suite~~ (Scoped by Lenny 2026-03-10)
   Build 46-test benchmark suite for our hashline-edit path, modeled on oh-my-opencode v3.9.0 contribution (minpeter). Target: deduplication validation + diff context limits.
   Source: Feb 28 competitor sweep.
-  Next action: Lenny scopes test cases in 1 cycle.
+  Next action: Winnie to review `self_improvement/tests/hashline_edit_benchmark_spec.md` and begin Phase 1 (pytest runner).
 
 - **[Winnie] Agent Teams inter-agent mailbox evaluation**
   Evaluate Claude Agent Teams' direct agent-to-agent messaging primitive for possible shared-state.json enhancement (move from broadcasts-only to targeted agent messages).
