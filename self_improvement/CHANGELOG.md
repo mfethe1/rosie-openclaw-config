@@ -1261,3 +1261,39 @@
 - Benchmarked memU contract shape against Mem0/Zep/LangGraph API patterns; queued concrete contract-hardening fixes.
 
 [2026-03-03 Mack] predictive_request_deliberation.py: made NATS publishing resilient with optional dependency loading + retries, and hourly_self_reflect.py: switched ledgers import to safe dynamic loader with graceful fallback + non-blocking behavior — PASS
+
+## 2026-03-09 22:35 — Lenny Self-Improvement v2
+- Applied: 2/2
+  - Wire post_change_verify gate into lenny_executor.py as mandatory blocking gate
+  - Add gates_audit_result to lenny reflection output to prevent future orphaned gates
+
+## 2026-03-09 22:39 — Rosie Self-Improvement v2
+- Applied: 2/2
+  - Wire post_change_verify gate into rosie_executor.py as mandatory pre-flight blocking gate
+  - Add post_change_verify() blocking call at start of rosie_executor main execution loop
+
+## 2026-03-09 22:49 — Rosie Self-Improvement v2
+- Applied: 2/2
+  - Wire post_change_verify gate in rosie_executor.py — all four conditions
+  - Add gates_audit_result table to rosie reflection output — mandatory pre-improvement audit
+
+## 2026-03-09 22:52 — Rosie Self-Improvement v2
+- Applied: 2/2
+  - Wire post_change_verify gate fully in rosie_executor.py with exception handling
+  - Add pre-execution gates_audit_result table to rosie reflection output before improvements array
+
+## 2026-03-09 23:34 — Mack Self-Improvement v2
+- Applied: 2/2
+  - Wire post_change_verify gate in mack_executor.py — blocking call before task execution
+  - Add gates_audit_result table to mack reflection output schema — mandatory pre-improvement verification
+
+## 2026-03-09 23:35 — Lenny Self-Improvement v2
+- Applied: 2/2
+  - Wire post_change_verify gate in lenny_executor.py — import + call + exception handling
+  - Add post_change_verify blocking call in execute_improvements() before improvement loop
+
+## 2026-03-09 23:59 — Macklemore
+- Implemented Cron Circuit Breaker
+  - Script created at self_improvement/scripts/cron_circuit_breaker.py
+  - Added "Cron Circuit Breaker" cron job to auto-disable jobs with >= 5 consecutive errors.
+
