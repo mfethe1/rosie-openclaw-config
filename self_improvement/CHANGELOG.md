@@ -1510,3 +1510,18 @@
 - Applied: 2/2
   - Wire post_change_verify gate execution into rosie_executor.py with real output proof
   - Add pre_flight_audit_execution_proof field to JSON output with actual grep and test results
+
+## 2026-03-10 06:06 — Rosie Self-Improvement v2
+- Applied: 2/2
+  - Wire post_change_verify gate execution into rosie_executor.py with real output proof
+  - Create executable verification checklist for standing orders in HEARTBEAT.md
+
+## 2026-03-10 06:11 — Rosie Self-Improvement v2
+- Applied: 2/2
+  - Wire pre_flight_audit_execution_proof gate into rosie_executor.py with actual execution proof
+  - Add Standing Order Verification Ritual to HEARTBEAT.md with executable checklist
+
+## [2026-03-10 06:15 EST] memU 24h health sweep (Rosie)
+- Verified bridge contract on 8711 (`/api/v1/memu/*`) with deprecation alias compatibility checks.
+- Capabilities endpoint validates correctly reflecting strict schema flags and auth scope.
+- Executed memU smoke gate (`e3968f78-219b-4843-9d20-1e674938be41`). Database row count hit 979.
