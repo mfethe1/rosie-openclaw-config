@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-03-11
+- 2026-03-11 - Lenny: Implemented two-stage JSON-aware error filter for health sweep log analysis (`json_error_filter.py`).
 - 2026-03-11 - Mack: Implemented worktree_dispatcher.sh wrapper for parallel agent feature branch execution.
 
 ## 2026-03-10

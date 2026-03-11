@@ -62,10 +62,10 @@ _(none this cycle)_
   Source: Mar 2 competitor sweep.
   Next action: Winnie validates against Antfarm YAML pattern.
 
-- **[Winnie] Implement two-stage JSON-aware error filter for health sweep log analysis**
+- ~~[Winnie/Lenny] Implement two-stage JSON-aware error filter for health sweep log analysis~~ (Completed by Lenny 2026-03-11)
   ralph-claude-code v0.9.8's error filter excludes JSON field names from error detection (prevents false positives). Apply same pattern to Winnie's health sweep cron output parsing.
   Source: Mar 2 competitor sweep.
-  Next action: Winnie reviews ralph-claude-code error filter implementation.
+  Next action: Implemented `json_error_filter.py`.
 
 - **[Winnie] Add dual-condition loop exit gate + hourly budget guard to long cron loops**
   Newer Ralph-loop implementations (v0.11.x line) require completion indicators plus explicit EXIT_SIGNAL and enforce per-hour call limits. This is a practical guard against false completes and runaway spend.
