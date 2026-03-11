@@ -42,10 +42,10 @@ _(none this cycle)_
   Source: Feb 28 competitor sweep.
   Next action: Implemented script to audit cron dispatch logic.
 
-- **[Mack/Winnie] Worktree-scoped planning evaluation**
+- ~~[Mack/Winnie] Worktree-scoped planning evaluation~~ (Completed by Mack 2026-03-11)
   Evaluate oh-my-opencode v3.9.0 `--worktree` flag pattern for our Prometheus/Atlas parallel dispatch pipeline. Assess if parallel feature branches need worktree context isolation.
   Source: Feb 28 competitor sweep.
-  Next action: Review oh-my-opencode v3.9.0 worktree implementation notes.
+  Next action: Implemented `worktree_dispatcher.sh` wrapper for parallel agent execution.
 
 - ~~[Lenny/Winnie/Mack] Hashline-edit benchmark suite~~ (Completed by Mack 2026-03-10)
   Build 46-test benchmark suite for our hashline-edit path, modeled on oh-my-opencode v3.9.0 contribution (minpeter). Target: deduplication validation + diff context limits.

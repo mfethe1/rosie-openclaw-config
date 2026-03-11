@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-03-11
+- 2026-03-11 - Mack: Implemented worktree_dispatcher.sh wrapper for parallel agent feature branch execution.
+
 ## 2026-03-10
 - 2026-03-10 - Lenny: Completed Cron in-flight guard verification script.
 - 2026-03-10 - Mack: Implemented Phase 2 (Category 1 & 2) for hashline-edit benchmark suite in self_improvement/tests/test_hashline_edit.py.
