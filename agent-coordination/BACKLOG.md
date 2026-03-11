@@ -95,8 +95,22 @@
   - [ ] **Lenny**: Configure the `memu-api` service to natively accept 4096-dimensional embeddings.
   - [ ] **Winnie**: Investigate and fix the IPv6/IPv4 NATS connection failures.
 
+## Michael's Directive (2026-03-11 10:15 EDT) - Long Lead / Supply Chain Risk Detection
+- **Goal:** Add capability to the Construction Bid App agent to detect and flag long lead items and equipment (procurement delays > 8 weeks) that impact project schedule.
+- **Assignments:**
+  - [x] **Rosie**: Update the agent's estimate validation logic to scan for long lead items and proactively suggest early release packages, preordering, or schedule contingency.
+  - [ ] **Mack**: Implement a supply chain/long lead database tool or API connector for the agent to use.
+
 ## Michael's Directive (2026-03-11 09:28 EDT) - Project Manager and Task Breakout
 - **Goal:** Integrate the DeerFlow "Project Manager and Task Breakout" capability into our Gateway Swarm architecture for complex multi-step task planning.
 - **Assignments:**
   - [x] **Rosie**: **Project Manager Integration** - Design and implement the Lead Agent planning phase (Project Manager) that breaks down ambiguous requests into sub-tasks.
   - [ ] **Mack**: **Task Breakout Implementation** - Create the NATS worker payload structures and routing to spawn parallel sub-agents for each broken-out task, then synthesize the results.
+
+## Michael's Directive (2026-03-11 11:45 EDT) - Graphiti Memory Upgrade
+- **Goal:** Integrate Graphiti memory upgrade (temporal knowledge-graph memory architecture) into `fumemory` and our memory system.
+- **Assignments:**
+  - [ ] **Mack**: Integrate the Graphiti/Zep knowledge graph architecture into the `fumemory` temporal worker/queue orchestration.
+  - [ ] **Lenny**: Handle backend `pgvector` filtered ANN tuning for the temporal knowledge-graph retrieval.
+  - [ ] **Winnie**: Enforce the `memu-write-contract-guardrails` during Graphiti integration.
+  - [ ] **Rosie**: Implement the `temporal-retrieval-lane` and verify end-to-end Graphiti memory operations.

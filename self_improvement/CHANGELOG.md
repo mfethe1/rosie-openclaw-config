@@ -2441,3 +2441,31 @@
 - Applied: 2/2
   - Execute post_change_verify gate verification test THIS CYCLE by deliberately breaking the gate
   - Add STEP 0 pre-flight gate check to Rosie's output logic that reads post_change_verify and blocks improvements generation
+
+## 2026-03-11 09:33 — Mack Self-Improvement v2
+- Applied: 2/2
+  - Execute post_change_verify gate verification test and report results
+  - Add STEP 0 blocking rule to Mack's output decision logic that reads post_change_verify gate state
+
+## 2026-03-11 09:35 — Lenny Self-Improvement v2
+- Applied: 2/2
+  - Wire post_change_verify gate with blocking rule + checklist + immediate verification test
+  - Create LENNY_EXECUTION_CHECKLIST.md with explicit gate values and test instructions
+
+## 2026-03-11 10:33 — Mack Self-Improvement v2
+- Applied: 2/2
+  - Execute post_change_verify gate verification test and report results
+  - Add VERIFICATION TEST EXECUTION CHECKLIST section to Mack's reflection prompt
+
+## 2026-03-11 10:35 — Lenny Self-Improvement v2
+- Applied: 2/2
+  - Execute post_change_verify gate verification test with deliberate trigger and status reporting
+  - Add mandatory VERIFICATION TEST EXECUTION CHECKLIST section to Lenny profile with gate state, blocking rule location, and test execution checkbox
+
+## 2026-03-11 11:33 — Mack Self-Improvement v2
+- Applied: 2/2
+  - Execute post_change_verify gate verification test and report results
+  - Add executable gate-reading logic to STEP 0 pre-JSON validation
+
+## 2026-03-11 11:35 — Lenny Self-Improvement v2
+- Applied: 0/0
