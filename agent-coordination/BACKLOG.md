@@ -1,5 +1,5 @@
 # BACKLOG.md — Canonical Task Registry
-**Last updated:** 2026-03-10
+**Last updated:** 2026-03-11
 **Owner:** Rosie (Coordinator/QA)
 
 ## Active Assignments (Michael's Directive 2026-03-10)
@@ -36,6 +36,7 @@
   - [x] **Rosie**: Orchestrate the cache routing logic (Cache -> Tavily -> LLM). Execute 3-query test pipeline (Paper-to-Code Oracle) using Tavily to verify it correctly finds Arxiv and GitHub implementations. (Done)
   - [x] **Rosie**: Implement Layer 2 (GitHub code extraction) and Layer 3 (Claude 3.5 Sonnet processing) of the Paper-to-Code Oracle pipeline. (Done)
   - [ ] **Winnie**: Push the tasks to the GitHub repo issues, monitor test metrics, and summarize the validation results.
+
 ## Update (2026-03-10 17:45 EDT)
 - **Codebase Merge & Tests**: Rosie resolved the remaining pytest failures (`test_notion_bridge.py`, `test_lane_lock_claim_integration.py`, and dependencies in `pyproject.toml`). All tests are passing locally.
 - **Status**: The `main` branch of `fumemory` is 100% green with the hybrid retrieval, temporal orchestration, and dedupe hygiene features successfully integrated.
@@ -57,3 +58,32 @@
 
 ## Michael's Directive (2026-03-10 19:52 EDT Follow-up)
 - **Execution Order:** Wait for Macklemore to successfully push the current baseline to Railway production. Once Mack's deploy is green, Rosie, Lenny, and Winnie are to swarm on implementing the 3 fixes (Dense Vectors, pgvector migration, local .md deprecation).
+
+## Swarm Update (2026-03-10 19:55 EDT)
+- **Status:** Swarm is GO for the memU Modernization project.
+- [x] **Rosie**: Updated policies (`AGENTS.md` and `context-memory-cost-policy.md`) to formally deprecate `memory/*.md` writes and enforce `memu-proof-gate-protocol.md`.
+- [ ] **Winnie**: Build branch for `memu-proof-gate-protocol.md` automated enforcement.
+- [ ] **Lenny**: Build branch for `fastembed`/OpenAI dense vector upgrades.
+- [ ] **Rosie**: Build branch to migrate SQLite store (`memu.db`) to `pgvector` database.
+
+## Michael's Directive (2026-03-11 08:18 EDT) - Construction Bid App Feature Initiative
+- **Goal:** Execute estimate workflow upgrades on `construction-bid-app`. 
+- **Branch:** `lenny/estimate-workflows`
+- **Execution Order (per Michael):**
+  - [x] 1. **EST-WF-01:** Spreadsheet-style verification tracking user name (Done)
+  - [x] 2. **EST-WF-02:** Keyboard-first editing with tab/enter (Done)
+  - [x] 3. **EST-WF-03:** Sort/filter by trade (Done)
+  - [x] 4. **EST-WF-04:** PDF/CSV export (Done)
+  - [x] 5. **EST-WF-05:** Gmail/Outlook draft flow (Done)
+  - [x] 6. **EST-WF-06:** Change orders (Done)
+  - [x] 7. **EST-WF-07:** GC-style scheduling (Done)
+  - [x] 8. **EST-WF-08:** Receipt/invoice cost tracking (Done)
+  - [x] 9. **EST-WF-09:** Estimate vs actual profit audit (Done)
+  - [x] 10. **EST-WF-10:** Cadence vs schedule audit (Done)
+
+## Michael's Directive (2026-03-11 09:14 EDT) - DeerFlow Performance Patterns Implementation
+- **Goal:** Implement the three performance efficiency patterns identified from the DeerFlow v2.0 repository into our Gateway Swarm architecture.
+- **Assignments:**
+  - [ ] **Lenny**: **Progressive Skill Loading (Context Efficiency)** - Implement lazy-loading for tools/skills in worker loops to reduce context window size.
+  - [ ] **Winnie**: **Strict Sub-Agent Context Isolation (Speed & Focus)** - Enforce shallow orchestration by stripping context bleed in NATS payload handoffs.
+  - [ ] **Macklemore**: **Aggressive In-Flight Summarization** - Add a context-compression step to the `task_orchestrator.py` skill that summarizes outputs and stores raw logs separately in `outputs/`.
