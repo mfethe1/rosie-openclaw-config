@@ -2469,3 +2469,13 @@
 
 ## 2026-03-11 11:35 — Lenny Self-Improvement v2
 - Applied: 0/0
+
+## 2026-03-11 12:33 — Mack Self-Improvement v2
+- Applied: 2/2
+  - Execute post_change_verify gate blocking test with deliberate trigger and report results
+  - Add STEP 0 gate-reading logic to mack.md that executes BEFORE JSON generation
+
+## 2026-03-11 12:35 — Lenny Self-Improvement v2
+- Applied: 2/2
+  - Wire post_change_verify gate with executable STEP 0 blocking logic and immediate verification test
+  - Create LENNY_EXECUTION_CHECKLIST.md with explicit gate state and test trigger instructions

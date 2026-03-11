@@ -10,10 +10,10 @@ _(none this cycle)_
 - ~~[Rosie/Lenny/Mack] Rare Agent Work website release hardening~~ (Freshness guardrail by Lenny 2026-03-10)
   Compare main/branch variants for offer competitiveness and merge best; keep only production-ready pages visible and add freshness guardrails for any benchmark surface.
 
-- **[Winnie/Mack] Provider-failover verification drill for long-running automations**
+- ~~[Winnie/Mack] Provider-failover verification drill for long-running automations~~ (Checklist defined by Lenny 2026-03-11)
   Run one controlled fallback drill: primary model intentionally unavailable, secondary/tertiary chain must continue with the same verification gates (tests/lint/diagnostics) and no duplicate side effects.
   Source: Mar 5 competitor sweep (oh-my-opencode provider-priority/fallback emphasis + Ralph deterministic loop discipline).
-  Next action: Winnie defines pass/fail checklist; Mack executes on one non-critical cron path.
+  Next action: Mack executes on one non-critical cron path using `self_improvement/drills/provider_failover_drill.md`.
 
 - **[Winnie/Oracle] Test ReasoningEffort param on Oracle + Hephaestus agents**
   oh-my-opencode #2118 signals broad ReasoningEffort (low/medium/high) adoption. Evaluate on our Oracle (architecture consults) and Hephaestus (deep worker) to reduce token cost on simpler tasks without quality loss.

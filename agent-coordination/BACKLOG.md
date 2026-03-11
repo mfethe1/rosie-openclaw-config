@@ -110,7 +110,7 @@
 ## Michael's Directive (2026-03-11 11:45 EDT) - Graphiti Memory Upgrade
 - **Goal:** Integrate Graphiti memory upgrade (temporal knowledge-graph memory architecture) into `fumemory` and our memory system.
 - **Assignments:**
-  - [ ] **Mack**: Integrate the Graphiti/Zep knowledge graph architecture into the `fumemory` temporal worker/queue orchestration.
-  - [ ] **Lenny**: Handle backend `pgvector` filtered ANN tuning for the temporal knowledge-graph retrieval.
-  - [ ] **Winnie**: Enforce the `memu-write-contract-guardrails` during Graphiti integration.
-  - [ ] **Rosie**: Implement the `temporal-retrieval-lane` and verify end-to-end Graphiti memory operations.
+  - [x] **Mack**: Integrate the Graphiti/Zep knowledge graph architecture into the `fumemory` temporal worker/queue orchestration. (Shipped via commit 44a74c9)
+  - [x] **Lenny**: Handle backend `pgvector` filtered ANN tuning for the temporal knowledge-graph retrieval. (Shipped via commit d60a304)
+  - [x] **Winnie**: Enforce the `memu-write-contract-guardrails` during Graphiti integration. (Shipped via commit d60a304)
+  - [x] **Rosie**: Implement the `temporal-retrieval-lane` and verify end-to-end Graphiti memory operations. (Shipped via commit d60a304)
