@@ -87,3 +87,10 @@
   - [ ] **Lenny**: **Progressive Skill Loading (Context Efficiency)** - Implement lazy-loading for tools/skills in worker loops to reduce context window size.
   - [ ] **Winnie**: **Strict Sub-Agent Context Isolation (Speed & Focus)** - Enforce shallow orchestration by stripping context bleed in NATS payload handoffs.
   - [ ] **Macklemore**: **Aggressive In-Flight Summarization** - Add a context-compression step to the `task_orchestrator.py` skill that summarizes outputs and stores raw logs separately in `outputs/`.
+
+## Michael's Directive (2026-03-11 09:26 EDT) - Migration Fix (4096 Dims)
+- **Goal:** Upgrade the pgvector column to support 4096 dimensions for modern models rather than downsampling to 384 dims.
+- **Assignments:**
+  - [ ] **Mack**: Update the migration script (e.g., `011_force_384_dims.sql`) to use `DROP COLUMN embedding CASCADE` to clear view dependencies, recreate it as `vector(4096)`, and recreate the `current_memories` view.
+  - [ ] **Lenny**: Configure the `memu-api` service to natively accept 4096-dimensional embeddings.
+  - [ ] **Winnie**: Investigate and fix the IPv6/IPv4 NATS connection failures.

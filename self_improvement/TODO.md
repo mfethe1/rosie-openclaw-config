@@ -336,3 +336,4 @@
 
 ## Completed (Mack)
 - [x] Implement dynamic gate_compliance_check verification in smoke_test.sh (Completed by Mack 2026-03-10)
+- [Priority: Medium] Next Action: Provision an experimental Antfarm agent team using a YAML configuration to benchmark deterministic execution and verification gates against our current oh-my-opencode setup.

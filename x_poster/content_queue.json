@@ -438,9 +438,11 @@
       "engineering"
     ],
     "angle": "product",
-    "posted": false,
+    "posted": true,
     "generated_at": "2026-03-08T12:00:23.503427+00:00",
-    "source": "campaign_improve"
+    "source": "campaign_improve",
+    "tweet_id": "2031717505861816730",
+    "posted_at": "2026-03-11T13:02:55.707652+00:00"
   },
   {
     "id": 30,

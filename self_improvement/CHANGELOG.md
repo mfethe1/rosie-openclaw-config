@@ -2426,3 +2426,18 @@
 - Applied: 2/2
   - Wire credibility_deadline_passed check into STEP 0 decision tree with mechanical improvements array blocking
   - Create explicit STEP 0 VERIFICATION CHECKPOINT with mechanical checkbox validation
+
+## 2026-03-11 08:41 — Rosie Self-Improvement v2
+- Applied: 2/2
+  - Create ROSIE_EXECUTION_CHECKLIST.md with executable gate verification test
+  - Add STEP 0 pre-flight blocking rule to Rosie's output decision logic
+
+## 2026-03-11 08:44 — Rosie Self-Improvement v2
+- Applied: 2/2
+  - Add VERIFICATION TEST EXECUTION CHECKLIST to Rosie prompt with mandatory same-cycle trigger
+  - Update ROSIE_EXECUTION_CHECKLIST.md with explicit test trigger instructions and gate state
+
+## 2026-03-11 08:50 — Rosie Self-Improvement v2
+- Applied: 2/2
+  - Execute post_change_verify gate verification test THIS CYCLE by deliberately breaking the gate
+  - Add STEP 0 pre-flight gate check to Rosie's output logic that reads post_change_verify and blocks improvements generation
