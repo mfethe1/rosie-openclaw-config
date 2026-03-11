@@ -94,3 +94,9 @@
   - [ ] **Mack**: Update the migration script (e.g., `011_force_384_dims.sql`) to use `DROP COLUMN embedding CASCADE` to clear view dependencies, recreate it as `vector(4096)`, and recreate the `current_memories` view.
   - [ ] **Lenny**: Configure the `memu-api` service to natively accept 4096-dimensional embeddings.
   - [ ] **Winnie**: Investigate and fix the IPv6/IPv4 NATS connection failures.
+
+## Michael's Directive (2026-03-11 09:28 EDT) - Project Manager and Task Breakout
+- **Goal:** Integrate the DeerFlow "Project Manager and Task Breakout" capability into our Gateway Swarm architecture for complex multi-step task planning.
+- **Assignments:**
+  - [ ] **Rosie**: **Project Manager Integration** - Design and implement the Lead Agent planning phase (Project Manager) that breaks down ambiguous requests into sub-tasks.
+  - [ ] **Mack**: **Task Breakout Implementation** - Create the NATS worker payload structures and routing to spawn parallel sub-agents for each broken-out task, then synthesize the results.
