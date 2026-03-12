@@ -1,0 +1,8 @@
+- 2026-03-11 18:56:38Z heartbeat: memU health check failed (connection refused at http://localhost:8711/api/v1/memu/health); retry next cycle.
+- 2026-03-11 19:06:37Z heartbeat: memU health check failed (<urlopen error [Errno 61] Connection refused>); retry next cycle.
+- 2026-03-11 19:11:18Z heartbeat: memU health check failed (error: <urlopen error [Errno 61] Connection refused>); retry next cycle.
+- 2026-03-11 19:16:10Z heartbeat: memU health check failed (error: <urlopen error [Errno 61] Connection refused>); retry next cycle.
+- 2026-03-11 19:21:49Z heartbeat: memU health check failed (error: <urlopen error [Errno 61] Connection refused>); retry next cycle.
+- 2026-03-11 19:26:04Z heartbeat: memU health check failed (error: <urlopen error [Errno 61] Connection refused>); retry next cycle.
+- 2026-03-11 19:30:04Z heartbeat: memU health check failed (error: <urlopen error [Errno 61] Connection refused>); retry next cycle.
+- 2026-03-11 19:35:34Z heartbeat: memU health check failed (error: <urlopen error [Errno 61] Connection refused>); retry next cycle.
