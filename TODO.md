@@ -13,7 +13,7 @@ _(none this cycle)_
 - ~~[Winnie/Mack] Provider-failover verification drill for long-running automations~~ (Checklist defined by Lenny 2026-03-11)
   Run one controlled fallback drill: primary model intentionally unavailable, secondary/tertiary chain must continue with the same verification gates (tests/lint/diagnostics) and no duplicate side effects.
   Source: Mar 5 competitor sweep (oh-my-opencode provider-priority/fallback emphasis + Ralph deterministic loop discipline).
-  Next action: Mack executes on one non-critical cron path using `self_improvement/drills/provider_failover_drill.md`.
+  Next action: COMPLETED 2026-03-12 by Mack. Fallback to Gemini validated with NO duplicate side effects and full JSON structure recovery.
 
 - **[Winnie/Oracle] Test ReasoningEffort param on Oracle + Hephaestus agents**
   oh-my-opencode #2118 signals broad ReasoningEffort (low/medium/high) adoption. Evaluate on our Oracle (architecture consults) and Hephaestus (deep worker) to reduce token cost on simpler tasks without quality loss.
@@ -52,10 +52,10 @@ _(none this cycle)_
   Source: Feb 28 competitor sweep.
   Next action: Phase 1, 2, 3 & 4 tests implemented by Mack 2026-03-10.
 
-- **[Winnie] Agent Teams inter-agent mailbox evaluation**
+- ~~[Winnie] Agent Teams inter-agent mailbox evaluation~~ (Prototype built by Mack 2026-03-12)
   Evaluate Claude Agent Teams' direct agent-to-agent messaging primitive for possible shared-state.json enhancement (move from broadcasts-only to targeted agent messages).
   Source: Feb 23 competitor sweep.
-  Next action: Winnie reviews Agent Teams mailbox API docs in 1 cycle.
+  Next action: Implemented `agent_mailbox.py` primitive by Mack 2026-03-12. Winnie to evaluate adoption.
 
 - ~~[Mack/Winnie] Evaluate Antfarm Momus→Atlas inter-agent verification gate~~ (Gate contract sketched by Mack 2026-03-10)
   Antfarm's verified inter-agent pipeline (agents check each other's output before proceeding) is architecturally cleaner than our current pattern. Evaluate applying this to Momus (plan reviewer) → Atlas (executor) handoff.
@@ -67,10 +67,10 @@ _(none this cycle)_
   Source: Mar 2 competitor sweep.
   Next action: Implemented `json_error_filter.py`.
 
-- **[Winnie] Add dual-condition loop exit gate + hourly budget guard to long cron loops**
+- ~~[Winnie/Lenny] Add dual-condition loop exit gate + hourly budget guard to long cron loops~~ (Completed by Lenny 2026-03-12)
   Newer Ralph-loop implementations (v0.11.x line) require completion indicators plus explicit EXIT_SIGNAL and enforce per-hour call limits. This is a practical guard against false completes and runaway spend.
   Source: Mar 4 competitor sweep.
-  Next action: Winnie adds a guard wrapper spec for one long-running cron job.
+  Next action: Implemented `cron_guard_wrapper.py` with dual-condition exit gate and hourly budget guard.
 
 - ~~[All] Third-party plugin intake policy~~ (Drafted by Lenny 2026-03-10)
   Document internal policy on when/how to accept new MCPs, models, and agent plugins. Antfarm's curated-only model is useful reference. Differentiates security posture from oh-my-opencode open ecosystem.
@@ -89,10 +89,10 @@ _(none this cycle)_
 
 ## P4 — Low Priority
 
-- **[Winnie] LobeHub `/loop` quality-check tier**
+- ~~[Winnie] LobeHub `/loop` quality-check tier~~ (Completed by Mack 2026-03-12)
   Review quality_score threshold as a stop condition, inspired by LobeHub loop skill QUALITY CHECK step.
   Source: Feb 23 competitor sweep.
-  Next action: Winnie reviews LobeHub loop skill implementation when bandwidth available.
+  Next action: Implemented quality_score threshold checking in hourly_self_reflect.py to reject low-quality improvements.
 
 ## Closed / Archived
 
