@@ -9,7 +9,7 @@ Every task completion MUST be accompanied by proof of memU usage.
 
 ## 3. Mandatory Steps
 - On task start: Read relevant context from `memU` via API/MCP tool.
-- During execution: Store key decisions, tool results, and novel findings to `memU`. Ensure all written memories include a `relationships` array to establish Graph-Lite entity/relationship tags.
+- During execution: Store key decisions, tool results, and novel findings to `memU`. Ensure all written memories include a `relationships` array to establish Graph-Lite entity/relationship tags. This array is REQUIRED for valid memU entries.
 - On task completion: Write the final state and any reusable insights to `memU`.
 
 ## 4. Deprecation Notice
