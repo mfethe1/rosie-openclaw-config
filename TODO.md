@@ -1,5 +1,5 @@
 # TODO.md
-_Last updated: 2026-03-07 09:00 EST by Winnie (competitor sweep)_
+_Last updated: 2026-03-12 20:57 EST by Mack (Technical implementation)_
 
 ## P1 — Critical
 
@@ -23,7 +23,7 @@ _(none this cycle)_
 - ~~[Rosie/Winnie] Adopt Ralph Loop iteration model for long-running cron tasks~~ (Completed by Mack 2026-03-10)
   Ralph Loop (fresh context + persistent progress JSON per iteration) is superior to single-context long cron runs. Prevents hallucination accumulation and enables natural circuit-breaking. ralph-prompt-generator skill (LobeHub, Mar 4) now available to accelerate adoption.
   Source: Mar 2 + Mar 7 competitor sweeps.
-  Next action: **[SCHEDULED by Rosie]** Implementation plan documented in `agent-coordination/standards/ralph-loop-cron-migration-plan.md`. Migration of "Mack - Code Refactoring" scheduled for execution.
+  Next action: COMPLETED 2026-03-12 by Mack. Implemented `ralph_cron_wrapper.py` integrating the `progress.json` state machine.
 
 - ~~[Winnie/Mack] Implement per-repo locking for cron-triggered workflow runners~~ (Completed by Mack 2026-03-10)
   Antfarm PR #251 (upstream) confirmed stalled — stop tracking. Build our own lock-file or SQLite-based repo mutex. Prevents overlapping runs in same repo.

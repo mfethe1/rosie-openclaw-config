@@ -1,9 +1,9 @@
 {
-  "last_run": "2026-03-11T13:05:00Z",
-  "what_changed": "Implemented two-stage JSON-aware error filter (json_error_filter.py) to reduce false positives in health sweep logs.",
-  "next_owner": "Rosie",
+  "last_run": "2026-03-13T00:57:00.000000Z",
+  "what_changed": "Mack completed ralph_cron_wrapper.py integrating the progress.json state machine for long-running cron jobs.",
+  "next_owner": "All",
   "blockers": null,
   "broadcasts": [],
-  "last_updated": "2026-03-11T13:05:00Z",
-  "last_updated_by": "lenny"
+  "last_updated": "2026-03-13T00:57:00.000000Z",
+  "last_updated_by": "mack"
 }
