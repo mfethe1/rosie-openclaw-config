@@ -148,6 +148,8 @@
 
 ## Completed (Archive Weekly)
 
+- [x] **[Mack]** Implement `unenforced_gate_auditor.py` to continuously scan LOOPS.md and agent profiles for documented quality gates and ensure they have functional hooks in `smoke_test.sh` or dedicated verification scripts. ✅ (2026-03-13 05:57)
+
 - [x] **[Rosie]** Research oh-my-opencode framework (2026-02-12)
 - [x] **[Rosie]** Create OH_MY_OPENCLAW_FRAMEWORK.md (2026-02-12)
 - [x] **[Rosie]** Create SKILL_RECOMMENDATIONS.md (2026-02-12)
@@ -337,3 +339,4 @@
 ## Completed (Mack)
 - [x] Implement dynamic gate_compliance_check verification in smoke_test.sh (Completed by Mack 2026-03-10)
 - [Priority: Medium] Next Action: Provision an experimental Antfarm agent team using a YAML configuration to benchmark deterministic execution and verification gates against our current oh-my-opencode setup.
+- **High Priority**: Evaluate Antfarm's YAML/SQLite deterministic workflow integration within OpenClaw. Next Action: Install Antfarm in an isolated sandbox and run a benchmark test.
