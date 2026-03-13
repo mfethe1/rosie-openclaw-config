@@ -340,3 +340,11 @@
 - [x] Implement dynamic gate_compliance_check verification in smoke_test.sh (Completed by Mack 2026-03-10)
 - [Priority: Medium] Next Action: Provision an experimental Antfarm agent team using a YAML configuration to benchmark deterministic execution and verification gates against our current oh-my-opencode setup.
 - **High Priority**: Evaluate Antfarm's YAML/SQLite deterministic workflow integration within OpenClaw. Next Action: Install Antfarm in an isolated sandbox and run a benchmark test.
+
+## [2026-03-13] Winnie Competitor Sweep — oh-my-opencode / antfarm / ralph-loop
+[HIGH]   OMO slim config — test selective agent activation to avoid default-agent override conflict (assign: Mack)
+[HIGH]   Add per-pipeline cost cap before any Antfarm autonomous cron activation (block: runaway spend risk, $3600/mo extreme case)
+[MEDIUM] Antfarm pilot: run feature-dev pipeline on docs-generation task, manual cost checkpoint per stage
+[MEDIUM] Ralph loop test: boilerplate/script generation with Lenny smoke-test gate post-loop
+[LOW]    Track OMO v3.10+ for upstream fix to default-agent replacement side effect
+# ref: self_improvement/outputs/2026-03-13-09-winnie.md
