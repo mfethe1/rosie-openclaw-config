@@ -1,0 +1,36 @@
+{
+  "name": "memu-health",
+  "command": "curl -s http://127.0.0.1:8711/api/v1/memu/health",
+  "runs": 3,
+  "success_rate": 1.0,
+  "duration_ms": {
+    "min": 13.802,
+    "max": 18.181,
+    "avg": 15.558,
+    "p50": 14.69
+  },
+  "generated_at": "2026-02-19T06:06:37-05:00",
+  "results": [
+    {
+      "run": 1,
+      "returncode": 0,
+      "duration_ms": 18.181,
+      "stdout_preview": "{\n  \"status\": \"ok\",\n  \"service\": \"memU bridge\",\n  \"version\": \"1.3.0\",\n  \"features\": [\n    \"fts\",\n    \"tfidf-semantic-search\",\n    \"wal-replay\",\n    \"idempotency\",\n    \"event-stream\"\n  ],\n  \"memory_dir",
+      "stderr_preview": ""
+    },
+    {
+      "run": 2,
+      "returncode": 0,
+      "duration_ms": 14.69,
+      "stdout_preview": "{\n  \"status\": \"ok\",\n  \"service\": \"memU bridge\",\n  \"version\": \"1.3.0\",\n  \"features\": [\n    \"fts\",\n    \"tfidf-semantic-search\",\n    \"wal-replay\",\n    \"idempotency\",\n    \"event-stream\"\n  ],\n  \"memory_dir",
+      "stderr_preview": ""
+    },
+    {
+      "run": 3,
+      "returncode": 0,
+      "duration_ms": 13.802,
+      "stdout_preview": "{\n  \"status\": \"ok\",\n  \"service\": \"memU bridge\",\n  \"version\": \"1.3.0\",\n  \"features\": [\n    \"fts\",\n    \"tfidf-semantic-search\",\n    \"wal-replay\",\n    \"idempotency\",\n    \"event-stream\"\n  ],\n  \"memory_dir",
+      "stderr_preview": ""
+    }
+  ]
+}

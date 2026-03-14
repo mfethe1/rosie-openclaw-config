@@ -1,0 +1,20 @@
+{
+  "ballot_id": "research-2026-03-14",
+  "created_at": "2026-03-14T11:03:03.362951+00:00",
+  "options": [
+    {
+      "id": "opt1",
+      "title": "Implement research track 1",
+      "query": "latest 2025 2026 research on LLM agent optimization and reliable tool use",
+      "proposal": "{\"ok\": true, \"model\": \"spark-1-mini\", \"prompt\": \"latest 2025 2026 research on LLM agent optimization and reliable tool use\", \"data\": {\"findings\": [{\"title\": \"HCAPO: Hindsight Credit Assignment for Long-Horizon Agents\", \""
+    },
+    {
+      "id": "opt2",
+      "title": "Implement research track 2",
+      "query": "recent papers on agentic workflows, planning, and multi-agent coordination",
+      "proposal": "{\"ok\": true, \"model\": \"spark-1-mini\", \"prompt\": \"recent papers on agentic workflows, planning, and multi-agent coordination\", \"data\": {\"findings\": [{\"title\": \"Paradigm Shift to Natural Language Reward Engineering\", \"summ"
+    }
+  ],
+  "threshold": 0.82,
+  "status": "open"
+}

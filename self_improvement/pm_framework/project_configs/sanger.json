@@ -1,0 +1,37 @@
+{
+  "name": "Sanger",
+  "description": "AI-assisted genomics and biotech research application. Helps researchers analyze sequencing data, identify variants, generate hypotheses from literature, and write structured research summaries.",
+  "current_state": "Literature search and summarization module working. Variant annotation pipeline in development. No wet-lab integration yet. Data privacy compliance review pending.",
+  "key_features": [
+    "AI-powered literature search and synthesis",
+    "Genomic variant annotation and interpretation",
+    "Research hypothesis generation",
+    "Structured scientific writing assistance",
+    "Dataset management for sequencing runs",
+    "Collaboration tools for research teams",
+    "Regulatory compliance documentation"
+  ],
+  "target_users": [
+    "Genomics researchers at academic institutions",
+    "Bioinformaticians at biotech companies",
+    "Clinical geneticists needing variant interpretation",
+    "Pharmaceutical R&D teams in early discovery"
+  ],
+  "known_issues": [
+    "HIPAA/GDPR compliance not yet certified",
+    "Variant annotation limited to known databases (no novel variant support)",
+    "Literature search limited to PubMed (no preprint servers yet)",
+    "No wet-lab LIMS integration",
+    "Large dataset performance issues (>10GB VCF files)"
+  ],
+  "next_priorities": [
+    "HIPAA compliance certification",
+    "Novel variant interpretation via AI reasoning",
+    "bioRxiv/medRxiv preprint integration",
+    "Performance optimization for large VCF files",
+    "LIMS API integration (Benchling, LabArchives)"
+  ],
+  "tech_stack": ["Python", "Bioinformatics pipelines (Nextflow)", "PostgreSQL", "Anthropic API", "AWS"],
+  "business_stage": "Research prototype — academic pilot",
+  "target_market": "Life sciences research — academic and biotech"
+}

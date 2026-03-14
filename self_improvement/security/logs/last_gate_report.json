@@ -1,0 +1,32 @@
+{
+  "gate": "fail",
+  "checks": [
+    {
+      "name": "ast_scan",
+      "status": "pass",
+      "details": "0 finding(s), none HIGH"
+    },
+    {
+      "name": "docker_audit",
+      "status": "skip",
+      "details": "No Dockerfiles found"
+    },
+    {
+      "name": "state_machine",
+      "status": "skip",
+      "details": "No XML files found"
+    },
+    {
+      "name": "bccs_consensus",
+      "status": "fail",
+      "details": "BCCS decision=reject (\u03bc=0.650)"
+    },
+    {
+      "name": "test_suite",
+      "status": "fail",
+      "details": "pytest exited 1: /opt/homebrew/opt/python@3.14/bin/python3.14: No module named pytest\n"
+    }
+  ],
+  "timestamp": "2026-03-02T12:17:08.469057Z",
+  "target_dir": "/var/folders/d1/hh78slw921d0g29bht0cdr4m0000gn/T/tmp_eer_t_c"
+}

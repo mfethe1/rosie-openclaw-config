@@ -1,0 +1,37 @@
+{
+  "name": "JiraFlow",
+  "description": "AI-powered project management tool that bridges Jira with natural language. Allows teams to create, update, and query Jira tickets via conversational AI, and generates automated sprint reports.",
+  "current_state": "Jira API integration complete. Basic ticket creation and query via chat working. Sprint report generation in alpha. No webhook support yet.",
+  "key_features": [
+    "Natural language Jira ticket creation",
+    "AI-powered sprint planning recommendations",
+    "Automated daily standup summaries",
+    "Velocity tracking and forecasting",
+    "Cross-project dependency mapping",
+    "Slack/Teams integration for updates",
+    "AI sprint retrospective facilitation"
+  ],
+  "target_users": [
+    "Engineering teams using Jira (5-50 developers)",
+    "Scrum Masters managing multiple teams",
+    "Engineering managers tracking delivery",
+    "Product managers doing backlog grooming"
+  ],
+  "known_issues": [
+    "No webhook support — relies on polling (slow updates)",
+    "Sprint report format not configurable",
+    "Slack integration limited to read-only",
+    "No support for Jira Service Management (only Software)",
+    "AI recommendations lack historical context"
+  ],
+  "next_priorities": [
+    "Webhook integration for real-time updates",
+    "Configurable sprint report templates",
+    "Slack write integration (create tickets from Slack)",
+    "Historical velocity data ingestion for better forecasts",
+    "Jira Service Management support"
+  ],
+  "tech_stack": ["Node.js", "PostgreSQL", "Jira REST API", "Slack API", "Anthropic API"],
+  "business_stage": "MVP — 2 internal pilot teams",
+  "target_market": "B2B SaaS — engineering teams at tech companies"
+}

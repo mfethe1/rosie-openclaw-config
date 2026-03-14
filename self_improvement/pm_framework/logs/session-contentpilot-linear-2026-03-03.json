@@ -1,0 +1,20 @@
+{
+  "project": "ContentPilot",
+  "timestamp": "2026-03-03T07:00:02.019755",
+  "context": "{\n  \"description\": \"AI-powered marketing content automation platform. Generates, schedules, and analyzes social media content, blog posts, and email campaigns. Maintains brand voice consistency across all outputs.\",\n  \"current_state\": \"Content generation working for LinkedIn and Twitter. Brand voice configuration UI complete. Scheduling requires manual export \\u2014 no direct posting API yet. Analytics dashboard in progress.\",\n  \"known_issues\": [\n    \"No direct posting \\u2014 manual export required\",\n    \"Brand voice inconsistent across platforms\",\n    \"No image/visual generation integrated\",\n    \"Analytics limited to generated content (no platform import)\",\n    \"Email campaigns not yet connected to ESPs (Mailchimp etc.)\"\n  ],\n  \"next_priorities\": [\n    \"LinkedIn and Twitter direct posting API\",\n    \"Brand voice consistency improvements\",\n    \"Canva/DALL-E visual generation integration\",\n    \"Mailchimp/ConvertKit ESP integration\",\n    \"Platform analytics import (LinkedIn Insights, Twitter Analytics)\"\n  ]\n}",
+  "personas_run": [
+    "pm",
+    "red",
+    "blue",
+    "qa"
+  ],
+  "outputs": {
+    "pm": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "red": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "blue": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "qa": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "synthesis": "ERROR: ANTHROPIC_API_KEY not set in environment"
+  },
+  "model": "claude-haiku-4-5",
+  "mode": "linear"
+}

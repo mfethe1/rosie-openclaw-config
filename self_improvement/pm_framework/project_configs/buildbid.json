@@ -1,0 +1,37 @@
+{
+  "name": "BuildBid",
+  "description": "AI-powered construction estimating application that helps GCs and estimators generate accurate bids faster. Automates quantity takeoffs, material pricing, and labor estimation.",
+  "current_state": "Estimating module complete with core takeoff functionality. Lot model persistence is in progress. PDF import for blueprints working. User auth and multi-tenant setup done.",
+  "key_features": [
+    "AI-assisted quantity takeoffs from blueprints",
+    "Material price database with regional pricing",
+    "Labor hour estimation by trade",
+    "Bid generation and export (PDF, Excel)",
+    "Multi-project estimating dashboard",
+    "Subcontractor quote comparison",
+    "Historical bid analysis"
+  ],
+  "target_users": [
+    "General contractors at small-to-mid firms (10-100 employees)",
+    "In-house estimators at construction companies",
+    "Independent estimating consultants",
+    "Specialty subcontractors doing self-perform work"
+  ],
+  "known_issues": [
+    "Lot model data not persisted between sessions",
+    "PDF import accuracy drops on hand-drawn blueprints",
+    "Material pricing requires manual refresh (no live feed yet)",
+    "No mobile app — estimators often work on-site",
+    "Multi-user collaboration on same bid not yet supported"
+  ],
+  "next_priorities": [
+    "Lot model persistence (database schema + API)",
+    "Live material pricing integration (RSMeans or similar)",
+    "Mobile-responsive UI for on-site use",
+    "Multi-user collaboration (shared bid workspace)",
+    "Bid template library (by project type)"
+  ],
+  "tech_stack": ["Python/FastAPI", "React", "PostgreSQL", "Anthropic API"],
+  "business_stage": "Early beta — 3 pilot customers",
+  "target_market": "US construction industry, $12B estimating software market"
+}

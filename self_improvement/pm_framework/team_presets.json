@@ -1,0 +1,292 @@
+{
+  "_meta": {
+    "version": "2.0.0",
+    "description": "Pre-built team compositions for common project types. Use with TeamBuilder.custom() or as --personas list in pm_session.py.",
+    "usage": "python3 pm_session.py run --project X --context Y --personas <preset_roles>",
+    "last_updated": "2026-03-02"
+  },
+
+  "presets": {
+    "minimal": {
+      "description": "Fastest review for quick decisions. Core PM + adversarial loop only.",
+      "roles": ["pm", "red", "blue", "qa"],
+      "phases": ["Planning", "Review", "Defense", "Quality"],
+      "recommended_for": "Daily standups, quick feature decisions, hot-fix reviews",
+      "estimated_api_calls": 5,
+      "notes": "No GTM or leadership. Pure technical review loop."
+    },
+
+    "pm_prompt_review_board": {
+      "description": "PM-led expert review board for prompt quality and execution behavior.",
+      "roles": [
+        "pm",
+        "tech_lead",
+        "engineering_manager",
+        "security",
+        "qa",
+        "solutions_architect",
+        "red",
+        "blue"
+      ],
+      "phases": ["Planning", "Review", "Defense", "Quality", "Synthesis"],
+      "recommended_for": "Prompt hardening, workflow quality reviews, proactive execution tuning",
+      "estimated_api_calls": 9,
+      "notes": "Use before shipping major agent prompt or workflow changes."
+    },
+
+    "sprint_planning": {
+      "description": "Full sprint planning session with engineering depth.",
+      "roles": ["pm", "tech_lead", "engineering_manager", "red", "blue", "qa"],
+      "phases": ["Planning", "Review", "Defense", "Quality"],
+      "recommended_for": "Weekly sprint planning, backlog refinement",
+      "estimated_api_calls": 7,
+      "notes": "Includes capacity planning and technical architecture review."
+    },
+
+    "feature_launch": {
+      "description": "Full feature launch readiness — from planning through go-to-market.",
+      "roles": [
+        "cpo", "pm", "tech_lead", "engineering_manager",
+        "ux_designer", "solutions_architect",
+        "red", "blue", "security", "chaos_engineer",
+        "qa", "accessibility", "tech_writer",
+        "product_marketing", "sales_engineer", "customer_success"
+      ],
+      "phases": ["Discovery", "Planning", "Review", "Defense", "Quality", "Go-to-Market", "Synthesis"],
+      "recommended_for": "Major feature releases, customer-facing milestone launches",
+      "estimated_api_calls": 18,
+      "notes": "Most comprehensive preset. Use for quarterly releases."
+    },
+
+    "security_audit": {
+      "description": "Deep security and compliance review for sensitive features or audit preparation.",
+      "roles": [
+        "pm", "tech_lead",
+        "security", "legal",
+        "red", "chaos_engineer",
+        "blue", "devops",
+        "qa"
+      ],
+      "phases": ["Planning", "Review", "Defense", "Quality"],
+      "recommended_for": "SOC 2 prep, HIPAA review, penetration test scope, security-sensitive features",
+      "estimated_api_calls": 10,
+      "notes": "Focuses on threat modeling, compliance, and chaos engineering."
+    },
+
+    "construction_saas": {
+      "description": "Specialized team for construction technology SaaS products (e.g. BuildBid).",
+      "roles": [
+        "cpo", "pm",
+        "tech_lead",
+        "ux_designer", "solutions_architect", "business_analyst",
+        "red", "blue", "security",
+        "qa", "tech_writer",
+        "product_marketing", "sales_engineer", "customer_success",
+        "competitive_intel"
+      ],
+      "domain": "construction",
+      "industry": "construction",
+      "stage": "growth",
+      "phases": ["Discovery", "Planning", "Review", "Defense", "Quality", "Go-to-Market", "Synthesis"],
+      "recommended_for": "BuildBid, construction estimating tools, field management software, bid management platforms",
+      "estimated_api_calls": 16,
+      "notes": "Tech lead adapted to construction domain (building codes, estimation, BIM). Includes competitive intel for crowded estimating software market."
+    },
+
+    "healthcare_saas": {
+      "description": "Healthcare / health tech SaaS with HIPAA and regulatory focus.",
+      "roles": [
+        "cpo", "pm",
+        "tech_lead",
+        "ux_designer", "data_scientist",
+        "security", "legal", "ethical_ai",
+        "red", "blue", "devops",
+        "qa", "accessibility",
+        "product_marketing", "customer_success"
+      ],
+      "domain": "biotech",
+      "industry": "healthcare",
+      "stage": "growth",
+      "phases": ["Discovery", "Planning", "Review", "Defense", "Quality", "Go-to-Market", "Synthesis"],
+      "recommended_for": "EHR integrations, patient portal features, clinical decision support, health data analytics",
+      "estimated_api_calls": 16,
+      "notes": "Prioritizes HIPAA compliance, ethical AI review, and accessibility (ADA Section 508)."
+    },
+
+    "fintech": {
+      "description": "Financial technology with regulatory, performance, and security depth.",
+      "roles": [
+        "cpo", "pm",
+        "tech_lead",
+        "solutions_architect", "data_scientist", "performance_engineer",
+        "security", "legal",
+        "red", "blue", "chaos_engineer",
+        "qa", "business_analyst",
+        "product_marketing", "sales_engineer"
+      ],
+      "domain": "finance",
+      "industry": "fintech",
+      "stage": "growth",
+      "phases": ["Discovery", "Planning", "Review", "Defense", "Quality", "Go-to-Market", "Synthesis"],
+      "recommended_for": "Payment processing, trading platforms, lending products, financial data APIs",
+      "estimated_api_calls": 16,
+      "notes": "Tech lead adapted to finance domain (SOX, PCI-DSS, risk models). Chaos engineering covers financial data failure scenarios."
+    },
+
+    "startup_mvp": {
+      "description": "Lean team for MVP validation. Speed over completeness.",
+      "roles": [
+        "cpo", "pm",
+        "tech_lead",
+        "interviewer",
+        "red", "blue",
+        "qa",
+        "product_marketing"
+      ],
+      "domain": "software",
+      "industry": "saas",
+      "stage": "startup",
+      "phases": ["Discovery", "Planning", "Review", "Defense", "Quality", "Synthesis"],
+      "recommended_for": "Pre-product-market-fit, first 3 sprints of a new product, pivot evaluation",
+      "estimated_api_calls": 9,
+      "notes": "Drops GTM depth in favor of speed. CPO acts as final decision maker."
+    },
+
+    "data_ml_platform": {
+      "description": "Data engineering and ML platform build.",
+      "roles": [
+        "pm", "tech_lead",
+        "data_scientist", "solutions_architect",
+        "devops", "security", "performance_engineer",
+        "ethical_ai",
+        "red", "blue", "chaos_engineer",
+        "qa", "tech_writer"
+      ],
+      "domain": "software",
+      "industry": "saas",
+      "stage": "growth",
+      "phases": ["Planning", "Review", "Defense", "Quality"],
+      "recommended_for": "ML model deployment, data pipeline builds, analytics infrastructure, feature stores",
+      "estimated_api_calls": 14,
+      "notes": "Ethical AI review mandatory. Chaos engineering covers data pipeline failure scenarios."
+    },
+
+    "api_platform": {
+      "description": "Public API or developer platform launch.",
+      "roles": [
+        "cpo", "pm",
+        "tech_lead", "solutions_architect",
+        "devops", "security", "performance_engineer",
+        "red", "blue",
+        "qa", "tech_writer",
+        "product_marketing", "sales_engineer"
+      ],
+      "domain": "software",
+      "industry": "saas",
+      "stage": "growth",
+      "phases": ["Planning", "Review", "Defense", "Quality", "Go-to-Market", "Synthesis"],
+      "recommended_for": "Developer APIs, SDK launches, webhook systems, partner integrations",
+      "estimated_api_calls": 13,
+      "notes": "Tech writer is critical — API docs are the product for developers. Performance engineer sets latency SLOs."
+    },
+
+    "accessibility_remediation": {
+      "description": "Focused accessibility audit and remediation sprint.",
+      "roles": [
+        "pm",
+        "ux_designer", "accessibility",
+        "tech_lead",
+        "qa", "tech_writer"
+      ],
+      "domain": "software",
+      "industry": "saas",
+      "stage": "growth",
+      "phases": ["Planning", "Quality"],
+      "recommended_for": "WCAG compliance sprints, ADA remediation, government contract requirements, Section 508",
+      "estimated_api_calls": 6,
+      "notes": "Accessibility auditor leads. UX designer proposes fixes. QA writes test cases for AT."
+    },
+
+    "enterprise_sales": {
+      "description": "Enterprise deal support — demo readiness and technical validation.",
+      "roles": [
+        "cpo", "pm",
+        "solutions_architect", "security", "legal",
+        "product_marketing", "sales_engineer", "customer_success",
+        "competitive_intel"
+      ],
+      "domain": "software",
+      "industry": "saas",
+      "stage": "enterprise",
+      "phases": ["Go-to-Market", "Synthesis"],
+      "recommended_for": "Fortune 500 deals, enterprise RFP responses, security reviews for big accounts",
+      "estimated_api_calls": 9,
+      "notes": "Skips development phases. Focused entirely on deal support and GTM."
+    },
+
+    "post_incident": {
+      "description": "Post-incident review and prevention planning.",
+      "roles": [
+        "pm",
+        "tech_lead", "devops",
+        "chaos_engineer", "security",
+        "red", "blue",
+        "engineering_manager",
+        "qa"
+      ],
+      "domain": "software",
+      "industry": "saas",
+      "stage": "growth",
+      "phases": ["Planning", "Review", "Defense", "Quality"],
+      "recommended_for": "Post-mortems, incident prevention, SRE improvement sprints",
+      "estimated_api_calls": 10,
+      "notes": "Chaos engineer leads failure mode analysis. DevOps produces runbook improvements."
+    }
+  },
+
+  "customer_persona_templates": {
+    "buildbid_construction": {
+      "product": "BuildBid",
+      "industry": "construction",
+      "count": 5,
+      "expertise_distribution": {"novice": 2, "intermediate": 2, "expert": 1},
+      "roles": ["general_contractor", "estimator", "project_owner", "subcontractor", "architect"]
+    },
+    "generic_saas_smb": {
+      "product": "SaaS Product",
+      "industry": "saas",
+      "count": 3,
+      "expertise_distribution": {"novice": 1, "intermediate": 1, "expert": 1},
+      "roles": ["developer", "it_manager"]
+    },
+    "healthcare_platform": {
+      "product": "Health Platform",
+      "industry": "healthcare",
+      "count": 3,
+      "expertise_distribution": {"novice": 1, "intermediate": 1, "expert": 1},
+      "roles": ["physician", "administrator"]
+    }
+  },
+
+  "team_builder_shortcuts": {
+    "description": "Use these with TeamBuilder.for_project() parameters",
+    "examples": [
+      {
+        "label": "Construction SaaS — Feature Development",
+        "code": "builder.for_project(project_type='saas', industry='construction', stage='growth', focus='feature_development')"
+      },
+      {
+        "label": "Healthcare — Security Audit",
+        "code": "builder.for_project(project_type='saas', industry='healthcare', stage='enterprise', focus='security_audit')"
+      },
+      {
+        "label": "Startup — MVP Launch",
+        "code": "builder.for_project(project_type='saas', industry='saas', stage='startup', focus='launch')"
+      },
+      {
+        "label": "Fintech — Data ML Platform",
+        "code": "builder.for_project(project_type='data_platform', industry='fintech', stage='growth', focus='data_ml')"
+      }
+    ]
+  }
+}

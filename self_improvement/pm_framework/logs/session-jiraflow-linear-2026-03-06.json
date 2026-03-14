@@ -1,0 +1,20 @@
+{
+  "project": "JiraFlow",
+  "timestamp": "2026-03-06T06:20:01.332860",
+  "context": "{\n  \"description\": \"AI-powered project management tool that bridges Jira with natural language. Allows teams to create, update, and query Jira tickets via conversational AI, and generates automated sprint reports.\",\n  \"current_state\": \"Jira API integration complete. Basic ticket creation and query via chat working. Sprint report generation in alpha. No webhook support yet.\",\n  \"known_issues\": [\n    \"No webhook support \\u2014 relies on polling (slow updates)\",\n    \"Sprint report format not configurable\",\n    \"Slack integration limited to read-only\",\n    \"No support for Jira Service Management (only Software)\",\n    \"AI recommendations lack historical context\"\n  ],\n  \"next_priorities\": [\n    \"Webhook integration for real-time updates\",\n    \"Configurable sprint report templates\",\n    \"Slack write integration (create tickets from Slack)\",\n    \"Historical velocity data ingestion for better forecasts\",\n    \"Jira Service Management support\"\n  ]\n}",
+  "personas_run": [
+    "pm",
+    "red",
+    "blue",
+    "qa"
+  ],
+  "outputs": {
+    "pm": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "red": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "blue": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "qa": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "synthesis": "ERROR: ANTHROPIC_API_KEY not set in environment"
+  },
+  "model": "claude-haiku-4-5",
+  "mode": "linear"
+}

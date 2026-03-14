@@ -1,0 +1,20 @@
+{
+  "project": "BuildBid",
+  "timestamp": "2026-03-13T06:00:02.776940",
+  "context": "{\n  \"description\": \"AI-powered construction estimating application that helps GCs and estimators generate accurate bids faster. Automates quantity takeoffs, material pricing, and labor estimation.\",\n  \"current_state\": \"Estimating module complete with core takeoff functionality. Lot model persistence is in progress. PDF import for blueprints working. User auth and multi-tenant setup done.\",\n  \"known_issues\": [\n    \"Lot model data not persisted between sessions\",\n    \"PDF import accuracy drops on hand-drawn blueprints\",\n    \"Material pricing requires manual refresh (no live feed yet)\",\n    \"No mobile app \\u2014 estimators often work on-site\",\n    \"Multi-user collaboration on same bid not yet supported\"\n  ],\n  \"next_priorities\": [\n    \"Lot model persistence (database schema + API)\",\n    \"Live material pricing integration (RSMeans or similar)\",\n    \"Mobile-responsive UI for on-site use\",\n    \"Multi-user collaboration (shared bid workspace)\",\n    \"Bid template library (by project type)\"\n  ]\n}",
+  "personas_run": [
+    "pm",
+    "red",
+    "blue",
+    "qa"
+  ],
+  "outputs": {
+    "pm": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "red": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "blue": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "qa": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "synthesis": "ERROR: ANTHROPIC_API_KEY not set in environment"
+  },
+  "model": "claude-haiku-4-5",
+  "mode": "linear"
+}

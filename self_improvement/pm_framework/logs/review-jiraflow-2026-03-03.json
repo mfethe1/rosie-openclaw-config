@@ -1,0 +1,24 @@
+{
+  "project": "jiraflow",
+  "timestamp": "2026-03-03T06:20:01.035332",
+  "personas_run": [
+    "pm",
+    "red",
+    "blue",
+    "qa"
+  ],
+  "outputs": {
+    "pm": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "red": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "blue": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "qa": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "synthesis": "ERROR: ANTHROPIC_API_KEY not set in environment"
+  },
+  "diff": {
+    "status": "first_review",
+    "changes": [],
+    "new_items": []
+  },
+  "action_items": [],
+  "team_summary": "\ud83d\udccb **PM Review: jiraflow** \u2014 2026-03-03\nPersonas: pm, red, blue, qa\n\n**Sprint Synthesis:**\nERROR: ANTHROPIC_API_KEY not set in environment\n\n**Top Risks (Red Team):**\nERROR: ANTHROPIC_API_KEY not set in environment...\n\n_(First review for this project)_"
+}

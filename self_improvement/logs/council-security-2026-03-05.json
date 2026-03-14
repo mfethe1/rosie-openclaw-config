@@ -1,0 +1,31 @@
+{
+  "council": "security",
+  "run_at": "2026-03-05T12:00:14.214938+00:00",
+  "skills_scanned": [
+    "agentic-research-routine",
+    "antfarm-workflows",
+    "firecrawl-agent",
+    "openrouter-sonar",
+    "prompt-optimizer"
+  ],
+  "skills_count": 5,
+  "findings_count": 1,
+  "findings": [
+    {
+      "scanned_files": 1,
+      "total_findings": 1,
+      "findings": [
+        {
+          "file": "/Users/harrisonfethe/.openclaw/skills/prompt-optimizer/scripts/optimize_prompt.py",
+          "line": 47,
+          "pattern": "subprocess.run()",
+          "severity": "MEDIUM",
+          "recommendation": "Avoid shell=True; pass args as a list and validate all inputs."
+        }
+      ],
+      "skill": "prompt-optimizer"
+    }
+  ],
+  "errors": [],
+  "overall": "FINDINGS"
+}

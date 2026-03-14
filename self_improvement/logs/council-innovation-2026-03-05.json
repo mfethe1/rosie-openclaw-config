@@ -1,0 +1,29 @@
+{
+  "council": "innovation",
+  "run_at": "2026-03-05T13:01:24.954338+00:00",
+  "queries_run": 3,
+  "raw_results": [
+    {
+      "query": "latest AI agent self-improvement techniques 2025",
+      "rc": 0,
+      "output_len": 3231
+    },
+    {
+      "query": "best practices autonomous LLM agent memory management",
+      "rc": 0,
+      "output_len": 3143
+    },
+    {
+      "query": "new methods for LLM agent orchestration and multi-agent coordination",
+      "rc": 0,
+      "output_len": 3591
+    }
+  ],
+  "suggestions": [
+    "Self-Reflection and In-Loop Feedback**: Agents improve at inference time via Reflexion (iterative reflection on failures), Self-Refine (prompt-level refinement), and trained self-correction like RISE, STaR, SELF, or STaSC. Self-rewarding models score their own outputs for RL training, while self-consistency aggregates multiple reasoning chains for reliability.[1]",
+    "Self-Generated Data and Curricula**: Agents create their own training examples, problems, or demonstrations, filtering for quality to drive self-training and avoid poor signals. This extends to peer learning among agents sharing strategies.[1][2]",
+    "Self-Adapting Models**: Techniques like SEAL generate self-edit instructions (e.g., \"prefer answer type X for certain patterns\"), converting them into fine-tuning data using downstream performance as reward.[1]"
+  ],
+  "errors": [],
+  "overall": "OK"
+}

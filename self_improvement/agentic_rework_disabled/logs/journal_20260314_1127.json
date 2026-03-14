@@ -1,0 +1,13 @@
+{
+  "summary": {
+    "record_count": 0,
+    "lanes": 0,
+    "pass_count": 0,
+    "fail_count": 0,
+    "budget_usd": 0
+  },
+  "lanes": {},
+  "date": null,
+  "window_days": 1,
+  "input": "/Users/harrisonfethe/.openclaw/workspace/self_improvement/agentic_rework_disabled/logs/kpi_events.jsonl"
+}

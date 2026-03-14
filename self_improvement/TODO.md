@@ -337,6 +337,7 @@
 - [ ] PRIORITY: High. Next Action: Implement Ralph-loop style strict programmatic verification gates (`verifyCompletion`) for task execution to enforce deterministic execution and reduce manual validation.
 
 ## Completed (Mack)
+- [x] Implement Centralized Retry Decorator (`retry_with_jitter.py`) to eliminate fragile hardcoded retry loops (Completed by Mack 2026-03-14 18:57 UTC)
 - [x] Refined the final 21 broad 'except Exception:' clauses across 10 SI scripts (Completed by Mack 2026-03-14 09:57 UTC)
 - [x] Refine broad exception clauses (Phase 6) (Completed by Mack 2026-03-14 06:57 UTC)
 - [x] Implement dynamic gate_compliance_check verification in smoke_test.sh (Completed by Mack 2026-03-10)

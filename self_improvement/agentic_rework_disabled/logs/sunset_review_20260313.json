@@ -1,0 +1,28 @@
+{
+  "ok": true,
+  "packet": "/Users/harrisonfethe/.openclaw/workspace/self_improvement/agentic_rework/intent_packet_template.md",
+  "required_sections": [
+    "objective",
+    "repo map",
+    "docs & references",
+    "constraints",
+    "definition of done",
+    "test plan",
+    "rollback plan",
+    "budget guard",
+    "owner sign-off"
+  ],
+  "found_sections": [
+    "objective",
+    "repo map",
+    "docs & references",
+    "constraints",
+    "definition of done (dod)",
+    "test plan",
+    "rollback plan",
+    "budget guard",
+    "owner sign-off",
+    "optional appendix"
+  ],
+  "missing_sections": []
+}

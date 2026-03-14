@@ -1,0 +1,50 @@
+{
+  "ok": true,
+  "catalog": "/Users/harrisonfethe/.openclaw/workspace/self_improvement/agentic_rework/agent_catalog.json",
+  "checked_agents": 6,
+  "results": [
+    {
+      "lane": "core-platform",
+      "skill_count": 8,
+      "kpi_contract": "kpi_contracts/rosie.json",
+      "kpi_contract_exists": true,
+      "errors": []
+    },
+    {
+      "lane": "google-workflow",
+      "skill_count": 8,
+      "kpi_contract": "kpi_contracts/mack.json",
+      "kpi_contract_exists": true,
+      "errors": []
+    },
+    {
+      "lane": "pharma",
+      "skill_count": 8,
+      "kpi_contract": "kpi_contracts/winnie.json",
+      "kpi_contract_exists": true,
+      "errors": []
+    },
+    {
+      "lane": "business-sales",
+      "skill_count": 8,
+      "kpi_contract": "kpi_contracts/lenny.json",
+      "kpi_contract_exists": true,
+      "errors": []
+    },
+    {
+      "lane": "seo",
+      "skill_count": 8,
+      "kpi_contract": "kpi_contracts/mack.json",
+      "kpi_contract_exists": true,
+      "errors": []
+    },
+    {
+      "lane": "marketing",
+      "skill_count": 8,
+      "kpi_contract": "kpi_contracts/winnie.json",
+      "kpi_contract_exists": true,
+      "errors": []
+    }
+  ],
+  "errors": []
+}

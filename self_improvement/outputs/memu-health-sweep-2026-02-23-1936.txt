@@ -1,0 +1,3 @@
+memU 24h health sweep notes placeholder
+- route contract: bridge at /api/v1/memu/*
+- smoke checks: pass

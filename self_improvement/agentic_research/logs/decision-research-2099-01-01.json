@@ -1,0 +1,18 @@
+{
+  "ok": true,
+  "ballot_id": "research-2099-01-01",
+  "winner": "opt1",
+  "normalised_score": 1.0,
+  "decided": true,
+  "votes_received": 3,
+  "result": {
+    "winner": "opt1",
+    "scores": {
+      "opt1": 75.0
+    },
+    "normalised_scores": {
+      "opt1": 1.0
+    }
+  },
+  "ts": "2026-03-03T13:44:44.258149+00:00"
+}

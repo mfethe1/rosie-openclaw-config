@@ -1,0 +1,37 @@
+{
+  "lane_owner": "rosie",
+  "version": "1.0.0",
+  "contract_window": "daily",
+  "pass_rule": "all_required_kpis_pass",
+  "sunset_rule": {
+    "condition": "3 consecutive daily failures OR 2 weekly failures within 30 days",
+    "action": "freeze lane changes, require owner remediation packet, and re-approve before resume"
+  },
+  "budget_cap_hints": {
+    "daily_soft_cap_usd": 200,
+    "daily_hard_cap_usd": 350,
+    "weekly_soft_cap_usd": 1200
+  },
+  "kpis": [
+    {
+      "name": "uptime_pct",
+      "pass_threshold": ">= 99.5",
+      "fail_threshold": "< 99.0"
+    },
+    {
+      "name": "loop_success_rate_pct",
+      "pass_threshold": ">= 97",
+      "fail_threshold": "< 94"
+    },
+    {
+      "name": "incident_mtta_minutes",
+      "pass_threshold": "<= 15",
+      "fail_threshold": "> 30"
+    },
+    {
+      "name": "p95_cycle_minutes",
+      "pass_threshold": "<= 30",
+      "fail_threshold": "> 45"
+    }
+  ]
+}

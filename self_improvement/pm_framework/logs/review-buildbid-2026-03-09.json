@@ -1,0 +1,27 @@
+{
+  "project": "buildbid",
+  "timestamp": "2026-03-09T06:00:02.024311",
+  "personas_run": [
+    "pm",
+    "red",
+    "blue",
+    "qa"
+  ],
+  "outputs": {
+    "pm": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "red": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "blue": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "qa": "ERROR: ANTHROPIC_API_KEY not set in environment",
+    "synthesis": "ERROR: ANTHROPIC_API_KEY not set in environment"
+  },
+  "diff": {
+    "status": "updated",
+    "days_since_last": 0,
+    "changes": [
+      "Previous review: 2026-03-08, Current: 2026-03-09"
+    ],
+    "synthesis_preview": "ERROR: ANTHROPIC_API_KEY not set in environment"
+  },
+  "action_items": [],
+  "team_summary": "\ud83d\udccb **PM Review: buildbid** \u2014 2026-03-09\nPersonas: pm, red, blue, qa\n\n**Sprint Synthesis:**\nERROR: ANTHROPIC_API_KEY not set in environment\n\n**Top Risks (Red Team):**\nERROR: ANTHROPIC_API_KEY not set in environment...\n\n_(Last review: 0 days ago)_"
+}

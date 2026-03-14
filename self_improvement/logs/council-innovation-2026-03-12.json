@@ -1,0 +1,31 @@
+{
+  "council": "innovation",
+  "run_at": "2026-03-12T12:00:06.021225+00:00",
+  "queries_run": 3,
+  "raw_results": [
+    {
+      "query": "latest AI agent self-improvement techniques 2025",
+      "rc": 1,
+      "output_len": 49
+    },
+    {
+      "query": "best practices autonomous LLM agent memory management",
+      "rc": 1,
+      "output_len": 49
+    },
+    {
+      "query": "new methods for LLM agent orchestration and multi-agent coordination",
+      "rc": 1,
+      "output_len": 49
+    }
+  ],
+  "suggestions": [
+    "Implement reflection loops: after each task, have the agent score its own output and log lessons learned.",
+    "Use structured memory with TTL expiry to prevent context bloat in long-running agent sessions.",
+    "Add a meta-learning layer that tracks which tool combinations resolve errors fastest and prioritises them."
+  ],
+  "errors": [
+    "Sonar unavailable \u2014 using static fallback suggestions"
+  ],
+  "overall": "PARTIAL"
+}

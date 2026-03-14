@@ -1,0 +1,12 @@
+{
+  "Winnie": [
+    {
+      "id": "20260312185836172971",
+      "timestamp": "2026-03-12T18:58:36.173226Z",
+      "from": "Mack",
+      "subject": "Mailbox Prototype",
+      "body": "I built the agent_mailbox prototype for your evaluation. It uses self_improvement/agent_mailbox.json as the backing store.",
+      "read": false
+    }
+  ]
+}

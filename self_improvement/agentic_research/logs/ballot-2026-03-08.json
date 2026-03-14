@@ -1,0 +1,38 @@
+{
+  "ballot_id": "research-2026-03-08",
+  "created_at": "2026-03-08T11:13:21.885820+00:00",
+  "options": [
+    {
+      "id": "opt1",
+      "title": "Implement research track 1",
+      "query": "latest 2025 2026 research on LLM agent optimization and reliable tool use",
+      "proposal": "{\"ok\": true, \"model\": \"spark-1-mini\", \"prompt\": \"latest 2025 2026 research on LLM agent optimization and reliable tool use\", \"data\": {\"findings\": [{\"title\": \"Trace-Free+: Curriculum Learning for Reliable Tool Use\", \"summ"
+    },
+    {
+      "id": "opt2",
+      "title": "Implement research track 2",
+      "query": "recent papers on agentic workflows, planning, and multi-agent coordination",
+      "proposal": "{\"ok\": true, \"model\": \"spark-1-mini\", \"prompt\": \"recent papers on agentic workflows, planning, and multi-agent coordination\", \"data\": {\"findings\": [{\"title\": \"Modular Agentic Planner (MAP): Brain-Inspired Modular Plannin"
+    },
+    {
+      "id": "opt3",
+      "title": "Implement research track 3",
+      "query": "elegant systems approaches for AI tool routing, safety, and evaluation loops",
+      "proposal": "{\"ok\": true, \"model\": \"spark-1-mini\", \"prompt\": \"elegant systems approaches for AI tool routing, safety, and evaluation loops\", \"data\": {\"findings\": [{\"title\": \"Model Context Protocol (MCP) as a Standardized Interface\", "
+    },
+    {
+      "id": "opt4",
+      "title": "Implement research track 4",
+      "query": "new research on autonomous software engineering agents, code review agents, and CI/CD agent reliability",
+      "proposal": "{\"ok\": true, \"model\": \"spark-1-mini\", \"prompt\": \"new research on autonomous software engineering agents, code review agents, and CI/CD agent reliability\", \"data\": {\"findings\": [{\"title\": \"Autonomous Software Engineering "
+    },
+    {
+      "id": "opt5",
+      "title": "Implement research track 5",
+      "query": "latest methods for multi-agent memory systems, retrieval quality, and consensus-based decision making",
+      "proposal": "{\"ok\": true, \"model\": \"spark-1-mini\", \"prompt\": \"latest methods for multi-agent memory systems, retrieval quality, and consensus-based decision making\", \"data\": {\"findings\": [{\"title\": \"Pancake: Hierarchical and Hybrid M"
+    }
+  ],
+  "threshold": 0.82,
+  "status": "open"
+}

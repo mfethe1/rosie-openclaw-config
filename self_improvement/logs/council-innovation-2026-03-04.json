@@ -1,0 +1,29 @@
+{
+  "council": "innovation",
+  "run_at": "2026-03-04T13:00:45.957425+00:00",
+  "queries_run": 3,
+  "raw_results": [
+    {
+      "query": "latest AI agent self-improvement techniques 2025",
+      "rc": 0,
+      "output_len": 3426
+    },
+    {
+      "query": "best practices autonomous LLM agent memory management",
+      "rc": 0,
+      "output_len": 3345
+    },
+    {
+      "query": "new methods for LLM agent orchestration and multi-agent coordination",
+      "rc": 0,
+      "output_len": 3568
+    }
+  ],
+  "suggestions": [
+    "Reflexion and Self-Refine**: Agents reflect on outputs, generate critiques, and refine prompts iteratively.[1]",
+    "Self-Correction Training (RISE, STaR, SELF, STaSC)**: Models learn to self-correct using rationales from successes/failures, expanding to tool-use and multi-agent tasks.[1]",
+    "Self-Reward and Consistency**: Agents score their own outputs for RL (e.g., Self-Rewarding Language Models) or select majority from multiple chains.[1]"
+  ],
+  "errors": [],
+  "overall": "OK"
+}

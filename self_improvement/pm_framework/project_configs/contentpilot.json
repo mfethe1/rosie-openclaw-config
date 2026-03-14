@@ -1,0 +1,38 @@
+{
+  "name": "ContentPilot",
+  "description": "AI-powered marketing content automation platform. Generates, schedules, and analyzes social media content, blog posts, and email campaigns. Maintains brand voice consistency across all outputs.",
+  "current_state": "Content generation working for LinkedIn and Twitter. Brand voice configuration UI complete. Scheduling requires manual export — no direct posting API yet. Analytics dashboard in progress.",
+  "key_features": [
+    "AI content generation with brand voice training",
+    "Multi-platform content adaptation (LinkedIn, Twitter, Instagram)",
+    "Content calendar management",
+    "Direct social media posting (in development)",
+    "Performance analytics and A/B testing",
+    "Email campaign generation",
+    "Blog post drafting with SEO optimization",
+    "Social media monitoring and response suggestions"
+  ],
+  "target_users": [
+    "Solo founders and small business owners doing their own marketing",
+    "Marketing managers at SMBs (1-3 person marketing teams)",
+    "Freelance social media managers handling multiple clients",
+    "Construction and trade businesses building online presence"
+  ],
+  "known_issues": [
+    "No direct posting — manual export required",
+    "Brand voice inconsistent across platforms",
+    "No image/visual generation integrated",
+    "Analytics limited to generated content (no platform import)",
+    "Email campaigns not yet connected to ESPs (Mailchimp etc.)"
+  ],
+  "next_priorities": [
+    "LinkedIn and Twitter direct posting API",
+    "Brand voice consistency improvements",
+    "Canva/DALL-E visual generation integration",
+    "Mailchimp/ConvertKit ESP integration",
+    "Platform analytics import (LinkedIn Insights, Twitter Analytics)"
+  ],
+  "tech_stack": ["React", "FastAPI", "PostgreSQL", "Anthropic API", "LinkedIn API", "Twitter API"],
+  "business_stage": "Private beta — 8 beta users",
+  "target_market": "SMB marketing automation — $14B market by 2028"
+}

@@ -1,0 +1,309 @@
+{
+  "version": 1,
+  "last_updated": "2026-03-14T18:35:17.890986+00:00",
+  "facts": [
+    {
+      "fact": "[lenny] Applied: REPLACED section in infrastructure/gates/post_change_verify_architectural_review.md: Architectural D",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T02:35:00.974825+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: REPLACED section in agents/mack.md: Add STEP 0 pre-flight circuit-breaker that blocks improvement ge",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T03:33:36.249201+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: REPLACED section in infrastructure/infrastructure_health.json: Document post_change_verify gate repl",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T03:33:36.250899+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: REPLACED section in agents/lenny.md: Make STEP 0 pre-flight check executable with hard circuit-break",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T03:34:59.615309+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: APPENDED (marker not found) agents/lenny.md: Add INFRASTRUCTURE_HEALTH gate status audit to pre-flig",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T03:34:59.617076+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: REPLACED section in agents/mack.md: STEP 0 Pre-Flight Gate Status Verification (Executable)",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T04:33:27.443071+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: APPENDED (marker not found) infrastructure/infrastructure_health.json: Infrastructure Health Audit: ",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T04:33:27.444651+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: REPLACED section in agents/lenny.md: Make STEP 0 gate-status verification executable and visible in ",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T04:34:43.274639+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: APPENDED (marker not found) agents/lenny.md: Add mandatory gate-status fields to pre_flight_audit ou",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T04:34:43.275913+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: REPLACED section in agents/mack.md: Add executable gate-status verification to pre_flight_audit outp",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T05:33:34.967345+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: REPLACED section in infrastructure/infrastructure_health.json: Fix 'post_change_verify' gate from no",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T05:33:34.968627+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: APPENDED (marker not found) agents/lenny.md: Make gate-status verification a hard circuit-breaker in",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T05:34:43.968093+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: REPLACED section in agents/lenny.md: Add explicit circuit-breaker rule to OUTPUT FORMAT section",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T05:34:43.969671+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: REPLACED section in agents/mack.md: Add mandatory gate-status verification fields to pre_flight_audi",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T06:33:35.810815+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: REPLACED section in agents/mack.md: Make STEP 0 gate verification executable and report results befo",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T06:33:35.812428+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: APPENDED (marker not found) agents/lenny.md: Implement hard circuit-breaker: block improvements gene",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T07:34:54.988928+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: APPENDED (marker not found) infrastructure/infrastructure_health.json: Fix 'post_change_verify' gate",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T07:34:54.990432+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: REPLACED section in agents/mack.md: Enforce gate verification circuit-breaker BEFORE improvement gen",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T08:33:26.021373+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: REPLACED section in agents/mack.md: Add mandatory gate_status_verified enforcement to OUTPUT FORMAT ",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T08:33:26.022823+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: APPENDED (marker not found) agents/lenny.md: Implement hard circuit-breaker: gate verification block",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T08:34:56.055844+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: REPLACED section in agents/lenny.md: Implement hard execution-flow gate verification blocker in STEP",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T09:34:45.013973+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: APPENDED (marker not found) infrastructure/infrastructure_health.json: Wire 'post_change_verify' gat",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T09:34:45.015271+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: REPLACED section in infrastructure/infrastructure_health.json: Wire 'post_change_verify' gate in inf",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T10:34:18.194477+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: REPLACED section in agents/mack.md: Add explicit gate-blocking logic to STEP 0 execution flow in age",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T10:34:18.195701+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: REPLACED section in agents/lenny.md: Wire 'post_change_verify' gate and implement hard STEP 0 circui",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T10:35:15.538888+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: REPLACED section in infrastructure/infrastructure_health.json: Wire 'post_change_verify' gate in inf",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T10:35:15.540411+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: REPLACED section in agents/lenny.md: Implement STEP 0 hard execution-flow gate blocker in lenny.md",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T11:35:27.185007+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: APPENDED (marker not found) agents/lenny.md: Add explicit output-validation rule to prevent silent i",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T11:35:27.186504+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: REPLACED section in agents/mack.md: Add hard execution-time gate blocker to STEP 0 in Mack profile",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T12:33:29.550805+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: REPLACED section in agents/mack.md: Add pre-return JSON validation rule to output format",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T12:33:29.552134+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: REPLACED section in agents/lenny.md: Implement STEP 0 hard execution-flow gate blocker with immediat",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T12:35:13.754360+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: APPENDED (marker not found) agents/lenny.md: Add pre-return JSON validation rule to prevent silent i",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T12:35:13.756141+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: REPLACED section in agents/mack.md: Embed mandatory gate-blocking logic into STEP 0 execution flow",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T13:33:26.104709+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: CREATED infrastructure/gates/post_change_verify.sh: Wire post_change_verify gate with automated veri",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T13:33:26.105192+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: APPENDED (marker not found) agents/lenny.md: STEP 0 Hard Circuit-Breaker: Block Improvements Before ",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T13:35:25.555512+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: APPENDED agents/lenny.md: Pre-Return JSON Validation: Reject Output If Improvements Non-Empty When G",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T13:35:25.557102+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: REPLACED section in agents/mack.md: STEP 0: Hard Gate-Blocking Circuit-Breaker (Execution Flow)",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T14:33:24.750878+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: APPENDED agents/mack.md: Pre-Return JSON Validation: Reject Output If Gate Verification Failed",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T14:33:24.752329+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: APPENDED (marker not found) agents/lenny.md: STEP 0 Hard Circuit-Breaker: Enforce improvements=[] Be",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T14:35:28.574819+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: APPENDED agents/lenny.md: Pre-Return JSON Validation: Reject Output If Improvements Non-Empty When g",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T14:35:28.576294+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: REPLACED section in agents/mack.md: STEP 0: Hard Execution-Flow Gate Blocker (Replace Prose With Cod",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T15:33:24.191823+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: REPLACED section in agents/lenny.md: STEP 0: Hard Execution-Flow Gate Blocker (Replace Prose With Co",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T15:35:29.127219+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: REPLACED section in agents/lenny.md: STEP 0 Hard Execution-Flow Gate Blocker: Enforce improvements=[",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T16:35:28.648811+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: REPLACED section in agents/mack.md: Embed gate-verification circuit-breaker in STEP 0 execution logi",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T17:33:21.489371+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: APPENDED agents/mack.md: Add explicit pre-return validation to reject violations of gate-verificatio",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T17:33:21.491049+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: REPLACED section in agents/lenny.md: STEP 0: Implement hard execution-time gate blocker with immedia",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T17:35:16.633827+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: APPENDED (marker not found) agents/lenny.md: Add explicit gate_verification_enforced field to pre_fl",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T17:35:16.634337+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: REPLACED section in agents/mack.md: Add explicit gate-verification circuit-breaker enforcement to ST",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T18:33:35.668870+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[mack] Applied: APPENDED (marker not found) infrastructure_health.json: Self-heal: Wire 'post_change_verify' gate im",
+      "source": "cycle-mack",
+      "ts": "2026-03-14T18:33:35.669591+00:00",
+      "verified": true
+    },
+    {
+      "fact": "[lenny] Applied: REPLACED section in agents/lenny.md: Implement hard execution-time gate blocker at STEP 0 with immed",
+      "source": "cycle-lenny",
+      "ts": "2026-03-14T18:35:17.890960+00:00",
+      "verified": true
+    }
+  ],
+  "guesses": [],
+  "plan": [],
+  "blockers": []
+}

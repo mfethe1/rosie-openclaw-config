@@ -1,0 +1,30 @@
+{
+  "ts": "2026-03-13T11:00:07.924115+00:00",
+  "results": [
+    {
+      "ok": false,
+      "query": "latest 2025 2026 research on LLM agent optimization and reliable tool use",
+      "error": "Launching Firecrawl Agent (spark-1-mini)...\nPrompt: latest 2025 2026 research on LLM agent optimization and reliable tool use..."
+    },
+    {
+      "ok": false,
+      "query": "recent papers on agentic workflows, planning, and multi-agent coordination",
+      "error": "Launching Firecrawl Agent (spark-1-mini)...\nPrompt: recent papers on agentic workflows, planning, and multi-agent coordination..."
+    },
+    {
+      "ok": false,
+      "query": "elegant systems approaches for AI tool routing, safety, and evaluation loops",
+      "error": "Launching Firecrawl Agent (spark-1-mini)...\nPrompt: elegant systems approaches for AI tool routing, safety, and evaluation loops..."
+    },
+    {
+      "ok": false,
+      "query": "new research on autonomous software engineering agents, code review agents, and CI/CD agent reliability",
+      "error": "Launching Firecrawl Agent (spark-1-mini)...\nPrompt: new research on autonomous software engineering agents, code review agents, and CI/CD agent reliability..."
+    },
+    {
+      "ok": false,
+      "query": "latest methods for multi-agent memory systems, retrieval quality, and consensus-based decision making",
+      "error": "Launching Firecrawl Agent (spark-1-mini)...\nPrompt: latest methods for multi-agent memory systems, retrieval quality, and consensus-based decision making..."
+    }
+  ]
+}

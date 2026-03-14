@@ -1,0 +1,26 @@
+{
+  "tracked": [
+    {
+      "name": "sqlite-vec",
+      "pypi": "sqlite-vec",
+      "github": "asg017/sqlite-vec"
+    },
+    {
+      "name": "sentence-transformers",
+      "pypi": "sentence-transformers",
+      "github": "UKPLab/sentence-transformers"
+    },
+    {
+      "name": "schwab-py",
+      "pypi": "schwab-py",
+      "github": "alexgolec/schwab-py"
+    },
+    {
+      "name": "fastembed",
+      "pypi": "fastembed",
+      "github": "qdrant/fastembed"
+    }
+  ],
+  "last_check": "2026-03-10T03:07:44.366857",
+  "history": []
+}

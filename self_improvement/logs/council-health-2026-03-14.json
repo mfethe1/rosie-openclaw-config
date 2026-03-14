@@ -1,0 +1,49 @@
+{
+  "council": "health",
+  "run_at": "2026-03-14T10:02:30.552868+00:00",
+  "services": [
+    {
+      "service": "memU",
+      "host": "localhost",
+      "port": 12345,
+      "status": "UP"
+    },
+    {
+      "service": "Ollama",
+      "host": "localhost",
+      "port": 11434,
+      "status": "UP"
+    },
+    {
+      "service": "NATS",
+      "host": "localhost",
+      "port": 4222,
+      "status": "UP"
+    },
+    {
+      "service": "MLE",
+      "host": "localhost",
+      "port": 8765,
+      "status": "DOWN"
+    }
+  ],
+  "scripts": [
+    {
+      "path": "/Users/harrisonfethe/.openclaw/workspace/self_improvement/cost_tracker.py",
+      "exists": true
+    },
+    {
+      "path": "/Users/harrisonfethe/.openclaw/workspace/self_improvement/security/skill_auditor.py",
+      "exists": true
+    },
+    {
+      "path": "/Users/harrisonfethe/.openclaw/skills/openrouter-sonar/scripts/sonar_search.py",
+      "exists": true
+    }
+  ],
+  "degraded_count": 1,
+  "degraded_services": [
+    "MLE"
+  ],
+  "overall": "DEGRADED"
+}

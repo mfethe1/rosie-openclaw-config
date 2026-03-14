@@ -1,0 +1,38 @@
+{
+  "ballot_id": "research-2026-03-13",
+  "created_at": "2026-03-13T11:00:07.924721+00:00",
+  "options": [
+    {
+      "id": "opt1",
+      "title": "Stability Track",
+      "query": "fallback",
+      "proposal": "Improve tool reliability and retry control."
+    },
+    {
+      "id": "opt2",
+      "title": "Cost Track",
+      "query": "fallback",
+      "proposal": "Improve budget guardrails and reduce failed retries."
+    },
+    {
+      "id": "opt3",
+      "title": "Workflow Track",
+      "query": "fallback",
+      "proposal": "Improve task decomposition and intent packet quality."
+    },
+    {
+      "id": "opt4",
+      "title": "Automation Track",
+      "query": "fallback",
+      "proposal": "Improve autonomous loops and exception handling."
+    },
+    {
+      "id": "opt5",
+      "title": "Memory Track",
+      "query": "fallback",
+      "proposal": "Improve memory retrieval quality and consistency."
+    }
+  ],
+  "threshold": 0.82,
+  "status": "open"
+}

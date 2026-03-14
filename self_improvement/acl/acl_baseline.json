@@ -1,0 +1,105 @@
+{
+  "version": "1.0",
+  "phase": 0,
+  "created_at": "2026-03-06T15:49:06.810706",
+  "total_messages_scanned": 545,
+  "category_distribution": {
+    "build": 167,
+    "other": 107,
+    "review": 101,
+    "status": 89,
+    "coordination": 33,
+    "fix": 23,
+    "research": 15,
+    "revenue": 8,
+    "self_improvement": 2
+  },
+  "response_time_baselines": {
+    "build": {
+      "count": 167,
+      "pct": 30.6,
+      "avg_response_ms": 9,
+      "samples": 167
+    },
+    "other": {
+      "count": 107,
+      "pct": 19.6,
+      "avg_response_ms": 8,
+      "samples": 107
+    },
+    "review": {
+      "count": 101,
+      "pct": 18.5,
+      "avg_response_ms": 7,
+      "samples": 101
+    },
+    "status": {
+      "count": 89,
+      "pct": 16.3,
+      "avg_response_ms": 8,
+      "samples": 89
+    },
+    "coordination": {
+      "count": 33,
+      "pct": 6.1,
+      "avg_response_ms": 9,
+      "samples": 33
+    },
+    "fix": {
+      "count": 23,
+      "pct": 4.2,
+      "avg_response_ms": 4,
+      "samples": 23
+    },
+    "research": {
+      "count": 15,
+      "pct": 2.8,
+      "avg_response_ms": 7,
+      "samples": 15
+    }
+  },
+  "gate_status": "COMPLETE",
+  "response_time_estimates": {
+    "build": {
+      "estimated_avg_s": 15,
+      "range": "10-30s",
+      "note": "Multi-tool, complex tasks"
+    },
+    "review": {
+      "estimated_avg_s": 10,
+      "range": "5-15s",
+      "note": "Fetch PR/code + analyze"
+    },
+    "status": {
+      "estimated_avg_s": 5,
+      "range": "3-8s",
+      "note": "Simple data gathering"
+    },
+    "coordination": {
+      "estimated_avg_s": 7,
+      "range": "5-10s",
+      "note": "Check multiple agent states"
+    },
+    "fix": {
+      "estimated_avg_s": 12,
+      "range": "8-20s",
+      "note": "Diagnose + implement fix"
+    },
+    "research": {
+      "estimated_avg_s": 25,
+      "range": "15-45s",
+      "note": "Web search + synthesis"
+    },
+    "revenue": {
+      "estimated_avg_s": 8,
+      "range": "5-12s",
+      "note": "CRM/pipeline queries"
+    }
+  },
+  "phase_0_notes": [
+    "545 messages scanned across 100 recent sessions",
+    "Top 4 categories: build (30.6%), review (18.5%), status (16.3%), other (19.6%)",
+    "Response times are estimates - live measurement via request_logger.py will refine in Phase 1",
+    "Phase 1 context primer should prioritize: cron_health (status), git_status (build/review), agent_status (coordination)"
+  ]
+}

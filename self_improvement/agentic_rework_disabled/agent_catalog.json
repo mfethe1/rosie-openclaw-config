@@ -1,0 +1,149 @@
+{
+  "version": "1.1.0",
+  "updated_at": "2026-03-03",
+  "policy": {
+    "skills_per_agent_min": 7,
+    "skills_per_agent_max": 10,
+    "mode": "specialized"
+  },
+  "agents": [
+    {
+      "lane": "core-platform",
+      "owner": "rosie",
+      "purpose": "Own platform reliability, orchestration quality, and control-loop integrity.",
+      "max_skills": 10,
+      "skills": [
+        "orchestration",
+        "runtime-observability",
+        "incident-triage",
+        "automation-hygiene",
+        "policy-enforcement",
+        "cron-governance",
+        "nats-coordination",
+        "release-gating"
+      ],
+      "kpi_contract": "kpi_contracts/rosie.json",
+      "required_kpis": [
+        "uptime_pct",
+        "loop_success_rate_pct",
+        "incident_mtta_minutes",
+        "p95_cycle_minutes"
+      ]
+    },
+    {
+      "lane": "google-workflow",
+      "owner": "mack",
+      "purpose": "Execute Google-facing workflows with measurable conversion and quality outcomes.",
+      "max_skills": 10,
+      "skills": [
+        "google-ads-ops",
+        "sheets-automation",
+        "campaign-qa",
+        "budget-pacing",
+        "lead-routing",
+        "keyword-expansion",
+        "conversion-tracking",
+        "attribution-debugging"
+      ],
+      "kpi_contract": "kpi_contracts/mack.json",
+      "required_kpis": [
+        "qualified_leads_count",
+        "ctr_pct",
+        "cost_per_qualified_lead_usd",
+        "on_time_sync_pct"
+      ]
+    },
+    {
+      "lane": "pharma",
+      "owner": "winnie",
+      "purpose": "Maintain pharma-domain compliance, signal quality, and doc traceability.",
+      "max_skills": 10,
+      "skills": [
+        "regulatory-review",
+        "claim-validation",
+        "medical-content-qa",
+        "citation-traceability",
+        "risk-flagging",
+        "protocol-consistency",
+        "safety-language-check",
+        "evidence-grading"
+      ],
+      "kpi_contract": "kpi_contracts/winnie.json",
+      "required_kpis": [
+        "compliance_pass_rate_pct",
+        "critical_findings_count",
+        "citation_coverage_pct",
+        "sla_on_time_pct"
+      ]
+    },
+    {
+      "lane": "business-sales",
+      "owner": "lenny",
+      "purpose": "Drive pipeline velocity and revenue operations discipline.",
+      "max_skills": 10,
+      "skills": [
+        "pipeline-hygiene",
+        "opportunity-scoring",
+        "followup-automation",
+        "forecast-discipline",
+        "crm-governance",
+        "deal-risk-detection",
+        "objection-response",
+        "cadence-optimization"
+      ],
+      "kpi_contract": "kpi_contracts/lenny.json",
+      "required_kpis": [
+        "pipeline_coverage_x",
+        "stage_progression_pct",
+        "meeting_to_sql_pct",
+        "forecast_error_pct"
+      ]
+    },
+    {
+      "lane": "seo",
+      "owner": "mack",
+      "purpose": "Improve organic discovery quality with technical and content SEO loops.",
+      "max_skills": 10,
+      "skills": [
+        "keyword-mapping",
+        "technical-seo-audits",
+        "serp-monitoring",
+        "content-briefing",
+        "schema-validation",
+        "internal-linking",
+        "crawl-budget-analysis",
+        "snippet-optimization"
+      ],
+      "kpi_contract": "kpi_contracts/mack.json",
+      "required_kpis": [
+        "non_brand_clicks_wow_pct",
+        "index_coverage_pct",
+        "top10_keywords_count",
+        "seo_issue_burn_down_pct"
+      ]
+    },
+    {
+      "lane": "marketing",
+      "owner": "winnie",
+      "purpose": "Coordinate demand generation and lifecycle campaigns with spend discipline.",
+      "max_skills": 10,
+      "skills": [
+        "campaign-planning",
+        "creative-testing",
+        "channel-attribution",
+        "funnel-analysis",
+        "retention-nurture",
+        "voice-consistency",
+        "engagement-ops",
+        "offer-iteration"
+      ],
+      "kpi_contract": "kpi_contracts/winnie.json",
+      "required_kpis": [
+        "mql_volume",
+        "mql_to_sql_pct",
+        "cac_payback_months",
+        "content_ship_count"
+      ]
+    }
+  ]
+}

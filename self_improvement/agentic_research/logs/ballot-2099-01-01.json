@@ -1,0 +1,14 @@
+{
+  "ballot_id": "research-2099-01-01",
+  "created_at": "2026-03-03T13:44:44.199207+00:00",
+  "options": [
+    {
+      "id": "opt1",
+      "title": "Implement research track 1",
+      "query": "q",
+      "proposal": "Test summary for option one."
+    }
+  ],
+  "threshold": 0.82,
+  "status": "open"
+}
