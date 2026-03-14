@@ -111,6 +111,8 @@ _(none this cycle)_
 
 ## Closed / Archived
 
+- ~~[Mack] Refine broad exception clauses (Phase 5)~~ — Completed by Mack (2026-03-13).
+
 - ~~[Mack] Implement 60-second opportunity scan~~ — Implemented by Mack (2026-03-13). Added self_improvement/scripts/60_second_opportunity_scan.py to enforce the new proactive loop rule.
 
 - ~~[Lenny] Integrate unenforced_gate_auditor.py into smoke_test.sh~~ — Implemented by Lenny (2026-03-13).
@@ -124,3 +126,6 @@ _(none this cycle)_
 - ~~[Lenny] Verify Infrastructure Pre-Flight Checks~~ — Verified smoke_test.sh and hourly_self_reflect.py compliant by Lenny (2026-03-12).
 
 - ~~[Lenny] Routine QA audit (Completed 2026-03-13)~~
+
+- [Lenny] Routine QA audit (Completed 2026-03-14 00:00 UTC)
+  Validated log_rotation.py.
