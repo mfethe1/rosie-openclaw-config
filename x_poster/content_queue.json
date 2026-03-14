@@ -453,9 +453,11 @@
       "saas"
     ],
     "angle": "product",
-    "posted": false,
+    "posted": true,
     "generated_at": "2026-03-08T12:00:23.503448+00:00",
-    "source": "campaign_improve"
+    "source": "campaign_improve",
+    "tweet_id": "2032080501171741012",
+    "posted_at": "2026-03-12T13:05:20.613894+00:00"
   },
   {
     "id": 31,
@@ -466,9 +468,11 @@
       "futureofwork"
     ],
     "angle": "thought-leadership",
-    "posted": false,
+    "posted": true,
     "generated_at": "2026-03-08T12:00:23.503452+00:00",
-    "source": "campaign_improve"
+    "source": "campaign_improve",
+    "tweet_id": "2032442603396837697",
+    "posted_at": "2026-03-13T13:04:12.395429+00:00"
   },
   {
     "id": 32,
@@ -479,9 +483,11 @@
       "devteams"
     ],
     "angle": "thought-leadership",
-    "posted": false,
+    "posted": true,
     "generated_at": "2026-03-08T12:00:23.503455+00:00",
-    "source": "campaign_improve"
+    "source": "campaign_improve",
+    "tweet_id": "2032804646725591137",
+    "posted_at": "2026-03-14T13:02:50.234149+00:00"
   },
   {
     "id": 33,

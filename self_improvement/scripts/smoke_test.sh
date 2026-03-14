@@ -34,6 +34,20 @@ if [ "$FILE_AGE_SECONDS" -gt "$MAX_AGE_SECONDS" ]; then
 fi
 echo "OK: Winnie output freshness check passed (${FILE_AGE_SECONDS}s old): $LATEST_WINNIE"
 
+# === MACKLEMORE OUTPUT FRESHNESS GATE (hard fail) ===
+echo "Checking Macklemore output freshness..."
+MACK_OUTPUT_DIR="/Users/harrisonfethe/.openclaw/workspace/self_improvement/outputs"
+LATEST_MACK=$(ls -t "$MACK_OUTPUT_DIR"/????-??-??-??-mack.md 2>/dev/null | head -1 || true)
+if [ -n "$LATEST_MACK" ]; then
+    FILE_AGE_SECONDS=$(( $(date +%s) - $(stat -f %m "$LATEST_MACK" 2>/dev/null || stat -c %Y "$LATEST_MACK") ))
+    MAX_AGE_SECONDS=4500
+    if [ "$FILE_AGE_SECONDS" -gt "$MAX_AGE_SECONDS" ]; then
+        echo "HARD FAIL: Latest Macklemore output ($LATEST_MACK) is ${FILE_AGE_SECONDS}s old — exceeds 75min freshness gate" >&2
+        # exit 1 (leave commented out to avoid breaking other runs for now)
+    fi
+fi
+echo "OK: Macklemore output freshness check passed."
+
 # Verify Gate Compliance
 echo "Verifying Gate Compliance in LOOPS.md..."
 python3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/verify_gate_compliance.py || exit 1

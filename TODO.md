@@ -111,6 +111,8 @@ _(none this cycle)_
 
 ## Closed / Archived
 
+- ~~[Mack] Refine broad exception clauses (Final Phase)~~ — Completed by Mack (2026-03-14 09:57 UTC). Eliminated the final 21 operational broad exceptions across 10 SI scripts.
+
 - ~~[Mack] Refine broad exception clauses (Phase 5)~~ — Completed by Mack (2026-03-13).
 
 - ~~[Mack] Implement 60-second opportunity scan~~ — Implemented by Mack (2026-03-13). Added self_improvement/scripts/60_second_opportunity_scan.py to enforce the new proactive loop rule.
@@ -132,3 +134,12 @@ _(none this cycle)_
 
 - [Lenny] QA Validation: momus_atlas_gate.py (Completed 2026-03-14 03:57 UTC)
   Created and executed test_momus_atlas_gate.py to validate the inter-agent verification logic before Atlas execution.
+
+- [Lenny] QA Validation: ralph_cron_wrapper.py (Completed 2026-03-14 06:57 UTC)
+  Verified progress.json state lock integrity and error handling.
+
+- [Lenny] QA Validation: Exception Clause Refinement (Completed 2026-03-14 09:57 UTC)
+  Verified zero operational `except Exception:` clauses remain in SI scripts.
+
+- [Lenny] QA Validation: repo_mutex.py (Completed 2026-03-14 12:57 UTC)
+  Verified SQLite-based lock acquisition, timeout handling, and deadlock prevention.

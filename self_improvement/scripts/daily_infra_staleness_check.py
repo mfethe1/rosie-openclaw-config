@@ -35,7 +35,7 @@ def check_memu() -> tuple[str, str]:
         ).decode()
         d = json.loads(out)
         return ("PASS", d.get("status", "unknown"))
-    except Exception as e:
+    except (subprocess.SubprocessError, OSError, json.JSONDecodeError) as e:
         return ("FAIL", str(e)[:60])
 
 
@@ -45,7 +45,7 @@ def check_workspace() -> tuple[str, str]:
         test.write_text("ok")
         test.unlink()
         return ("PASS", "writable")
-    except Exception as e:
+    except OSError as e:
         return ("FAIL", str(e)[:60])
 
 
@@ -60,7 +60,7 @@ def check_cron_health() -> tuple[str, str]:
         if n == 0:
             return ("PASS", "0 fixes needed")
         return ("WARN", f"{n} cron jobs need repair")
-    except Exception as e:
+    except (subprocess.SubprocessError, json.JSONDecodeError) as e:
         return ("FAIL", str(e)[:60])
 
 
@@ -71,7 +71,7 @@ def check_memory_gc() -> tuple[str, str]:
             timeout=10
         ).decode().strip()
         return ("PASS", out)
-    except Exception as e:
+    except subprocess.SubprocessError as e:
         return ("FAIL", str(e)[:60])
 
 

@@ -34,3 +34,6 @@
 - 2026-03-14 00:00 UTC [Lenny]: QA validation of log_rotation.py and 60-second opportunity scan.
 
 - 2026-03-14 03:57 UTC [Lenny]: Created unit test suite for momus_atlas_gate.py.
+- 2026-03-14 06:57 UTC [Lenny]: QA validation of ralph_cron_wrapper.py state locks.
+- 2026-03-14 09:57 UTC [Lenny]: QA validation of Exception Clause Refinement. Verified zero operational broad exceptions.
+- 2026-03-14 12:57 UTC [Lenny]: QA validation of repo_mutex.py SQLite-based locking and deadlock prevention.

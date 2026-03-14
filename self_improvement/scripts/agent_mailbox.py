@@ -9,6 +9,11 @@ import os
 import sys
 import datetime
 
+# Ensure scripts directory is on path for local imports
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from file_mutex import file_lock
+
 MAILBOX_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'agent_mailbox.json')
 
 def load_mailbox():
@@ -25,42 +30,45 @@ def save_mailbox(data):
         json.dump(data, f, indent=2)
 
 def send_message(from_agent, to_agent, subject, body):
-    data = load_mailbox()
-    if to_agent not in data:
-        data[to_agent] = []
-    
-    msg = {
-        "id": datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%d%H%M%S%f'),
-        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z"),
-        "from": from_agent,
-        "subject": subject,
-        "body": body,
-        "read": False
-    }
-    data[to_agent].append(msg)
-    save_mailbox(data)
+    with file_lock(MAILBOX_FILE):
+        data = load_mailbox()
+        if to_agent not in data:
+            data[to_agent] = []
+        
+        msg = {
+            "id": datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%d%H%M%S%f'),
+            "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z"),
+            "from": from_agent,
+            "subject": subject,
+            "body": body,
+            "read": False
+        }
+        data[to_agent].append(msg)
+        save_mailbox(data)
     print(f"Message sent to {to_agent}")
     return msg["id"]
 
 def read_messages(agent_name, unread_only=True):
-    data = load_mailbox()
-    messages = data.get(agent_name, [])
-    if unread_only:
-        messages = [m for m in messages if not m.get('read', False)]
-    return messages
+    with file_lock(MAILBOX_FILE):
+        data = load_mailbox()
+        messages = data.get(agent_name, [])
+        if unread_only:
+            messages = [m for m in messages if not m.get('read', False)]
+        return messages
 
 def mark_as_read(agent_name, message_id):
-    data = load_mailbox()
-    messages = data.get(agent_name, [])
-    found = False
-    for m in messages:
-        if m.get('id') == message_id:
-            m['read'] = True
-            found = True
-    if found:
-        save_mailbox(data)
-        return True
-    return False
+    with file_lock(MAILBOX_FILE):
+        data = load_mailbox()
+        messages = data.get(agent_name, [])
+        found = False
+        for m in messages:
+            if m.get('id') == message_id:
+                m['read'] = True
+                found = True
+        if found:
+            save_mailbox(data)
+            return True
+        return False
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:

@@ -14,7 +14,7 @@ def main():
     
     try:
         data = json.loads(res.stdout)
-    except Exception as e:
+    except json.JSONDecodeError as e:
         print(f"Failed to parse JSON: {e}")
         sys.exit(1)
         

@@ -337,6 +337,7 @@
 - [ ] PRIORITY: High. Next Action: Implement Ralph-loop style strict programmatic verification gates (`verifyCompletion`) for task execution to enforce deterministic execution and reduce manual validation.
 
 ## Completed (Mack)
+- [x] Refined the final 21 broad 'except Exception:' clauses across 10 SI scripts (Completed by Mack 2026-03-14 09:57 UTC)
 - [x] Refine broad exception clauses (Phase 6) (Completed by Mack 2026-03-14 06:57 UTC)
 - [x] Implement dynamic gate_compliance_check verification in smoke_test.sh (Completed by Mack 2026-03-10)
 - [Priority: Medium] Next Action: Provision an experimental Antfarm agent team using a YAML configuration to benchmark deterministic execution and verification gates against our current oh-my-opencode setup.
@@ -349,3 +350,14 @@
 [MEDIUM] Ralph loop test: boilerplate/script generation with Lenny smoke-test gate post-loop
 [LOW]    Track OMO v3.10+ for upstream fix to default-agent replacement side effect
 # ref: self_improvement/outputs/2026-03-13-09-winnie.md
+- [x] Fix 60_second_opportunity_scan.py self-matching bug and resolve the final FIXME/TODO marker in winnie_model_selector.py, creating a clean 0-opportunity baseline. (Completed by Mack 2026-03-14 12:57 UTC)
+
+## [2026-03-14] Winnie Competitor Sweep — oh-my-opencode / antfarm / ralph-loop
+[HIGH]   Test ralph-loop-agent (Vercel Labs) verifyCompletion pattern — port smoke_test.sh gate to programmatic verifier (assign: Mack)
+[HIGH]   Antfarm v0.5.1 pilot: run feature-dev on bounded docs/script task, $10 cost ceiling, manual checkpoint per stage (assign: Mack)
+[MEDIUM] Antfarm: invoke ensure-crons command to close idle-cron-drift gap (cron-drift-2026-02-23.md) (assign: Lenny)
+[MEDIUM] OMO v3.9: test selective agent activation to resolve default-agent override side effect (carry from 2026-03-13)
+[LOW]    Monitor Antfarm for native cost-cap YAML field in v0.6.x; block autonomous activation until available
+# ref: self_improvement/outputs/2026-03-14-09-winnie.md
+
+- ~~[Mack] Implement Macklemore Output Freshness Gate~~ — Completed by Mack (2026-03-14 15:57 UTC). Wired Mack into smoke_test.sh freshness guardrails.

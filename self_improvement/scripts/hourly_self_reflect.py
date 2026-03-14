@@ -73,7 +73,7 @@ def _load_ledgers():
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         return module
-    except Exception:
+    except (ImportError, OSError, SyntaxError):
         return None
 
 
@@ -191,7 +191,7 @@ def read_file_safe(path, max_chars=4000):
     try:
         content = Path(path).read_text(encoding="utf-8")
         return content[:max_chars] if len(content) > max_chars else content
-    except Exception:
+    except OSError:
         return ""
 
 
@@ -341,7 +341,7 @@ def get_prompt_evolution():
         try:
             data = json.loads(PROMPT_EVOLUTION_FILE.read_text())
             return data
-        except Exception:
+        except (json.JSONDecodeError, OSError):
             pass
     return {"version": 1, "additions": [], "banned_patterns": [], "meta_lessons": []}
 
@@ -590,43 +590,42 @@ CRITICAL: Keep each improvement's "content" field under 500 characters. For code
 # ║  DO NOT reduce max_tokens below 3500 — model JSON output is ~3k.  ║
 # ╚══════════════════════════════════════════════════════════════════════╝
 def call_model(prompt, agent_name):
-    """Call Anthropic API with retry + model fallback chain.
-
-    Root cause of JSON parse failures: max_tokens was 2000 but model
-    output is typically 2500-3500 tokens. Truncated output = broken JSON.
-    """
+    """Call API with retry + cross-provider model fallback chain."""
     import urllib.request
     import time as _time
+    import os
+    import json
 
     models = ["claude-haiku-4-5", "claude-sonnet-4-6"]
-    fallback_model = "claude-haiku-4-5"
+    fallback_model = "gemini-2.5-flash"
     models.append(fallback_model)
     max_retries = 3
     last_error = None
 
-    if not ANTHROPIC_KEY:
-        return json.dumps(
-            {
-                "reflection": "ANTHROPIC_API_KEY is missing; skipping model call.",
-                "improvements": [],
-                "self_healing_actions": [],
-                "lesson_captured": "Missing ANTHROPIC_API_KEY in environment or deploy.env.",
-                "cross_agent_broadcast": None,
-                "prompt_upgrade": None,
-                "banned_pattern": None,
-                "score": {
-                    "correctness": 0,
-                    "speed": 0,
-                    "risk": 0,
-                    "followthrough": 0,
-                    "self_healing": 0,
-                },
-            }
-        )
-
     for model in models:
         for attempt in range(max_retries):
             try:
+                if "gemini" in model:
+                    gemini_key = os.environ.get("GEMINI_API_KEY")
+                    if not gemini_key:
+                        raise Exception("GEMINI_API_KEY missing")
+                    req = urllib.request.Request(
+                        f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={gemini_key}",
+                        data=json.dumps({
+                            "contents": [{"parts": [{"text": prompt}]}],
+                            "generationConfig": {"temperature": 0.5, "maxOutputTokens": 4096}
+                        }).encode(),
+                        headers={"Content-Type": "application/json"},
+                        method="POST",
+                    )
+                    with urllib.request.urlopen(req, timeout=45) as resp:
+                        result = json.loads(resp.read())
+                        text = result["candidates"][0]["content"]["parts"][0]["text"]
+                        return text
+                
+                if not ANTHROPIC_KEY:
+                    raise Exception("ANTHROPIC_API_KEY missing")
+
                 req = urllib.request.Request(
                     "https://api.anthropic.com/v1/messages",
                     data=json.dumps(
@@ -647,14 +646,12 @@ def call_model(prompt, agent_name):
                 with urllib.request.urlopen(req, timeout=45) as resp:
                     result = json.loads(resp.read())
                     text = result["content"][0]["text"]
-                    # Check for truncation (stop_reason == max_tokens)
                     if result.get("stop_reason") == "end_turn":
                         return text
-                    # Truncated — try to salvage or retry with shorter prompt
                     print(
                         f"[WARN] {model} response truncated (stop_reason={result.get('stop_reason')})"
                     )
-                    return text  # Still return — extract_json can sometimes recover
+                    return text
             except Exception as e:
                 last_error = e
                 wait = 3 * (2**attempt)
@@ -915,7 +912,7 @@ def _run_prompt_optimizer(prompt_upgrade, model_key="claude"):
                 print(f"[PROMPT-OPT] Found {len(issues)} issues in prompt_upgrade, logging")
                 log_event("PROMPT_EVOLVED", "system", {"issues": issues, "model": model_key})
         return prompt_upgrade  # Return original for now; optimizer provides advisory
-    except Exception:
+    except (OSError, subprocess.SubprocessError, json.JSONDecodeError):
         return prompt_upgrade
 
 
@@ -1200,10 +1197,26 @@ def main():
                 }
             ]
 
+    # 4c. Quality check tier (LobeHub /loop style)
+    scores = result_data.get("score", {})
+    total_score = 0
+    if isinstance(scores, dict):
+        for k, v in scores.items():
+            if isinstance(v, (int, float)):
+                total_score += v
+                
     # 5. Apply improvements
     improvements = result_data.get("improvements", [])
-    print(f"[{agent_name.upper()}] Applying {len(improvements)} improvements...")
-    applied, failed = apply_improvements(agent_name, improvements)
+    if total_score < 6 and len(improvements) > 0:
+        print(f"[{agent_name.upper()}] QUALITY CHECK FAILED: Score {total_score}/10 is below threshold 6. Rejecting improvements.")
+        applied = []
+        failed = [f"REJECTED (Quality Check): Score {total_score} too low. Needed >= 6. Scores: {scores}"]
+        # Clear improvements so they aren't written to changelog as "applied: 0/x" in a confusing way
+    else:
+        if len(improvements) > 0:
+            print(f"[{agent_name.upper()}] QUALITY CHECK PASSED: Score {total_score}/10.")
+        print(f"[{agent_name.upper()}] Applying {len(improvements)} improvements...")
+        applied, failed = apply_improvements(agent_name, improvements)
 
     # 6. Store in memU
     store_in_memu(agent_name, result_data, applied, failed)
