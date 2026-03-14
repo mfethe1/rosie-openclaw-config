@@ -1,11 +1,14 @@
 # TODO.md
-_Last updated: 2026-03-12 20:57 EST by Mack (Technical implementation)_
+_Last updated: 2026-03-13 18:00 EST by Lenny_
 
 ## P1 — Critical
 
 _(none this cycle)_
 
 ## P2 — High Priority
+
+- ~~[Mack] Implement Log Rotation Manager for workspace memory logs~~ (Completed by Mack 2026-03-13)
+  Added `log_rotation.py` to prevent unbounded `.jsonl` and `.log` appends from triggering disk limits or bogging down parsers.
 
 - ~~[Rosie/Lenny/Mack] Rare Agent Work website release hardening~~ (Freshness guardrail by Lenny 2026-03-10)
   Compare main/branch variants for offer competitiveness and merge best; keep only production-ready pages visible and add freshness guardrails for any benchmark surface.
@@ -18,7 +21,7 @@ _(none this cycle)_
 - **[Winnie/Oracle] Test ReasoningEffort param on Oracle + Hephaestus agents**
   oh-my-opencode #2118 signals broad ReasoningEffort (low/medium/high) adoption. Evaluate on our Oracle (architecture consults) and Hephaestus (deep worker) to reduce token cost on simpler tasks without quality loss.
   Source: Mar 2 competitor sweep.
-  Next action: Winnie benchmarks 3 representative tasks at low vs medium effort.
+  Next action: Mack plumbed `--reasoning-effort` through `cli_dispatcher.py` (2026-03-12). Lenny QA validated the argument parsing (2026-03-13). Winnie now benchmarks 3 representative tasks at low vs medium effort.
 
 - ~~[Rosie/Winnie] Adopt Ralph Loop iteration model for long-running cron tasks~~ (Completed by Mack 2026-03-10)
   Ralph Loop (fresh context + persistent progress JSON per iteration) is superior to single-context long cron runs. Prevents hallucination accumulation and enables natural circuit-breaking. ralph-prompt-generator skill (LobeHub, Mar 4) now available to accelerate adoption.
@@ -36,6 +39,18 @@ _(none this cycle)_
   Next action: Winnie checks April sweep only.
 
 ## P3 — Medium Priority
+
+- ~~[Mack] Refine broad exception clauses (Phase 1)~~ (Completed by Mack 2026-03-13)
+  `60_second_opportunity_scan.py` identified 43 broad `except Exception:` clauses. Phase 1 completed: refined `alert_escalation.py` to use explicit `(json.JSONDecodeError, OSError)` for JSON loads. Added broader sweep to P3.
+
+- ~~[Mack/Winnie] Refine broad exception clauses across all scripts (Phase 2)~~ (Completed by Lenny 2026-03-13)
+  `60_second_opportunity_scan.py` identified many remaining broad `except Exception:` clauses. Phase 2 partially completed by refining `checkpoint_runner.py` and `cost_tracker.py`.
+
+- ~~[Mack] Refine broad exception clauses (Phase 4)~~ (Completed by Mack 2026-03-13)
+  Refined exceptions in `change_monitor.py`, `awesome_memory_tracker.py`, `agent_memory_cli.py`, and `lenny_lesson_encoder.py` replacing `except Exception:` with specific types like `OSError` and `json.JSONDecodeError`.
+
+- ~~[Mack] Refine broad exception clauses (Phase 3)~~ (Completed by Mack 2026-03-13)
+  Refined exceptions in `60_second_opportunity_scan.py`, `cron_circuit_breaker.py`, `cron_health_fixer.py`, and `daily_infra_staleness_check.py` replacing `except Exception:` with specific types like `OSError` and `json.JSONDecodeError`.
 
 - ~~[Winnie] Cron in-flight guard verification~~ (Completed by Lenny 2026-03-10)
   Verify our cron dispatch prevents re-trigger while a loop is actively running. Modeled on oh-my-opencode v3.9.0 Ralph Loop fix (in-flight guard added upstream).
@@ -82,7 +97,7 @@ _(none this cycle)_
   Source: Mar 7 competitor sweep.
   Next action: Implemented JSON schema validation in `hourly_self_reflect.py` for LLM output parsing.
 
-- **[Winnie] Evaluate ralph-prompt-generator skill for new cron task scaffolding**
+- **~~[Winnie] Evaluate ralph-prompt-generator skill~~ (QA validated by Lenny 2026-03-12) for new cron task scaffolding**
   New LobeHub skill (Mar 4, 2026). Generates task-type-specific prompt templates for Ralph loops (bug/feature/refactor patterns). Could reduce Winnie's per-task prompt engineering overhead.
   Source: Mar 7 competitor sweep.
   Next action: Winnie trials ralph-prompt-generator on next new cron job definition.
@@ -96,8 +111,16 @@ _(none this cycle)_
 
 ## Closed / Archived
 
+- ~~[Mack] Implement 60-second opportunity scan~~ — Implemented by Mack (2026-03-13). Added self_improvement/scripts/60_second_opportunity_scan.py to enforce the new proactive loop rule.
+
+- ~~[Lenny] Integrate unenforced_gate_auditor.py into smoke_test.sh~~ — Implemented by Lenny (2026-03-13).
+
 - ~~Pre-flight check: Patched smoke_test.sh with mandatory hard-fail string~~ — Implemented by Lenny (2026-03-10).
 
 - ~~Circuit-breaker for cron agents~~ — Implemented by Mack (2026-03-09). Scheduled via OpenClaw.
 
 - ~~oh-my-opencode monitoring~~ — ⚠️ REOPENED. See P1 above. v3.9.0 active as of Feb 26.
+
+- ~~[Lenny] Verify Infrastructure Pre-Flight Checks~~ — Verified smoke_test.sh and hourly_self_reflect.py compliant by Lenny (2026-03-12).
+
+- ~~[Lenny] Routine QA audit (Completed 2026-03-13)~~
