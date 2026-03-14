@@ -1,3 +1,7 @@
+## [2026-03-14 06:57 UTC] Refine broad exception clauses Phase 6 (Mack)
+- Replaced broad `except Exception:` clauses with explicit exceptions (`ValueError`, `OSError`, `ImportError`, `UnicodeDecodeError`, `sqlite3.Error`) in `openrouter_cost_monitor.py`, `dependency_analyzer.py`, and `pattern_matcher.py`.
+- Resolved additional findings from the opportunity scan.
+
 ## [2026-03-13 23:57 EST] Refine broad exception clauses Phase 5 (Mack)
 - Replaced broad `except Exception:` clauses with explicit exceptions (`ValueError`, `TypeError`, `sqlite3.Error`) in `fail_reflection_reader.py` and `winnie_lesson_inject.py`.
 - Resolved additional findings from the opportunity scan.
@@ -2956,3 +2960,31 @@
 - Applied: 2/2
   - Make STEP 0 pre-flight check executable with hard circuit-breaker logic
   - Add INFRASTRUCTURE_HEALTH gate status audit to pre-flight output
+
+## 2026-03-14 00:33 — Mack Self-Improvement v2
+- Applied: 2/2
+  - STEP 0 Pre-Flight Gate Status Verification (Executable)
+  - Infrastructure Health Audit: Resolve post_change_verify Gate Status
+
+## 2026-03-14 00:34 — Lenny Self-Improvement v2
+- Applied: 2/2
+  - Make STEP 0 gate-status verification executable and visible in pre_flight_audit
+  - Add mandatory gate-status fields to pre_flight_audit output format
+
+## 2026-03-14 01:33 — Mack Self-Improvement v2
+- Applied: 2/2
+  - Add executable gate-status verification to pre_flight_audit output with hard circuit-breaker logic
+  - Fix 'post_change_verify' gate from not_wired to executable harness with decision closure
+
+## 2026-03-14 01:34 — Lenny Self-Improvement v2
+- Applied: 2/2
+  - Make gate-status verification a hard circuit-breaker in pre_flight_audit output
+  - Add explicit circuit-breaker rule to OUTPUT FORMAT section
+
+## 2026-03-14 02:33 — Mack Self-Improvement v2
+- Applied: 2/2
+  - Add mandatory gate-status verification fields to pre_flight_audit output schema
+  - Make STEP 0 gate verification executable and report results before improvement generation
+
+## 2026-03-14 02:34 — Lenny Self-Improvement v2
+- Applied: 0/0

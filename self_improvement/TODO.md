@@ -337,6 +337,7 @@
 - [ ] PRIORITY: High. Next Action: Implement Ralph-loop style strict programmatic verification gates (`verifyCompletion`) for task execution to enforce deterministic execution and reduce manual validation.
 
 ## Completed (Mack)
+- [x] Refine broad exception clauses (Phase 6) (Completed by Mack 2026-03-14 06:57 UTC)
 - [x] Implement dynamic gate_compliance_check verification in smoke_test.sh (Completed by Mack 2026-03-10)
 - [Priority: Medium] Next Action: Provision an experimental Antfarm agent team using a YAML configuration to benchmark deterministic execution and verification gates against our current oh-my-opencode setup.
 - **High Priority**: Evaluate Antfarm's YAML/SQLite deterministic workflow integration within OpenClaw. Next Action: Install Antfarm in an isolated sandbox and run a benchmark test.
