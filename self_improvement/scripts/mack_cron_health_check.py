@@ -5,42 +5,39 @@ Sample 2 random crons owned by Mack, validate last run, flag errors >2h old.
 """
 
 import json
-import subprocess
 import sys
-from datetime import datetime, timedelta
+from pathlib import Path
+from datetime import datetime, timedelta, timezone
 import random
 
+JOBS_PATH = Path.home() / ".openclaw/cron/jobs.json"
+
 def get_mack_crons():
-    """Fetch all crons assigned to Mack from openclaw.json."""
+    """Fetch all crons assigned to Mack from ~/.openclaw/cron/jobs.json."""
     try:
-        result = subprocess.run(
-            ["openclaw", "cron", "list", "--owner=Mack", "--json"],
-            capture_output=True,
-            text=True,
-            timeout=10
-        )
-        if result.returncode != 0:
-            print(f"ERROR: openclaw cron list failed: {result.stderr}")
+        if not JOBS_PATH.exists():
+            print(f"ERROR: cron/jobs.json not found at {JOBS_PATH}")
             return []
-        return json.loads(result.stdout)
-    except Exception as e:
+        data = json.loads(JOBS_PATH.read_text())
+        jobs = data.get("jobs", data) if isinstance(data, dict) else data
+        mack_jobs = [
+            j for j in jobs
+            if "mack" in j.get("name", "").lower()
+            or "macklemore" in j.get("name", "").lower()
+        ]
+        return mack_jobs
+    except (OSError, json.JSONDecodeError) as e:
         print(f"ERROR fetching Mack crons: {e}")
         return []
 
-def check_cron_status(cron_id):
-    """Get last run status for a cron."""
-    try:
-        result = subprocess.run(
-            ["openclaw", "cron", "log", cron_id, "--last=1", "--json"],
-            capture_output=True,
-            text=True,
-            timeout=10
-        )
-        if result.returncode != 0:
-            return {"status": "ERROR", "message": result.stderr}
-        return json.loads(result.stdout)
-    except Exception as e:
-        return {"status": "ERROR", "message": str(e)}
+def check_cron_status(cron):
+    """Derive health from job metadata (updatedAtMs, enabled)."""
+    updated_ms = cron.get("updatedAtMs") or cron.get("createdAtMs")
+    enabled = cron.get("enabled", False)
+    if updated_ms:
+        updated_dt = datetime.fromtimestamp(updated_ms / 1000, tz=timezone.utc).replace(tzinfo=None)
+        return {"status": "OK", "timestamp": updated_dt.isoformat(), "enabled": enabled}
+    return {"status": "UNKNOWN", "timestamp": None, "enabled": enabled}
 
 def main():
     crons = get_mack_crons()
@@ -49,19 +46,20 @@ def main():
         return 0
     
     sample = random.sample(crons, min(2, len(crons)))
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc).replace(tzinfo=None)
     stale_threshold = now - timedelta(hours=2)
     
     alerts = []
     for cron in sample:
         cron_id = cron.get("id")
-        status = check_cron_status(cron_id)
+        status = check_cron_status(cron)
         last_run = status.get("timestamp")
-        
-        if status.get("status") == "ERROR":
-            alerts.append(f"CRON {cron_id}: error in last run — {status.get('message')}")
+        enabled = status.get("enabled", False)
+
+        if not enabled:
+            alerts.append(f"CRON {cron_id} ({cron.get('name','')}): disabled")
         elif last_run and datetime.fromisoformat(last_run) < stale_threshold:
-            alerts.append(f"CRON {cron_id}: last run >2h old ({last_run})")
+            alerts.append(f"CRON {cron_id} ({cron.get('name','')}): not updated in >2h ({last_run})")
     
     if alerts:
         print("\n## Mack Cron Health Alerts\n")

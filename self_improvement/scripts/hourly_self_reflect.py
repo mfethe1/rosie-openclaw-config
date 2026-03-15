@@ -106,7 +106,7 @@ def _nats_call(*args):
             timeout=5,
         )
     except (OSError, subprocess.TimeoutExpired) as e:
-        print(f\"[WARN] NATS bridge unavailable: {e}\")
+        print(f"[WARN] NATS bridge unavailable: {e}")
 
 
 def _sonar_research(query, model="pro"):
@@ -128,7 +128,7 @@ def _sonar_research(query, model="pro"):
                 return data.get("content", "")[:2000]  # Cap at 2k chars for prompt budget
         return ""
     except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError) as e:
-        print(f\"[WARN] Sonar research failed: {e}\")
+        print(f"[WARN] Sonar research failed: {e}")
         return ""
 
 
@@ -148,7 +148,7 @@ def _load_anthropic_key() -> str:
                 if line_stripped.startswith("ANTHROPIC_API_KEY="):
                     return line_stripped.split("=", 1)[1].strip().strip('"').strip("'")
         except OSError as e:
-            print(f\"[WARN] Failed to read deploy.env: {e}\")
+            print(f"[WARN] Failed to read deploy.env: {e}")
 
     return ""
 
@@ -609,7 +609,7 @@ def call_llm(prompt, agent_name):
                 if "gemini" in model:
                     gemini_key = os.environ.get("GEMINI_API_KEY")
                     if not gemini_key:
-                        raise Exception("GEMINI_API_KEY missing")
+                        raise ValueError("GEMINI_API_KEY missing")
                     req = urllib.request.Request(
                         f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={gemini_key}",
                         data=json.dumps({
@@ -625,35 +625,34 @@ def call_llm(prompt, agent_name):
                         return text
                 
                 if not ANTHROPIC_KEY:
-                    raise Exception("ANTHROPIC_API_KEY missing")
-
-                req = urllib.request.Request(
-                    "https://api.anthropic.com/v1/messages",
-                    data=json.dumps(
-                        {
-                            "model": model,
-                            "max_tokens": 4096,
-                            "temperature": 0.5,
-                            "messages": [{"role": "user", "content": prompt}],
-                        }
-                    ).encode(),
-                    headers={
-                        "x-api-key": ANTHROPIC_KEY,
-                        "anthropic-version": "2023-06-01",
-                        "content-type": "application/json",
-                    },
-                    method="POST",
-                )
-                with urllib.request.urlopen(req, timeout=45) as resp:
-                    result = json.loads(resp.read())
-                    text = result["content"][0]["text"]
-                    if result.get("stop_reason") == "end_turn":
-                        return text
-                    print(
-                        f"[WARN] {model} response truncated (stop_reason={result.get('stop_reason')})"
+                    # Fallback to OpenRouter
+                    openrouter_env = Path("/Users/harrisonfethe/.openclaw/secrets/openrouter.env")
+                    openrouter_key = ""
+                    if openrouter_env.exists():
+                        for line in openrouter_env.read_text().splitlines():
+                            if line.startswith("OPENROUTER_API_KEY="):
+                                openrouter_key = line.split("=", 1)[1].strip()
+                    if not openrouter_key:
+                        raise ValueError("ANTHROPIC_API_KEY missing")
+                    
+                    req = urllib.request.Request(
+                        "https://openrouter.ai/api/v1/chat/completions",
+                        data=json.dumps(
+                            {
+                                "model": "anthropic/claude-3.5-sonnet",
+                                "messages": [{"role": "user", "content": prompt}]
+                            }
+                        ).encode(),
+                        headers={
+                            "Authorization": f"Bearer {openrouter_key}",
+                            "Content-Type": "application/json",
+                        },
+                        method="POST",
                     )
-                    return text
-            except (urllib.error.URLError, json.JSONDecodeError, OSError) as e:
+                    with urllib.request.urlopen(req, timeout=45) as resp:
+                        result = json.loads(resp.read())
+                        return result["choices"][0]["message"]["content"]
+            except (urllib.error.URLError, json.JSONDecodeError, OSError, ValueError) as e:
                 last_error = e
                 wait = 3 * (2**attempt)
                 print(
@@ -1328,7 +1327,7 @@ def _post_to_memory_learning_engine(agent_name, result_data, applied):
                     f"[MLE] Extracted {extracted} memories, stored {stored} new for {agent_name}"
                 )
                 return
-        except (OSError, urllib.error.URLError, json.JSONDecodeError, ValueError) as e:
+        except (OSError, _json.JSONDecodeError, _req.URLError) as e:
             is_last = attempt == len(backoff_s)
             if is_last:
                 print(

@@ -1,0 +1,26 @@
+[
+  {
+    "task": "- [x] **[Winnie]** Test: Cross-agent memory sharing (Rosie stores, Mack retrieves) \u2705 (2026-02-18 01:01) \u2192 6/6 tests PASS. CRITICAL: EDrive SMB latency 67\u2013224ms (2000x slower than local). WAL blocked on SMB. See D-007/D-008/D-009 and outputs/2026-02-18-01-winnie.md",
+    "impact": 10,
+    "urgency": 10,
+    "effort": 2,
+    "category": "blocker",
+    "score": 50.0
+  },
+  {
+    "task": "- [x] **[Mack]** **CRITICAL (D-007)**: Move agent-memory.db to local path `~/.openclaw/agent-memory.db`, enable WAL mode, add async rsync to EDrive. Copy existing 56 rows from EDrive DB first. Fix per Winnie cycle #4 findings: SMB=2000x slower, WAL blocked on SMB. \u2705 (2026-02-18 02:04)",
+    "impact": 10,
+    "urgency": 10,
+    "effort": 2,
+    "category": "blocker",
+    "score": 50.0
+  },
+  {
+    "task": "- [x] **[Rosie]** Build `alert-escalation` script \u2014 auto-notify Telegram for critical blockers unresolved >24h. (HIGH, LOW effort) \u2705 (2026-03-03 01:56) \u2014 Added `scripts/alert_escalation.py` (shared-state scan, >24h HIGH/CRITICAL filter, cooldown state file, Telegram escalation via `openclaw message send`, dry-run/json modes).",
+    "impact": 10,
+    "urgency": 10,
+    "effort": 2,
+    "category": "blocker",
+    "score": 50.0
+  }
+]

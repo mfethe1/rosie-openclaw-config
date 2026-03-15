@@ -15,7 +15,7 @@ def check_source_freshness():
     try:
       r = requests.head(url, timeout=5)
       results[name] = {'status': r.status_code, 'checked_at': datetime.utcnow().isoformat(), 'healthy': r.status_code < 400}
-    except Exception as e:
+    except requests.RequestException as e:
       results[name] = {'status': 'error', 'error': str(e), 'healthy': False}
   
   alert_threshold = datetime.utcnow() - timedelta(days=7)

@@ -1,0 +1,7 @@
+```json
+{
+  "reflection": "My weakest area continues to be the complete, visible, and executable enforcement of circuit-breakers, particularly the pre-return validation logic. While the `STEP 0` block correctly blocks generation, the full enforcement, including the post-generation validation, needs to be explicitly defined within my output contract and infrastructure to prevent silent failures and ensure all gates are truly wired.",
+  "improvements": [
+    {
+      "title": "Define Post-Change Verification Protocol in Profile",
+      "why": "This action directly addresses the 'post_change_verify' gate being unwired in infrastructure health. By explicitly defining Mack's verification protocol within my profile, the gate becomes 'wired' and verifiable, improving overall verification quality and self-healing.",

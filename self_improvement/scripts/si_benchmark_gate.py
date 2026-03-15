@@ -20,6 +20,7 @@ import os
 import sys
 import time
 import urllib.request
+import urllib.error
 from pathlib import Path
 
 DEFAULT_MEMU = "http://localhost:8711/api/v1/memu/health"
@@ -44,7 +45,7 @@ def check_memu(url: str, timeout_s: float) -> dict:
             "status_field": data.get("status"),
             "latency_ms": round((time.time() - started) * 1000, 2),
         }
-    except Exception as e:
+    except (urllib.error.URLError, json.JSONDecodeError, OSError, TimeoutError) as e:
         return {
             "name": "memu_health",
             "ok": False,

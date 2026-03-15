@@ -2,6 +2,12 @@
 import sys
 import re
 import os
+from pathlib import Path
+
+SCRIPT_DIR = Path(__file__).parent
+SI_DIR = SCRIPT_DIR.parent
+import re
+import os
 
 def check_orphans(todo_path):
     if not os.path.exists(todo_path):
@@ -67,6 +73,11 @@ def check_orphans(todo_path):
         if not valid:
             orphans.append((i+1, line, f"Unknown agent(s) in bracket: {assigned_str}"))
 
+    return orphans
+
+if __name__ == "__main__":
+    todo_path = sys.argv[1] if len(sys.argv) > 1 else str(SI_DIR / 'TODO.md')
+    orphans = check_orphans(todo_path)
     if orphans:
         print(f"TODO.md Orphan Check FAILED: Found {len(orphans)} unassigned or misassigned active tasks.")
         for line_num, text, reason in orphans:
@@ -75,7 +86,3 @@ def check_orphans(todo_path):
         
     print("PASS: TODO.md Orphan Check. All active tasks have valid assignees.")
     sys.exit(0)
-
-if __name__ == "__main__":
-    todo_path = sys.argv[1] if len(sys.argv) > 1 else "self_improvement/TODO.md"
-    check_orphans(todo_path)

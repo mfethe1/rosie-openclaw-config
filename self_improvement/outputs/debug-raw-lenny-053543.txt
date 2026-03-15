@@ -1,0 +1,7 @@
+{
+  "reflection": "My weakest area right now is the recurring failure to produce parseable JSON output, as evidenced by the repeated 'Model returned unparseable response' lessons. This issue is critical as it prevents any improvements from being applied, and it's currently compounded by the pre-flight gate check blocking all output due to an unwired gate, preventing me from addressing the JSON issue directly with an improvement.",
+  "improvements": [],
+  "self_healing_actions": [
+    {
+      "issue": "Pre-flight execution audit: 'post_change_verify' gate is not wired, causing STEP 0 to block execution.",
+      "fix": "Add a new 'Gate Status Configuration' section to agents/lenny.md and explicitly declare the '

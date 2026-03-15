@@ -17,7 +17,7 @@ def health_check():
                 latency = (time.time() - start) * 1000
                 results['models'][model] = {'status': 'healthy', 'latency_ms': latency, 'alert': latency > THRESHOLD_LATENCY_MS}
                 break
-            except Exception as e:
+            except (OSError, requests.RequestException) as e:
                 retries -= 1
                 if retries == 0:
                     results['models'][model] = {'status': 'failed', 'error': str(e)}

@@ -7,7 +7,17 @@ def validate_improvements(improvements):
             return False
     return True
 if __name__ == '__main__':
-    data = json.load(sys.stdin)
+    if sys.stdin.isatty():
+        print('Usage: echo \'{{"improvements": [...]}}\'  | python3 pre_improvement_validator.py')
+        sys.exit(0)
+    raw = sys.stdin.read().strip()
+    if not raw:
+        print('ERROR: no input provided on stdin')
+        sys.exit(1)
+    if sys.stdin.isatty():
+        print('Usage: echo \'{{"improvements": [...]}}\'  | python3 pre_improvement_validator.py')
+        sys.exit(0)
+    data = json.loads(raw)
     if validate_improvements(data.get('improvements', [])):
         print('PATCH_PROOF_GATE: PASS')
         sys.exit(0)

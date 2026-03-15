@@ -10,7 +10,7 @@ def run_audit():
             audit['model_health_pass'] = health.get('pass', False)
         else:
             audit['model_health_pass'] = False
-    except Exception as e:
+    except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError) as e:
         audit['model_health_pass'] = False
     all_pass = all(audit.values())
     print(json.dumps({'audit': audit, 'ready': all_pass}))

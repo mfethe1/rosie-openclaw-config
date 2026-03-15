@@ -15,7 +15,7 @@ def check_freshness():
         try:
             resp = requests.head(url, timeout=5, allow_redirects=True)
             results['sources'][name] = {'status': 'ok' if resp.status_code < 400 else 'degraded', 'code': resp.status_code, 'last_checked': datetime.utcnow().isoformat()}
-        except Exception as e:
+        except requests.RequestException as e:
             results['sources'][name] = {'status': 'unreachable', 'error': str(e)}
     with open('/tmp/winnie_source_freshness.json', 'w') as f:
         json.dump(results, f)
