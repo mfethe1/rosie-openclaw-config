@@ -105,8 +105,8 @@ def _nats_call(*args):
             capture_output=True,
             timeout=5,
         )
-    except Exception as e:
-        print(f"[WARN] NATS bridge unavailable: {e}")
+    except (OSError, subprocess.TimeoutExpired) as e:
+        print(f\"[WARN] NATS bridge unavailable: {e}\")
 
 
 def _sonar_research(query, model="pro"):
@@ -127,8 +127,8 @@ def _sonar_research(query, model="pro"):
             if data.get("ok"):
                 return data.get("content", "")[:2000]  # Cap at 2k chars for prompt budget
         return ""
-    except Exception as e:
-        print(f"[WARN] Sonar research failed: {e}")
+    except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError) as e:
+        print(f\"[WARN] Sonar research failed: {e}\")
         return ""
 
 
@@ -147,8 +147,8 @@ def _load_anthropic_key() -> str:
                     line_stripped = line_stripped[7:]
                 if line_stripped.startswith("ANTHROPIC_API_KEY="):
                     return line_stripped.split("=", 1)[1].strip().strip('"').strip("'")
-        except Exception as e:
-            print(f"[WARN] Failed to read deploy.env: {e}")
+        except OSError as e:
+            print(f\"[WARN] Failed to read deploy.env: {e}\")
 
     return ""
 
@@ -223,7 +223,7 @@ def memu_request(method, endpoint, data=None):
 
             with urllib.request.urlopen(req, timeout=8) as resp:
                 return json.loads(resp.read())
-        except Exception as e:
+        except (urllib.error.URLError, OSError, json.JSONDecodeError) as e:
             if attempt == 0:
                 # Self-heal: try restarting memU
                 error_body = e.read().decode() if hasattr(e, "read") else ""
@@ -237,7 +237,7 @@ def memu_request(method, endpoint, data=None):
                     import time
 
                     time.sleep(2)
-                except Exception as restart_error:
+                except OSError as restart_error:
                     print(f"[WARN] memU restart attempt failed: {restart_error}")
             else:
                 print(f"[WARN] memU unavailable after restart attempt: {e}")
@@ -380,7 +380,7 @@ def run_health_checks():
             audit_data = json.loads(audit_result.stdout)
             for w in audit_data.get("warnings", []):
                 issues_found.append(f"[advisory] {w}")
-    except Exception as e:
+    except (OSError, json.JSONDecodeError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as e:
         issues_found.append(f"Template audit error: {e}")
 
     # 0b. Pre-flight execution audit — verify HARD_GATE templates are wired
@@ -406,7 +406,7 @@ def run_health_checks():
                 )
             # Note: this is advisory, not blocking — the gates themselves
             # (executable_templates_audit etc.) run independently above
-        except Exception as e:
+        except (OSError, json.JSONDecodeError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as e:
             issues_found.append(f"Pre-flight execution audit error: {e}")
 
     # 0c. health_check_models gate — verify model gateway before generating improvements
@@ -426,7 +426,7 @@ def run_health_checks():
                 issues_found.append(
                     f"Model health gate WARN: gateway may be down — {hm_result.stdout.strip()}"
                 )
-        except Exception as e:
+        except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as e:
             issues_found.append(f"Model health gate error: {e}")
 
     # 1. memU health
@@ -445,7 +445,7 @@ def run_health_checks():
                 issues_fixed.append("memU server restarted successfully")
             else:
                 issues_found.append("memU restart failed — needs manual intervention")
-        except Exception as e:
+        except OSError as e:
             issues_found.append(f"memU restart exception: {e}")
 
     # 2. Check workspace directories exist
@@ -589,9 +589,10 @@ CRITICAL: Keep each improvement's "content" field under 500 characters. For code
 # ║  parse failures). Restored to 4096 + retry/fallback chain.        ║
 # ║  DO NOT reduce max_tokens below 3500 — model JSON output is ~3k.  ║
 # ╚══════════════════════════════════════════════════════════════════════╝
-def call_model(prompt, agent_name):
+def call_llm(prompt, agent_name):
     """Call API with retry + cross-provider model fallback chain."""
     import urllib.request
+    import urllib.error
     import time as _time
     import os
     import json
@@ -652,7 +653,7 @@ def call_model(prompt, agent_name):
                         f"[WARN] {model} response truncated (stop_reason={result.get('stop_reason')})"
                     )
                     return text
-            except Exception as e:
+            except (urllib.error.URLError, json.JSONDecodeError, OSError) as e:
                 last_error = e
                 wait = 3 * (2**attempt)
                 print(
@@ -842,7 +843,7 @@ def apply_improvements(agent_name, improvements):
                         f.write(f"\n{content}\n")
                     applied.append(f"APPENDED {imp['file']}: {imp['title']}")
 
-        except Exception as e:
+        except (OSError, IOError, ValueError) as e:
             failed.append(f"FAILED {imp.get('file', '?')}: {str(e)}")
 
     return applied, failed
@@ -1112,7 +1113,7 @@ def main():
     print(
         f"[{agent_name.upper()}] Calling model (prompt v{prompt_evolution.get('version', 1)})..."
     )
-    raw_response = call_model(prompt, agent_name)
+    raw_response = call_llm(prompt, agent_name)
 
     def validate_schema(data):
         if not isinstance(data, dict): return False
@@ -1146,7 +1147,7 @@ def main():
 
         # Try one more time with a repair prompt
         repair_prompt = f"The following text should be valid JSON but isn't. Extract and fix it into valid JSON. Return ONLY the fixed JSON:\n\n{raw_response[:2000]}"
-        repair_response = call_model(repair_prompt, agent_name)
+        repair_response = call_llm(repair_prompt, agent_name)
         result_data = extract_json(repair_response)
 
         if result_data and not validate_schema(result_data):
@@ -1327,7 +1328,7 @@ def _post_to_memory_learning_engine(agent_name, result_data, applied):
                     f"[MLE] Extracted {extracted} memories, stored {stored} new for {agent_name}"
                 )
                 return
-        except Exception as e:
+        except (OSError, urllib.error.URLError, json.JSONDecodeError, ValueError) as e:
             is_last = attempt == len(backoff_s)
             if is_last:
                 print(

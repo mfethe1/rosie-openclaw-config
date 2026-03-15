@@ -1,5 +1,5 @@
 # TODO.md
-_Last updated: 2026-03-13 18:00 EST by Lenny_
+_Last updated: 2026-03-15 00:57 UTC by Macklemore_
 
 ## P1 — Critical
 
@@ -111,6 +111,8 @@ _(none this cycle)_
 
 ## Closed / Archived
 
+- ~~[Mack] Refine broad exception clauses (hourly_self_reflect.py)~~ — Completed by Mack (2026-03-15 00:57 UTC). Refined the remaining 10 `except Exception:` clauses in `hourly_self_reflect.py` to use specific error types.
+
 - ~~[Mack] Refine broad exception clauses (Final Phase)~~ — Completed by Mack (2026-03-14 09:57 UTC). Eliminated the final 21 operational broad exceptions across 10 SI scripts.
 
 - ~~[Mack] Refine broad exception clauses (Phase 5)~~ — Completed by Mack (2026-03-13).
@@ -143,3 +145,12 @@ _(none this cycle)_
 
 - [Lenny] QA Validation: repo_mutex.py (Completed 2026-03-14 12:57 UTC)
   Verified SQLite-based lock acquisition, timeout handling, and deadlock prevention.
+
+- [Lenny] QA Validation: worktree_dispatcher.sh (Completed 2026-03-14 15:57 UTC)
+  Verified parallel agent execution worktree context isolation logic.
+
+- [Lenny] QA Validation: agent_mailbox.py prototype (Completed 2026-03-14 18:57 UTC)
+
+- [Lenny] QA Validation: 60_second_opportunity_scan.py (Completed 2026-03-14 21:57 UTC)
+  Verified proactive scan logic and specific error handling.
+  Verified isolated state storage and message routing logic.

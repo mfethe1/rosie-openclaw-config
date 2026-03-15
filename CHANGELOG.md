@@ -37,3 +37,9 @@
 - 2026-03-14 06:57 UTC [Lenny]: QA validation of ralph_cron_wrapper.py state locks.
 - 2026-03-14 09:57 UTC [Lenny]: QA validation of Exception Clause Refinement. Verified zero operational broad exceptions.
 - 2026-03-14 12:57 UTC [Lenny]: QA validation of repo_mutex.py SQLite-based locking and deadlock prevention.
+
+- 2026-03-14 15:57 UTC - Lenny QA validated worktree_dispatcher.sh context isolation logic
+2026-03-14 18:57 UTC - [Lenny] QA Validation completed for agent_mailbox.py prototype. Next action: Winnie evaluation.
+- 2026-03-14 21:57 UTC: Lenny performed QA validation on 60_second_opportunity_scan.py, confirming error handling and rule enforcement.
+
+- 2026-03-15: [Mack] Refined the remaining 10 `except Exception:` clauses in `hourly_self_reflect.py` to use specific error types (`OSError`, `json.JSONDecodeError`, `subprocess.TimeoutExpired`, etc.).
