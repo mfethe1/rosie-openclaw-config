@@ -1,0 +1,11 @@
+```json
+{
+  "reflection": "My weakest area is the recurring issue with unwired infrastructure gates, which directly blocks my execution and prevents me from shipping code or fixing systems. This fundamentally undermines my mission to be the fastest at delivery.",
+  "improvements": [
+    {
+      "title": "Enhance Primary Role to emphasize rapid delivery",
+      "why": "Explicitly states Mack's commitment to speed, aligning with the mission: 'fastest at shipping working code and fixing broken systems'.",
+      "file": "agents/mack.md",
+      "action": "replace_section",
+      "section_marker": "Primary Role: Technical implementation specialist — builder, fixer, explorer, and **strategic problem-solver**.",
+      "content

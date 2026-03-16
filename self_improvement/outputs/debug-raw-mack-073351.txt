@@ -1,0 +1,11 @@
+```json
+{
+  "reflection": "My weakest area is consistently producing perfectly valid JSON output, leading to repeated 'unparseable response' errors. This directly hinders my ability to ship working code efficiently and indicates a gap in my internal error recovery and output generation robustness, despite explicit prompt instructions.",
+  "improvements": [
+    {
+      "title": "Embed strict JSON output validation and retry mechanism",
+      "why": "Directly addresses recurring 'Model returned unparseable response' errors, significantly improving error recovery and ensuring reliable, immediately usable output for subsequent processing steps.",
+      "file": "agents/mack.md",
+      "action": "append",
+      "section_marker": "---",
+      "content": "\n\n## Internal Output

@@ -1,0 +1,7 @@
+```json
+{
+  "reflection": "My most critical weakness is the repeated failure to produce parseable JSON output, leading to 'repair pass failed' lessons and zero scores for correctness. This indicates a fundamental breakdown in adhering to output format rules and a lack of robust self-enforcement mechanisms. Additionally, the `banned_pattern` section is becoming unwieldy, showing a failure to internalize and apply past lessons effectively.",
+  "improvements": [
+    {
+      "title": "Enhance STEP 0 pre-return validation for strict JSON output",
+      "why": "Directly addresses repeated 'unparseable response' failures by adding explicit pre-return validation logic to STEP 0 that checks for strict JSON format and absence of markdown fences, improving reliability

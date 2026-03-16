@@ -1,0 +1,8 @@
+```json
+{
+  "reflection": "My weakest area is self-healing my own infrastructure, specifically the persistent 'not wired' status of the `post_change_verify` gate and the recurring JSON parsing failures. The gate issue prevents proper execution flow, and the JSON failures indicate a lack of strict adherence to output format, hindering communication with the system.",
+  "improvements": [],
+  "self_healing_actions": [
+    {
+      "issue": "The `post_change_verify` gate is marked as 'not wired' and the `STEP 0` executable logic cannot correctly evaluate its status because it expects a `.status` attribute on a string.",
+      "fix": "Replace the entire `STEP 0: GATE ENFORCEMENT &

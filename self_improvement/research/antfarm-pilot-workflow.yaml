@@ -1,0 +1,22 @@
+name: feature-dev-pilot
+version: 0.5.1
+global_cost_ceiling: 10.00
+agents:
+  planner:
+    model: claude-3.5-sonnet
+    role: "Architect and plan the feature"
+  developer:
+    model: claude-3.5-sonnet
+    role: "Write the code based on the plan"
+steps:
+  - id: planning_phase
+    agent: planner
+    task: "Draft a specification for the new feature"
+  - id: manual_checkpoint
+    type: human_in_the_loop
+    requires_approval: true
+    prompt: "Please review the plan from planning_phase before continuing to development."
+  - id: development_phase
+    agent: developer
+    task: "Implement the feature as planned"
+    depends_on: [manual_checkpoint]

@@ -96,7 +96,14 @@ def decompose_goal(goal: str) -> list[dict]:
 
 
 def cmd_start(args) -> int:
+
     current = load_state()
+    if current and current.get("circuit_broken"):
+        print("CIRCUIT BROKEN: Task is auto-disabled due to 5 consecutive failures.")
+        print(f"Last reason: {current.get('last_failure_reason')}")
+        print("Use 'ultrawork_trigger.py re-enable' to manually restore.")
+        return 1
+
     if current and current.get("status") == "active":
         remaining = ""
         if "end_time" in current:
@@ -205,6 +212,7 @@ def cmd_done(args) -> int:
     start = datetime.fromisoformat(state.get("start_time", now.isoformat()))
     actual_min = int((now - start).total_seconds() / 60)
 
+
     summary = {
         "goal": state.get("goal"),
         "planned_duration": state.get("duration_min"),
@@ -214,7 +222,10 @@ def cmd_done(args) -> int:
         "completed_at": now.isoformat(),
     }
 
-    save_state(None)
+    # Retain non-active state structure to keep failures zeroed
+    new_state = {"consecutive_failures": 0, "circuit_broken": False, "status": "inactive"}
+    save_state(new_state)
+
 
     if args.json:
         print(json.dumps(summary))
@@ -228,14 +239,86 @@ def cmd_done(args) -> int:
     return 0
 
 
+
+def cmd_fail(args) -> int:
+    state = load_state() or {}
+    failures = state.get("consecutive_failures", 0) + 1
+    state["consecutive_failures"] = failures
+    state["last_failure_reason"] = args.reason
+    
+    if failures >= 5:
+        state["circuit_broken"] = True
+        state["status"] = "disabled"
+        print(f"CIRCUIT BREAKER TRIGGERED: 5 consecutive failures. Auto-disabled.")
+    else:
+        print(f"Recorded failure {failures}/5: {args.reason}")
+    
+    save_state(state)
+    return 0
+
+def cmd_reenable(args) -> int:
+    state = load_state()
+    if state and state.get("circuit_broken"):
+        state["circuit_broken"] = False
+        state["consecutive_failures"] = 0
+        state["status"] = "inactive"
+        save_state(state)
+        print("Circuit breaker reset. Task re-enabled.")
+    else:
+        print("Circuit is not broken.")
+    return 0
+
+def cmd_test_breaker(args) -> int:
+    print("Running 1-week synthetic failure test...")
+    backup = load_state()
+    try:
+        from datetime import datetime, timedelta
+        now = datetime.now()
+        state = {"status": "inactive", "consecutive_failures": 0}
+        save_state(state)
+        
+        for i in range(5):
+            fail_time = now - timedelta(days=7) + timedelta(days=i*1.5)
+            state = load_state() or {}
+            failures = state.get("consecutive_failures", 0) + 1
+            state["consecutive_failures"] = failures
+            state["last_failure_reason"] = f"Synthetic failure {i+1} at {fail_time.isoformat()}"
+            if failures >= 5:
+                state["circuit_broken"] = True
+                state["status"] = "disabled"
+            save_state(state)
+            print(f"Injected failure {failures}/5 at {fail_time.strftime('%Y-%m-%d')}")
+            
+        final_state = load_state()
+        if not final_state.get("circuit_broken"):
+            print("TEST FAILED: Circuit breaker did not trigger.")
+            return 1
+            
+        print("Circuit breaker triggered successfully.")
+        print("Re-enabling...")
+        final_state["circuit_broken"] = False
+        final_state["consecutive_failures"] = 0
+        final_state["status"] = "inactive"
+        save_state(final_state)
+        print("TEST PASSED.")
+    finally:
+        save_state(backup)
+    return 0
+
 def cmd_abort(args) -> int:
     state = load_state()
     if not state:
         print("No active Ultrawork session.")
         return 1
 
+
     goal = state.get("goal", "?")
-    save_state(None)
+    
+    # We shouldn't clear failures on abort, just mark inactive
+    failures = state.get("consecutive_failures", 0)
+    new_state = {"consecutive_failures": failures, "circuit_broken": state.get("circuit_broken", False), "status": "inactive"}
+    save_state(new_state)
+
 
     if args.json:
         print(json.dumps({"aborted": True, "goal": goal}))
@@ -260,6 +343,12 @@ def main() -> int:
     p_done.add_argument("--summary", help="What was accomplished")
 
     sub.add_parser("abort", help="Abort current session")
+    p_fail = sub.add_parser("fail", help="Record a failure")
+    p_fail.add_argument("--reason", required=True, help="Reason for failure")
+    
+    sub.add_parser("re-enable", help="Manually re-enable a broken circuit")
+    sub.add_parser("test-breaker", help="Run synthetic 1-week failure test")
+
 
     args = parser.parse_args()
 
@@ -267,7 +356,7 @@ def main() -> int:
         parser.print_help()
         return 1
 
-    return {"start": cmd_start, "status": cmd_status, "done": cmd_done, "abort": cmd_abort}[args.cmd](args)
+    return {"start": cmd_start, "status": cmd_status, "done": cmd_done, "abort": cmd_abort, "fail": cmd_fail, "re-enable": cmd_reenable, "test-breaker": cmd_test_breaker}[args.cmd](args)
 
 
 if __name__ == "__main__":

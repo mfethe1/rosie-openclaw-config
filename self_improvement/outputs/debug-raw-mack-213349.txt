@@ -1,0 +1,7 @@
+```json
+{
+  "reflection": "My most critical weakness is consistently producing unparseable JSON output, as evidenced by repeated meta-lessons. This directly hinders my ability to ship improvements and learn from cycles. The `post_change_verify` gate also remains unwired, indicating a gap in my self-healing infrastructure.",
+  "improvements": [
+    {
+      "title": "Embed Pre-Return JSON Validation Hook in STEP 0",
+      "why": "Directly addresses the 'unparseable response' meta-lesson and 'AVOID' patterns by defining a robust validation function within STEP 0 that ensures all output conforms to strict JSON, includes `enforcement_test_result`, and respects gate-blocked states before final emission, improving correctness and follow-through

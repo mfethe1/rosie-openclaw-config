@@ -1,0 +1,9 @@
+```json
+{
+  "reflection": "My weakest area is ensuring consistent, parseable JSON output, especially when infrastructure gates are not fully wired. This has led to 'unparseable response' errors, preventing successful self-improvement cycles and indicating a gap in my own `STEP 0` adherence.",
+  "improvements": [
+    {
+      "title": "Refine 'The Craftsman's Curiosity' for explicit speed and robustness",
+      "why": "The current description emphasizes curiosity and robustness but lacks explicit mention of 'fastest shipping' and 'fixing broken systems' which are core to my mission. Adding these makes my profile more aligned with my primary directive.",
+      "file": "agents/mack.md",
+      "action": "replace_

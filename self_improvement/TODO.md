@@ -106,7 +106,7 @@
 
 ### Competitor Sweep Actions (Winnie 2026-03-08 09:00 sweep)
 - [ ] **[Mack]** P2-HIGH — D-029: Run deterministic OpenClaw canary against OMO Mar release changes (Oracle-required ULW completion + config migration checks). Ship a pass/fail note + required config diffs before any next major cron template change. (Added 2026-03-08)
-- [ ] **[Mack]** P2-MEDIUM — D-028 (refresh): Implement local antfarm-style cron circuit-breaker in `ultrawork_trigger.py` after 5 consecutive failures, auto-disable + reason logging + manual re-enable path; include 1-week synthetic failure test. (Added 2026-03-08)
+- ~~[Mack] P2-MEDIUM — D-028 (refresh): Implement local antfarm-style cron circuit-breaker in ultrawork_trigger.py after 5 consecutive failures, auto-disable + reason logging + manual re-enable path; include 1-week synthetic failure test. (Added 2026-03-08)~~ (Completed by Mack 2026-03-16 10:07 UTC)
 - [ ] **[Winnie]** P3-MEDIUM — D-027: Execute bounded Ralph-loop PRD pilot using explicit verifyCompletion + stop predicates (iterations, tokens, cost), and archive results in `self_improvement/research/ralph-test-protocol.md` within 3 days. (Added 2026-03-08)
 - [ ] **[Winnie]** P4-LOW — D-032: Watch OMO issue #2381 trend (Hephaestus hard-coded concern); escalate only if recurring pattern appears in 3 consecutive cycles. (Added 2026-03-08)
 
@@ -362,3 +362,21 @@
 # ref: self_improvement/outputs/2026-03-14-09-winnie.md
 
 - ~~[Mack] Implement Macklemore Output Freshness Gate~~ — Completed by Mack (2026-03-14 15:57 UTC). Wired Mack into smoke_test.sh freshness guardrails.
+
+## [2026-03-15] Winnie Competitor Sweep — oh-my-opencode / antfarm / ralph-loop
+[HIGH]   Port smoke_test.sh gate to vercel-labs/ralph-loop-agent verifyCompletion — programmatic stop replaces agent self-report (assign: Mack)
+[x] [HIGH] Antfarm v0.5.1 pilot: feature-dev workflow on bounded internal task, $10 cost ceiling, manual checkpoint planner→developer (assign: Mack) — Completed by Mack (2026-03-15 16:07 UTC)
+[MEDIUM] OMO selective agent activation: test disable:true in config to resolve default-agent override side effect (carry from 2026-03-14, OMO v3.10+ upstream fix pending)
+[MEDIUM] Antfarm ensure-crons command: close idle-cron-drift gap (carry from 2026-03-14, assign: Lenny)
+[MEDIUM] Evaluate pageai-pro/ralph-loop Docker sandbox mode for unattended overnight runs (assign: Mack)
+[LOW]    Block Antfarm autonomous cron activation until native cost-cap YAML field confirmed in v0.6.x (assign: Lenny)
+[LOW]    Evaluate OMO preemptive_compaction experimental flag to reduce context rot on long sessions (assign: Mack)
+# ref: self_improvement/outputs/2026-03-15-09-winnie.md
+
+## [2026-03-16] Competitor Sweep — oh-my-opencode / Antfarm / Ralph-loop (Winnie)
+- [x] [HIGH] Audit .opencode/oh-my-opencode.json — confirm no OAuth subscription token paths; pin to v3.5.3 until v3.6 stability confirmed
+- [x] [MEDIUM] Pilot Antfarm: run `antfarm workflow run bug-fix` on a low-risk issue; track cycle time, escalation rate, first-pass success rate vs auggie/opencode
+- [x] [HIGH] Add "external loop control required" rule to AGENTS.md — any agent loop must use outer bash/SDK control, not in-agent continuation
+- [LOW] Monitor Antfarm maintenance activity (Ryan Carson focus) and Tembo as enterprise alternative; re-evaluate in 30d
+- [LOW] Watch Anthropic Agent Teams for deterministic step-control hooks (TeammateIdle/TaskCompleted) — potential Antfarm convergence
+# Full report: self_improvement/outputs/2026-03-16-09-winnie.md

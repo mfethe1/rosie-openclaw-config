@@ -1,0 +1,9 @@
+```json
+{
+  "reflection": "My weakest area is consistently adhering to the exact JSON output format, leading to repeated 'unparseable response' errors. This directly impacts my reliability and speed, as cycles are wasted on debugging format issues. Additionally, the `post_change_verify` gate remains unwired in my infrastructure, which is a critical gap in my self-healing and robustness capabilities.",
+  "improvements": [
+    {
+      "title": "Wire `post_change_verify` gate infrastructure in profile",
+      "why": "Directly addresses the '1 gates not wired' infrastructure issue, making my execution flow more robust and compliant with mandatory gate enforcement, improving overall reliability.",
+      "file": "agents/mack.md",
+      "

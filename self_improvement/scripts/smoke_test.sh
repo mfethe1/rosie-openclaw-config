@@ -56,6 +56,10 @@ python3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/verify
 echo "Auditing Unenforced Gates..."
 python3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/unenforced_gate_auditor.py || exit 1
 
+# Validate shared-state.json
+echo "Validating shared-state.json schema..."
+python3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/shared_state_validator.py /Users/harrisonfethe/.openclaw/workspace/shared-state.json || exit 1
+
 # Auto-extract knowledge from this cycle's output
 LATEST_OUTPUT=$(ls -t self_improvement/outputs/*.md 2>/dev/null | head -n1 || true)
 if [[ -n "$LATEST_OUTPUT" && -f "self_improvement/scripts/knowledge_extractor.py" ]]; then

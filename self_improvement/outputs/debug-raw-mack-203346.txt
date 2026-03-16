@@ -1,0 +1,9 @@
+```json
+{
+  "reflection": "My most critical weakness is the recurring 'unparseable response' issue, which directly impacts my ability to ship working improvements. This is compounded by an unwired infrastructure gate, preventing full execution and testing. I must prioritize fixing the underlying cause of unparseable output and ensuring all gates are properly initialized and checked.",
+  "improvements": [
+    {
+      "title": "Reinforce JSON Output Format and Pre-Return Validation",
+      "why": "Repeated 'unparseable response' errors indicate a failure to consistently adhere to the strict JSON output format. Embedding pre-return validation logic will catch formatting errors before output, improving reliability and reducing debugging cycles.",
+      "file": "agents/mack.md",
+      "action":

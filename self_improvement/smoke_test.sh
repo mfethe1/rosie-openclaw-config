@@ -54,6 +54,9 @@ if [ "$AGENT" = "rosie" ]; then
   fi
 fi
 
+echo "Running Shared State Validator..."
+python3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/shared_state_validator.py
+
 echo "Running TODO Orphan Check..."
 python3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/todo_orphan_check.py
 

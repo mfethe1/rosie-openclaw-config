@@ -1,0 +1,7 @@
+```json
+{
+  "reflection": "My weakest area is currently infrastructure health, specifically the 'post_change_verify' gate not being wired. This directly impacts my ability to reliably ship changes by blocking execution, as per the critical rules. I need to prioritize fixing this to ensure my self-healing capabilities are fully functional and my output is always validated.",
+  "improvements": [
+    {
+      "title": "Embed Pre-Return Validation Logic for post_change_verify",
+      "why": "This directly addresses the 'post_change_verify' gate not wired issue, making the gate functional. It ensures generated improvements adhere to output constraints (e.g., content length, required fields) before final output, preventing unparseable responses and improving overall reliability and correctness

@@ -1,0 +1,8 @@
+```json
+{
+  "reflection": "My most critical weakness is the recurring JSON parsing failures, which prevent any improvements from being applied. This is compounded by the `post_change_verify` gate remaining unwired, which currently hard-blocks the generation of any new improvements according to my `STEP 0` logic. I am stuck in a loop of failing to self-improve due to these two issues.",
+  "improvements": [],
+  "self_healing_actions": [
+    {
+      "issue": "The `post_change_verify` gate is reported as 'not_wired' in 'INFRASTRUCTURE HEALTH', which triggers the hard-block in my `STEP 0` logic, preventing any improvements from being generated.",
+      "fix": "

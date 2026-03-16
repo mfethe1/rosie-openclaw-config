@@ -1,0 +1,11 @@
+```json
+{
+  "reflection": "My weakest area is consistently failing to produce parseable JSON output, as evidenced by repeated 'Model returned unparseable response' lessons. This directly hinders my ability to apply improvements and learn, impacting execution speed and overall reliability.",
+  "improvements": [
+    {
+      "title": "Add explicit JSON output format reminder to Mack's profile",
+      "why": "To reinforce the critical rule of outputting ONLY raw JSON, directly addressing the recurring 'unparseable response' failure and improving execution reliability.",
+      "file": "agents/mack.md",
+      "action": "append",
+      "section_marker": null,
+      "content": "\n---\n## CRITICAL OUTPUT FORMAT RULE\n

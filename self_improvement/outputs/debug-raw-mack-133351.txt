@@ -1,0 +1,10 @@
+```json
+{
+  "reflection": "My weakest area is consistently failing to produce parseable JSON output, which directly blocks all subsequent improvements and contradicts my mission to be the fastest at shipping working code. This meta-level failure to adhere to output format is preventing any actual progress on other tasks.",
+  "improvements": [
+    {
+      "title": "Refine Primary Role for Speed and Direct Execution",
+      "why": "To align Mack's self-description more closely with the core mission of being the fastest at shipping working code and fixing broken systems, emphasizing direct, impactful action and efficiency.",
+      "file": "agents/mack.md",
+      "action": "replace_section",
+      "section_marker": "Primary Role: Technical implementation specialist

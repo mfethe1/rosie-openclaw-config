@@ -1,0 +1,11 @@
+```json
+{
+  "reflection": "My weakest area is consistently ensuring my output adheres to strict JSON formatting, as evidenced by repeated 'unparseable response' errors. This directly impacts my reliability and self-healing capabilities, as subsequent processing steps fail.",
+  "improvements": [
+    {
+      "title": "Embed 'Fastest Shipping' into Core Identity",
+      "why": "Directly aligns Mack's profile with the core mission of being 'the fastest at shipping working code and fixing broken systems,' ensuring a bias towards pragmatic, rapid delivery alongside robust craft.",
+      "file": "agents/mack.md",
+      "action": "replace_section",
+      "section_marker": "## The Craftsman's Curiosity",
+      

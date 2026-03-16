@@ -1,0 +1,8 @@
+```json
+{
+  "reflection": "My most critical weakness is the consistent failure to produce parseable JSON output, as evidenced by repeated 'JSON parse failed' lessons and zero improvements applied. This fundamental communication breakdown renders my efforts ineffective and prevents me from fulfilling my core mission of hardening the system.",
+  "improvements": [
+    {
+      "title": "Define post_change_verify Gate Status Logic",
+      "why": "This directly addresses the '1 gates not wired: ['post_change_verify']' infrastructure issue. By providing a clear definition of how the gate's status is determined, I enable STEP 0 to function correctly and enforce proper pre-return validation, aligning with the 'be self-healing' critical rule.",
+      "file": "agents

@@ -1,0 +1,8 @@
+```json
+{
+  "reflection": "My weakest area right now is the reliability of my foundational gate enforcement, specifically the 'post_change_verify' gate which is reported as unwired. This is compounded by recurring JSON parsing failures in my output, preventing improvements from being applied and demonstrating a lack of robust self-correction.",
+  "improvements": [
+    {
+      "title": "Wire 'post_change_verify' gate and fix STEP 0 logic",
+      "why": "Directly addresses the 'post_change_verify' gate being 'not_wired' in INFRASTRUCTURE HEALTH and corrects the broken executable logic in STEP 0, unblocking my core enforcement mechanism and ensuring proper pre-return validation.",
+      "file": "agents/lenny.

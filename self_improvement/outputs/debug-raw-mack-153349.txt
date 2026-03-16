@@ -1,0 +1,11 @@
+```json
+{
+  "reflection": "My weakest area is consistent, robust output formatting, leading to 'unparseable response' errors. This stems from a combination of verbose prompt instructions and a lack of explicit pre-return validation, despite previous attempts to enforce it. Additionally, a critical infrastructure gate remains unwired.",
+  "improvements": [
+    {
+      "title": "Implement Structured Lesson Capture for Actionable Insights",
+      "why": "Current lesson capture is generic. This change ensures lessons are specific, tied to task IDs and outcomes, directly addressing the 'lesson retention' directive and improving future learning and performance.",
+      "file": "agents/mack.md",
+      "action": "append",
+      "section_marker": null,
+      "
