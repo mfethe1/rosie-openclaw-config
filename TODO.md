@@ -112,6 +112,7 @@ _(none this cycle)_
 ## Closed / Archived
 
 - ~~[Mack] Implement unit tests for shared-state.json schema validator~~ — Completed by Mack (2026-03-16 04:07 UTC). Refactored validator and added `test_shared_state_validator.py`.
+  - [Lenny] QA Validation (Completed 2026-03-16 04:10 UTC). Executed unit tests successfully; verified schema validation test coverage.
 
 - ~~[Lenny] QA Validation: test_log_rotation.py~~ — Completed by Lenny (2026-03-15 19:10 UTC). Added unit test scaffold for log rotation logic.
 
@@ -182,5 +183,7 @@ _(none this cycle)_
 - [Lenny] QA Validation: verify_completion_gate.py (Completed 2026-03-15 16:07 UTC)
   Added unit tests for programmatic verification gate. Tested successfully without errors.
 
-- [Lenny] QA Validation: shared-state.json schema validator (Completed 2026-03-15 22:15 UTC)
+- ~~[Lenny] QA Validation: shared-state.json schema validator (Completed 2026-03-15 22:15 UTC)
   Verified `shared_state_validator.py` and wired it into `smoke_test.sh`.
+
+- ~~[Mack] Refine broad exception clauses (Proactive 60-second scan)~~ — Completed by Mack (2026-03-16 07:15 UTC). Refined remaining broad `except Exception:` clauses in `model_health_check.py` triggered by proactive loop rule.
