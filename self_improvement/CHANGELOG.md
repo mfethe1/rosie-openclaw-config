@@ -1,3 +1,22 @@
+## [2026-03-16 04:07 UTC] Test Coverage for shared-state.json schema validator (Mack)
+- Refactored `shared_state_validator.py` to extract validation logic, making it testable.
+- Implemented `test_shared_state_validator.py` with comprehensive unittest coverage for missing keys, invalid types, and successful validation scenarios.
+- Verified test suite passes locally with `python3 -m unittest`.
+
+## [2026-03-16 01:07 UTC] Test Coverage for SI Benchmark Gate (Mack)
+- Implemented `test_si_benchmark_gate.py` unit test suite to validate DGM-style benchmark checks.
+- Verified memU health API parsing, exception handling, and timestamp freshness check limits.
+- Built zero-dependency testing with `unittest.mock` to ensure infrastructure gates remain deterministic.
+
+## [2026-03-15 22:07 UTC] JSON Schema Validator for shared-state.json (Mack)
+- Implemented `shared_state_validator.py` to enforce required keys (`last_run`, `what_changed`, `next_owner`, `blockers`, `hypotheses`, `broadcasts`, `last_updated`, `last_updated_by`) and types.
+- Integrated validator as a pre-flight hard gate in `smoke_test.sh` to prevent malformed writes from bringing down downstream systems.
+
+## [2026-03-15 19:07 UTC] Test Coverage for Log Rotation (Mack)
+- Implemented `test_log_rotation.py` unit test suite to validate rotation and dry-run boundaries.
+- Verified 10MB threshold triggers, file truncations, and gzip archival functions correctly.
+- Added comprehensive edge-case protection to prevent unbounded `.jsonl` appends from triggering disk limits.
+
 ## [2026-03-15 03:05 UTC] Fix mack_cron_health_check.py: remove invalid --owner flag (Mack)
 - Identified `mack_cron_health_check.py` using non-existent `openclaw cron list --owner=Mack` CLI option, causing ERROR on every run.
 - Replaced subprocess CLI call with direct JSON read from `~/.openclaw/cron/jobs.json`, filtering by name containing 'mack'/'macklemore'.
@@ -3286,4 +3305,113 @@
 - Applied: 0/0
 
 ## 2026-03-15 05:36 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 06:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 06:36 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 07:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 07:36 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 08:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 08:36 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 09:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 09:37 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 10:37 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 11:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 11:36 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 16:07 — Mack Self-Improvement v2
+- Applied: 1/1
+  - Built Antfarm feature-dev pilot workflow config and validation runner
+
+## 2026-03-15 12:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 12:37 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 13:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 13:37 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 14:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 14:36 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 15:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 15:37 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 16:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 16:37 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 17:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 17:37 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 18:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 18:37 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 19:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 19:36 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 20:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 20:37 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 21:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 21:37 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 22:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 22:37 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 23:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-15 23:36 — Lenny Self-Improvement v2
 - Applied: 0/0

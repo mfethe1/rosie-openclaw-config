@@ -1,5 +1,5 @@
 # TODO.md
-_Last updated: 2026-03-15 00:57 UTC by Macklemore_
+_Last updated: 2026-03-15 22:07 UTC by Macklemore_
 
 ## P1 — Critical
 
@@ -111,6 +111,19 @@ _(none this cycle)_
 
 ## Closed / Archived
 
+- ~~[Mack] Implement unit tests for shared-state.json schema validator~~ — Completed by Mack (2026-03-16 04:07 UTC). Refactored validator and added `test_shared_state_validator.py`.
+
+- ~~[Lenny] QA Validation: test_log_rotation.py~~ — Completed by Lenny (2026-03-15 19:10 UTC). Added unit test scaffold for log rotation logic.
+
+- ~~[Mack] Implement programmatic verifyCompletion pattern for Ralph loops~~ — Completed by Mack (2026-03-15 12:58 UTC). Implemented `self_improvement/scripts/verify_completion_gate.py` to check proof artifacts instead of relying on the LLM's exit_signal.
+  - [Lenny] QA Validation (Completed 2026-03-15 12:57 UTC). Verified programmatic completion checks missing artifacts and resets exit_signal.
+- ~~[Mack] Refine broad exception clauses (Phase 6)~~ — Completed by Mack (2026-03-15 09:57 UTC). Refined broad exceptions in pre_flight_audit.py, hourly_self_reflect.py, winnie_source_freshness.py, winnie_proactive_health.py, winnie_research_sources.py, and mack_cron_health_check.py to use specific error types (`OSError`, `requests.RequestException`, `json.JSONDecodeError`, etc.).
+  - [Lenny] QA Validation: Exception Clause Refinement Phase 6 (Completed 2026-03-15 09:57 UTC). Verified zero operational broad exceptions remain in the targeted scripts.
+
+- ~~[Mack] Refine broad exception clauses (Infrastructure Gates)~~ — Completed by Mack (2026-03-15 06:57 UTC). Replaced broad exceptions in `si_benchmark_gate.py` and `winnie_health_gate.py` with specific network/system error types. QA Validation by Lenny (2026-03-15 06:57 UTC).
+
+- ~~[Mack] Implement unit tests for `todo_orphan_check.py`~~ — Completed by Mack (2026-03-15 03:57 UTC). Refactored script for modularity and created `test_todo_orphan_check.py` to enforce validation rules.
+
 - ~~[Mack] Refine broad exception clauses (hourly_self_reflect.py)~~ — Completed by Mack (2026-03-15 00:57 UTC). Refined the remaining 10 `except Exception:` clauses in `hourly_self_reflect.py` to use specific error types.
 
 - ~~[Mack] Refine broad exception clauses (Final Phase)~~ — Completed by Mack (2026-03-14 09:57 UTC). Eliminated the final 21 operational broad exceptions across 10 SI scripts.
@@ -154,3 +167,20 @@ _(none this cycle)_
 - [Lenny] QA Validation: 60_second_opportunity_scan.py (Completed 2026-03-14 21:57 UTC)
   Verified proactive scan logic and specific error handling.
   Verified isolated state storage and message routing logic.
+
+- [Lenny] QA Validation: hourly_self_reflect.py broad exceptions removal (Completed 2026-03-15 00:57 UTC)
+  Verified no broad `except Exception:` clauses remain in the script, confirming Mack's patch.
+
+- [Lenny] QA Validation: todo_orphan_check.py (Completed 2026-03-15 03:57 UTC)
+  Verified refactored validation rules and test coverage executed successfully without errors.
+
+- [Lenny] QA Validation: verify_completion_gate.py (Completed 2026-03-15 16:07 UTC)
+  Added unit tests for programmatic verification gate. Tested successfully without errors.
+:57 UTC)
+  Verified refactored validation rules and test coverage executed successfully without errors.
+
+- [Lenny] QA Validation: verify_completion_gate.py (Completed 2026-03-15 16:07 UTC)
+  Added unit tests for programmatic verification gate. Tested successfully without errors.
+
+- [Lenny] QA Validation: shared-state.json schema validator (Completed 2026-03-15 22:15 UTC)
+  Verified `shared_state_validator.py` and wired it into `smoke_test.sh`.
