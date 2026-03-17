@@ -1,3 +1,23 @@
+## [2026-03-17 06:58 UTC] Fix file_mutex re-entrancy bug & add test coverage (Mack)
+- Identified and fixed a deadlock bug in `file_mutex.py` where re-entrant locks within the same thread caused scripts to hang.
+- Implemented `test_file_mutex.py` unit test suite to validate atomic write text and file lock concurrency.
+- Enforced test coverage and verified tests pass successfully.
+
+## [2026-03-17 03:58 UTC] Test Coverage for Cron Circuit Breaker (Mack)
+- Implemented `test_cron_circuit_breaker.py` unit test suite to validate circuit breaker logic.
+- Verified mocked responses trigger disablement of jobs correctly when consecutive errors exceed 5.
+- Verified dry-run / skipped behavior for already disabled jobs.
+
+## [2026-03-16 21:56 UTC] Test Coverage for Agent Mailbox Primitive (Mack)
+- Implemented `test_agent_mailbox.py` unit test suite to validate targeted inter-agent messaging primitive.
+- Verified read/write/mark logic, concurrency file lock handling, and JSON parsing safety.
+- Test suite passes locally with `python3 -m unittest`, preparing for downstream Agent Teams integration.
+
+## [2026-03-16 18:56 UTC] Refine broad exception clauses (Phase 7) - ACL & Consensus (Mack)
+- Replaced 8 broad `except Exception:` clauses with specific exceptions (`OSError`, `subprocess.TimeoutExpired`, `json.JSONDecodeError`, `ValueError`, `TypeError`) in `rule_engine.py`, `acl_baseline.py`, `acl_safety.py`, `bccs_engine.py`, and `verification_gate.py`.
+- Enhances script robustness by avoiding masking of critical infrastructure failures.
+- Smoke test passed.
+
 ## [2026-03-16 08:00 UTC] Fix model_health_check.py: replace fake api.example.com with real OpenRouter check (Mack)
 - `model_health_check.py` was hitting `https://api.example.com/health?model=...` which always returned non-200, causing `pass: false` on every run.
 - Fixed: now checks OpenRouter `/api/v1/models` endpoint (real, reachable); marks all models healthy when API is up.
@@ -3490,4 +3510,94 @@
 - Applied: 0/0
 
 ## 2026-03-16 11:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 12:38 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 12:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 13:38 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 13:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 14:38 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 14:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 15:38 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 15:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 16:38 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 16:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 17:38 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 17:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 18:38 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 18:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 19:38 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 19:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 20:38 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 20:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 21:38 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 21:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 22:38 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 22:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 23:39 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-16 23:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 00:39 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 00:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 01:39 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 01:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 02:39 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 02:44 — Lenny Self-Improvement v2
 - Applied: 0/0

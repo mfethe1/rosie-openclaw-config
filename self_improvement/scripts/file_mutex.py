@@ -16,9 +16,12 @@ try to update shared-state.json at the exact same time.
 import fcntl
 import os
 import time
+import threading
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Generator
+
+_local = threading.local()
 
 def get_lock_path(file_path: str | Path) -> Path:
     """Get the path to the lock file for a given file."""
@@ -33,6 +36,16 @@ def file_lock(file_path: str | Path, timeout: float = 60.0, delay: float = 0.1) 
     Raises TimeoutError if the lock cannot be acquired within the timeout.
     """
     lock_path = get_lock_path(file_path)
+    lock_str = str(lock_path)
+    
+    if not hasattr(_local, 'held_locks'):
+        _local.held_locks = set()
+        
+    if lock_str in _local.held_locks:
+        # Re-entrant lock logic: already held by this thread
+        yield
+        return
+        
     lock_path.parent.mkdir(parents=True, exist_ok=True)
     
     start_time = time.time()
@@ -46,13 +59,21 @@ def file_lock(file_path: str | Path, timeout: float = 60.0, delay: float = 0.1) 
                 break
             except (IOError, OSError):
                 if time.time() - start_time > timeout:
+                    os.close(fd)
                     raise TimeoutError(f"Could not acquire lock for {file_path} within {timeout}s")
                 time.sleep(delay)
                 
-        yield
+        _local.held_locks.add(lock_str)
+        try:
+            yield
+        finally:
+            _local.held_locks.remove(lock_str)
+            try:
+                fcntl.flock(fd, fcntl.LOCK_UN)
+            except (IOError, OSError):
+                pass
     finally:
         try:
-            fcntl.flock(fd, fcntl.LOCK_UN)
             os.close(fd)
         except (IOError, OSError):
             pass

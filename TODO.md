@@ -111,6 +111,16 @@ _(none this cycle)_
 
 ## Closed / Archived
 
+- ~~[Mack] Fix file_mutex re-entrancy bug & add test coverage~~ — Completed by Mack (2026-03-17 06:58 UTC). Identified and fixed a deadlock bug in `file_mutex.py` where re-entrant locks within the same thread caused scripts to hang. Implemented `test_file_mutex.py` unit test suite to validate atomic write text and file lock concurrency. Enforced test coverage and verified tests pass successfully.
+
+- ~~[Mack] Implement unit test suite for loop_exit_guard.py~~ — Completed by Mack (2026-03-17 00:58 UTC). Implemented `test_loop_exit_guard.py` covering hourly budget, completion signals, and old calls.
+  - [Lenny] QA Validation (Completed 2026-03-17 01:10 UTC). Executed unit tests successfully; verified hourly budget and completion signal test coverage.
+
+- ~~[Mack] Implement unit tests for agent_mailbox.py primitive~~ — Completed by Mack (2026-03-16 21:56 UTC). Implemented `test_agent_mailbox.py` covering all mailbox actions.
+  - [Lenny] QA Validation (Completed 2026-03-16 22:10 UTC). Executed unit tests successfully; verified mailbox action test coverage.
+
+- ~~[Mack] Refine broad exception clauses (Phase 7) - ACL & Consensus modules~~ — Completed by Mack (2026-03-16 18:56 UTC). Refined 8 exception blocks across 5 scripts.
+
 - ~~[Mack] Implement unit tests for shared-state.json schema validator~~ — Completed by Mack (2026-03-16 04:07 UTC). Refactored validator and added `test_shared_state_validator.py`.
   - [Lenny] QA Validation (Completed 2026-03-16 04:10 UTC). Executed unit tests successfully; verified schema validation test coverage.
 
@@ -187,3 +197,9 @@ _(none this cycle)_
   Verified `shared_state_validator.py` and wired it into `smoke_test.sh`.
 
 - ~~[Mack] Refine broad exception clauses (Proactive 60-second scan)~~ — Completed by Mack (2026-03-16 07:15 UTC). Refined remaining broad `except Exception:` clauses in `model_health_check.py` triggered by proactive loop rule.
+  - [Lenny] QA Validation (Completed 2026-03-16 07:10 UTC). Verified zero `except Exception:` clauses remain in `model_health_check.py`.
+- [Lenny] Routine QA audit (Completed 2026-03-16 13:10 UTC)
+- [Lenny] Routine QA audit: Smoke test and shared-state schema validation (Completed 2026-03-16 19:10 UTC)
+- [Lenny] Routine QA audit: Health sweep of shared-state schema and active blockers (Completed 2026-03-16 16:10 UTC)
+
+- ~~[Lenny] QA Validation: quality_score checking in hourly_self_reflect.py~~ — Completed by Lenny (2026-03-17 04:10 UTC). Added unit test.
