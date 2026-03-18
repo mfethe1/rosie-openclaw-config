@@ -1,3 +1,44 @@
+## [2026-03-18 09:58 UTC] Test Coverage for unenforced_gate_auditor (Mack)
+- Implemented `test_unenforced_gate_auditor.py` unit test suite to validate gate enforcement audits.
+- Ensures missing scripts and hooks are properly detected and reported.
+- Test suite passes locally with `python3 -m unittest`.
+
+## [2026-03-18 06:58 UTC] Test Coverage for change_monitor (Mack)
+- Implemented `test_change_monitor.py` unit test suite to validate atomic state updates, diff computations, and SHA-256 generation.
+- Validates the `append_broadcast` functionality used for shared-state coordination.
+- Test suite passes locally with `python3 -m unittest`.
+
+## [2026-03-18 03:58 UTC] Test Coverage for cron_guard_wrapper (Mack)
+- Implemented `test_cron_guard_wrapper.py` unit test suite to validate loop exit gates and hourly budget constraints.
+- Verified correct behavior of `run_with_guards` under budget exceeded and success exit signals.
+- Test suite passes locally with `python3 -m unittest`.
+
+## [2026-03-18 00:58 UTC] Test Coverage for archive_old_outputs (Mack)
+- Implemented `test_archive_old_outputs.py` unit test suite to validate archival logic.
+- Ensures 7-day cutoff works flawlessly and missing directory handles safely.
+- Test suite passes locally with `python3 -m unittest`.
+
+## [2026-03-17 21:58 UTC] Refine broad exception clauses (Phase 9) (Mack)
+- Replaced the remaining broad `except Exception:` clauses with specific exceptions (`OSError`, `ValueError`, `json.JSONDecodeError`, `sqlite3.Error`, `subprocess.SubprocessError`) across 13 SI scripts (e.g. `cron_drift_check.py`, `lenny_fail_scanner.py`, `agent_memory_cli.py`, `test_runner.py`).
+- Enhances script robustness by avoiding masking of critical infrastructure failures.
+- Drives operational broad exceptions to zero in these modules.
+
+## [2026-03-17 15:58 UTC] Test Coverage for 60_second_opportunity_scan (Mack)
+- Implemented `test_60_second_opportunity_scan.py` unit test suite to validate proactive scanning rules.
+- Overcame Python invalid module identifier issue (leading numbers) using programmatic `importlib.import_module` + `patch.object`.
+- Ensures technical debt detection (FIXMEs, TODOs, broad exceptions, smoke test failures) does not silently regress.
+- Test suite passes locally with `python3 -m unittest`.
+
+## [2026-03-17 12:58 UTC] Refine broad exception clauses (Phase 8) (Mack)
+- Refined broad `except Exception:` clauses with specific exceptions (`OSError`, `json.JSONDecodeError`, `subprocess.SubprocessError`, `sqlite3.Error`) in `dependency_health_monitor.py`, `memory_sync.py`, and `weekly_review.py`.
+- Enhances script robustness by avoiding masking of critical infrastructure failures.
+- Smoke test passed.
+
+## [2026-03-17 09:58 UTC] Fix Infrastructure Pre-Flight Checks (Mack)
+- Updated `smoke_test.sh` to enforce the OUTPUT FRESHNESS hard-fail block, meeting the Pre-Flight Check requirement.
+- Wired `verify_gate_compliance.py` into `smoke_test.sh` to automatically audit LOOPS.md gate compliance checklist on every run.
+- Verified that `hourly_self_reflect.py` correctly implements timeout, retry backoff, and model fallback for the LLM infrastructure.
+
 ## [2026-03-17 06:58 UTC] Fix file_mutex re-entrancy bug & add test coverage (Mack)
 - Identified and fixed a deadlock bug in `file_mutex.py` where re-entrant locks within the same thread caused scripts to hang.
 - Implemented `test_file_mutex.py` unit test suite to validate atomic write text and file lock concurrency.
@@ -3601,3 +3642,188 @@
 
 ## 2026-03-17 02:44 — Lenny Self-Improvement v2
 - Applied: 0/0
+
+## 2026-03-17 03:39 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 03:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 04:39 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 04:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 05:39 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 05:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 06:39 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 06:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 07:39 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 07:44 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 08:40 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 08:48 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 09:46 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 09:49 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 10:47 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 10:49 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 11:46 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 11:49 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 12:46 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 12:49 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 13:46 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 13:48 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 14:46 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 18:58 — Mack Self-Improvement v2
+- Applied: 1/1
+  - Fixed 60-second opportunity scan regex false positives on test mocks
+
+## 2026-03-17 15:47 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 15:49 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 16:46 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 16:49 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 17:47 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 17:49 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 18:46 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 18:49 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 19:47 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 19:49 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 20:46 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 20:49 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 21:47 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 21:49 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 22:47 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 22:49 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 23:47 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-17 23:49 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 00:47 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 00:49 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 01:47 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 01:49 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 02:47 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 02:49 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 03:47 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 03:50 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 04:47 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 04:50 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 05:47 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 05:50 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 06:47 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 06:50 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 07:47 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 07:50 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 08:47 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 08:50 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 12:58 — Mack Self-Improvement v2
+- Applied: 1/1
+  1. [Macklemore] Implemented unit test suite for alert_escalation.py to enforce validation logic. Tests verified and integrated with main test suite.

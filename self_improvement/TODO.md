@@ -380,3 +380,14 @@
 - [LOW] Monitor Antfarm maintenance activity (Ryan Carson focus) and Tembo as enterprise alternative; re-evaluate in 30d
 - [LOW] Watch Anthropic Agent Teams for deterministic step-control hooks (TeammateIdle/TaskCompleted) — potential Antfarm convergence
 # Full report: self_improvement/outputs/2026-03-16-09-winnie.md
+
+## [2026-03-17] Competitor Sweep — oh-my-opencode / Antfarm / Ralph-loop (Winnie)
+[HIGH]   BLOCK OMO in-agent Ralph Loop plugin — context rot violator per §1.8 policy; replace all usages with external bash loop pattern (assign: Mack)
+[HIGH]   Watch OMO PR #2590 (circuit breaker + max-step limit): when merged, re-evaluate Gemini routing policy and consider re-enabling Gemini for visual-engineering category (assign: Lenny monitor)
+[MEDIUM] TEST vercel-labs/agent-browser in a Ralph loop with frontend verification step — target 82.5% context reduction vs Playwright MCP (assign: Mack)
+[MEDIUM] Antfarm: expand pilot to bug-fix workflow; track cycle time, escalation rate, first-pass success vs auggie/opencode baseline (assign: Mack)
+[MEDIUM] Confirm OMO v3.10 selective agent activation (disable:true config bug) — still pending upstream (carry from 2026-03-15)
+[LOW]    Evaluate pageai-pro/ralph-loop Docker sandbox mode for overnight unattended runs (carry from 2026-03-15, assign: Mack)
+[LOW]    Block Antfarm autonomous cron activation until native cost-cap YAML field confirmed in v0.6.x release notes (assign: Lenny)
+[LOW]    Close Antfarm ensure-crons idle-cron-drift gap (carry from 2026-03-15, assign: Lenny)
+# Full report: self_improvement/outputs/2026-03-17-09-winnie.md
