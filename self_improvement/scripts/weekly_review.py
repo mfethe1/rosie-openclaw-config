@@ -204,7 +204,7 @@ def fetch_cost_summary(days: int) -> dict:
         data = json.loads(r.stdout)
         data["store_cycle"] = cycle
         return data
-    except Exception as e:
+    except (subprocess.TimeoutExpired, OSError, json.JSONDecodeError) as e:
         return {"error": f"cost_tracker exception: {e}"}
 
 
@@ -219,7 +219,7 @@ def fetch_memory_md_summary() -> dict:
         if r.returncode != 0:
             return {"error": f"memory_md_updater failed rc={r.returncode}", "stderr": r.stderr.strip()[:300]}
         return json.loads(r.stdout)
-    except Exception as e:
+    except (subprocess.SubprocessError, OSError, json.JSONDecodeError) as e:
         return {"error": f"memory_md_updater exception: {e}"}
 
 

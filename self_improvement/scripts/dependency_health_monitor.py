@@ -82,7 +82,7 @@ def fetch_json(url: str, timeout: int = 10, retries: int = 3, backoff: float = 1
             last_exc = exc
         except (urllib.error.URLError, TimeoutError, OSError) as exc:
             last_exc = exc
-        except Exception as exc:
+        except (json.JSONDecodeError, ValueError) as exc:
             last_exc = exc
             # Non-network errors (e.g. JSON decode) — no point retrying
             break
@@ -283,7 +283,7 @@ def store_results(results: list):
         conn.commit()
         conn.close()
         print("[OK] Stored in agent-memory.db")
-    except Exception as e:
+    except (sqlite3.Error, OSError) as e:
         print(f"[WARN] Store failed: {e}")
 
 

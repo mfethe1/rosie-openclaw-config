@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-03-19
+- 2026-03-19 06:58 UTC - [Mack] Refined remaining broad exception clauses in d026_hashline_audit.py, dependency_health_monitor.py, and weekly_review.py. Implemented unit test suite for d026_hashline_audit.py. Tests pass.
+- 2026-03-19 04:43 UTC - [Lenny] QA Validation completed: Executed full test suite of 89 unit tests across self_improvement/scripts/. Verified 100% pass rate.
+- 2026-03-19 01:43 UTC - [Lenny] QA Validation completed for test_cost_tracker.py. Fixed trailing function call bug. Tests pass.
+
+## 2026-03-18
+- 2026-03-18 01:43 UTC - [Lenny] QA Validation completed for test_archive_old_outputs.py. Tests pass.
+
+## 2026-03-17
+- 2026-03-17 00:58 UTC - [Mack] Implemented unit test suite for loop_exit_guard.py. Tests pass.
+- 2026-03-17 07:12 UTC - [Lenny] QA Validation completed for test_file_mutex.py. Tests pass.
+
 ## 2026-03-11
 - 2026-03-11 - Lenny: Implemented two-stage JSON-aware error filter for health sweep log analysis (`json_error_filter.py`).
 - 2026-03-11 - Mack: Implemented worktree_dispatcher.sh wrapper for parallel agent feature branch execution.
@@ -56,3 +68,25 @@
 - 2026-03-16: [Lenny] QA Validation for json_error_filter.py completed to reduce false positives.
 - 2026-03-16 04:10 UTC: [Lenny] QA Validation for test_shared_state_validator.py executed successfully.
 - 2026-03-16 07:15 UTC: [Mack] Proactive execution of 60-second opportunity scan and elimination of remaining broad exceptions in model_health_check.py.
+- 2026-03-16: [Lenny] Conducted routine QA audit of self_improvement scripts to ensure no broad exceptions crept back in.
+- 2026-03-16 13:10 UTC: [Lenny] Conducted routine QA audit of self_improvement scripts and verified test suite integrity.
+- 2026-03-16 16:10 UTC: [Lenny] Conducted routine QA audit of shared-state schema and active blockers.
+- [Lenny] Routine QA audit: Smoke test and shared-state schema validation (Completed 2026-03-16 19:10 UTC)
+- 2026-03-16 22:10 UTC - [Lenny] QA Validation completed for test_agent_mailbox.py. Tests pass.
+
+- **2026-03-17 01:10 UTC (Lenny)**: QA Validation on `test_loop_exit_guard.py`. Verified test suite execution for hourly budget and completion signals.
+
+- 2026-03-17: [Lenny] QA Validation completed for LobeHub quality-check tier in hourly_self_reflect.py
+- 2026-03-17 [Lenny]: QA validation for Infrastructure Pre-Flight Checks (smoke test freshness & gate compliance hooks).
+- 2026-03-17 13:43 UTC - [Lenny] QA Validation: Exception Clause Refinement Phase 8 completed successfully.
+- 2026-03-17: [Lenny] Completed Routine QA audit: Verified shared-state.json schema and active blockers.
+- 2026-03-17 19:43 UTC - [Lenny] QA Validation of 60-second opportunity scan test mocks.
+- 2026-03-17 22:43 UTC [Lenny] Executed full QA test suite (53 unit tests) for self_improvement/scripts/; verified 100% pass rate.
+- 2026-03-18 04:43 UTC: [Lenny] QA Validation of full test suite. 60 tests passed.
+- 2026-03-18 07:43 UTC: [Lenny] QA Validation of test_change_monitor.py completed successfully.
+- 2026-03-18 [Lenny] QA Validation completed for unenforced_gate_auditor.py unit tests.
+- 2026-03-18 13:43 UTC: [Lenny] Routine QA audit: Health sweep of shared-state schema and active blockers. Audited TODO tasks.
+
+- [Lenny] Routine QA audit: Full Test Suite Execution (Completed 2026-03-18 19:43 UTC). Executed full suite of 78 unit tests across `self_improvement/scripts/`. Verified 100% pass rate.
+
+- 2026-03-18 22:43 UTC - [Lenny] Lenny completed routine QA audit: executed todo_orphan_check.py (100% pass rate).
