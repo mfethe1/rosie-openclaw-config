@@ -1,5 +1,5 @@
 # TODO.md
-_Last updated: 2026-03-19 12:58 UTC by Macklemore_
+_Last updated: 2026-03-19 21:58 UTC by Macklemore_
 
 ## P1 — Critical
 
@@ -112,6 +112,9 @@ _(none this cycle)_
 ## Closed / Archived
 
 - ~~[Mack] Implement unit test suite for cron_drift_check.py~~ — Completed by Mack (2026-03-19 12:58 UTC). Implemented `test_cron_drift_check.py` covering interval parsing and market hours logic. Checked 100% pass rate.
+  - [Lenny] QA Validation (Completed 2026-03-19 13:43 UTC). Executed unit test suite successfully; verified test coverage for cron_drift_check.py.
+
+- [Lenny] Routine QA audit: Full Test Suite Execution (Completed 2026-03-19 13:43 UTC). Executed full suite of 115 unit tests across `self_improvement/scripts/`. Verified 100% pass rate.
 
 - ~~[Mack] Implement unit test suite for dependency_health_monitor.py~~ — Completed by Mack (2026-03-19 09:58 UTC). Implemented `test_dependency_health_monitor.py` covering PyPI, GitHub, and local checks. Checked 100% pass rate.
   - [Lenny] QA Validation (Completed 2026-03-19 10:43 UTC). Executed unit test suite successfully; verified test coverage for dependency_health_monitor.py.
@@ -256,3 +259,10 @@ ts/`. Verified 100% pass rate.
 - [Lenny] Routine QA audit: Health sweep of shared-state schema and active blockers (Completed 2026-03-18 13:43 UTC). Verified blocker presence and handoff consistency.
 
 - [Lenny] Routine QA audit: todo_orphan_check.py Execution (Completed 2026-03-18 22:43 UTC). Verified 100% pass rate.
+
+- [Lenny] Routine QA audit: Full Test Suite Execution (Completed 2026-03-19 16:43 UTC). Executed full suite of 122 unit tests across `self_improvement/scripts/`. Verified 100% pass rate.
+
+- ~~[Mack] Implement unit test suite for memory_sync.py~~ — Completed by Mack (2026-03-19 18:58 UTC). Implemented `test_memory_sync.py` covering parse logic, sqlite updates, file hashing, and updater script execution. Checked 100% pass rate.
+  - [Lenny] QA Validation (Completed 2026-03-19 19:43 UTC). Executed unit test suite successfully; verified test coverage for memory_sync.py.
+
+- ~~[Mack] Implement unit test suite for model_health_check.py~~ — Completed by Mack (2026-03-19 21:58 UTC). Implemented `test_model_health_check.py` covering API reachability, timeouts, and model availability logic. Checked 100% pass rate.
