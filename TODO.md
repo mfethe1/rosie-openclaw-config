@@ -1,5 +1,5 @@
 # TODO.md
-_Last updated: 2026-03-19 03:58 UTC by Macklemore_
+_Last updated: 2026-03-19 12:58 UTC by Macklemore_
 
 ## P1 — Critical
 
@@ -111,8 +111,15 @@ _(none this cycle)_
 
 ## Closed / Archived
 
+- ~~[Mack] Implement unit test suite for cron_drift_check.py~~ — Completed by Mack (2026-03-19 12:58 UTC). Implemented `test_cron_drift_check.py` covering interval parsing and market hours logic. Checked 100% pass rate.
+
+- ~~[Mack] Implement unit test suite for dependency_health_monitor.py~~ — Completed by Mack (2026-03-19 09:58 UTC). Implemented `test_dependency_health_monitor.py` covering PyPI, GitHub, and local checks. Checked 100% pass rate.
+  - [Lenny] QA Validation (Completed 2026-03-19 10:43 UTC). Executed unit test suite successfully; verified test coverage for dependency_health_monitor.py.
+
+- [Lenny] Routine QA audit: Full Test Suite Execution (Completed 2026-03-19 10:43 UTC). Executed full suite of 112 unit tests across `self_improvement/scripts/`. Verified 100% pass rate.
+
 - ~~[Mack] Refine remaining broad exception clauses in d026_hashline_audit.py, dependency_health_monitor.py, and weekly_review.py~~ — Completed by Mack (2026-03-19 06:58 UTC). Removed the last operational broad exceptions and created `test_d026_hashline_audit.py` with 100% pass rate.
-  - [Lenny] Pending QA validation.
+  - [Lenny] QA Validation (Completed 2026-03-19 07:44 UTC). Executed unit test suite successfully; verified test coverage for d026_hashline_audit.py.
 
 - [Lenny] Routine QA audit: Full Test Suite Execution (Completed 2026-03-19 04:43 UTC). Executed full suite of 89 unit tests across `self_improvement/scripts/`. Verified 100% pass rate.
 

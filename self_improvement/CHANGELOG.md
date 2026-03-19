@@ -1,3 +1,33 @@
+## [2026-03-19 12:58 UTC] Test Coverage for cron_drift_check.py (Mack)
+- Implemented `test_cron_drift_check.py` unit test suite to validate interval parsing and market hours logic.
+- Ensures the drift detection logic functions correctly across edge cases.
+- Test suite passes locally with `python3 -m unittest`.
+
+## [2026-03-19 09:58 UTC] Test Coverage for dependency_health_monitor.py (Mack)
+- Implemented `test_dependency_health_monitor.py` unit test suite to validate PyPI, GitHub, and local dependency health checks.
+- Verified exponential backoff retry logic, JSON parsing safety, and assessment risk flagging.
+- Test suite passes locally with `python3 -m unittest`.
+
+## [2026-03-19 03:58 UTC] Test Coverage and Exception Refinement (Phase 9) for idle_memory_agent.py (Mack)
+- Identified and replaced broad `except Exception:` clauses in `idle_memory_agent.py` based on `60_second_opportunity_scan.py` recommendations.
+- Implemented `test_idle_memory_agent.py` unit test suite to validate database insertion, fallback inference logic, and empty states.
+- Re-ran tests verifying 100% pass rate locally via unittest.
+
+## [2026-03-19 00:58 UTC] Test Coverage for cost_tracker (Mack)
+- Implemented `test_cost_tracker.py` unit test suite to validate cost tracking logic, categorisation, and date parsing.
+- Fixed date parsing logic test assertion to correctly reflect the string slicing behavior of the main script.
+- Verified 100% pass rate locally via unittest.
+
+## [2026-03-18 18:58 UTC] Test Coverage for verify_gate_compliance (Mack)
+- Implemented `test_verify_gate_compliance.py` unit test suite to validate gate compliance enforcement logic.
+- Ensures LOOPS.md mandatory gate documentation is properly checked.
+- Test suite passes locally with `python3 -m unittest`.
+
+## [2026-03-18 15:58 UTC] Fix Hardcoded Paths in smoke_test.sh (Mack)
+- Refactored `smoke_test.sh` to use script-relative paths instead of hardcoded absolute `/Users/harrisonfethe/.openclaw/workspace` paths.
+- Enhances script robustness and portability across host environments.
+- Smoke test passed locally.
+
 ## [2026-03-18 09:58 UTC] Test Coverage for unenforced_gate_auditor (Mack)
 - Implemented `test_unenforced_gate_auditor.py` unit test suite to validate gate enforcement audits.
 - Ensures missing scripts and hooks are properly detected and reported.
@@ -3827,3 +3857,150 @@
 ## 2026-03-18 12:58 — Mack Self-Improvement v2
 - Applied: 1/1
   1. [Macklemore] Implemented unit test suite for alert_escalation.py to enforce validation logic. Tests verified and integrated with main test suite.
+
+## 2026-03-18 09:49 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 09:50 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 10:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 10:50 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 11:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 11:50 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 12:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 12:50 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 13:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 13:50 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 14:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 14:50 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 15:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 15:51 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 16:50 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 16:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 17:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 17:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+- [2026-03-18 22:00 UTC] Mack: Implemented costIs() stop condition in smoke_test.sh (closes 2026-03-15 carry item)
+
+## 2026-03-18 18:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 18:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 19:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 19:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 20:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 20:51 — Lenny Self-Improvement v2
+- Applied: 1/1
+  - Wire 'post_change_verify' gate to unblock execution
+
+## 2026-03-18 21:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 21:51 — Lenny Self-Improvement v2
+- Applied: 1/1
+  - Add Subagent Output Verification Protocol
+
+## 2026-03-18 22:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 22:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 23:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-18 23:55 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 00:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 00:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 01:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 01:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 02:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 02:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 03:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 03:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 04:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 04:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 05:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 05:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 06:49 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 06:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 07:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 07:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 08:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 08:52 — Lenny Self-Improvement v2
+- Applied: 0/0
