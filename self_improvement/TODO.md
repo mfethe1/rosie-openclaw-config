@@ -391,3 +391,25 @@
 [LOW]    Block Antfarm autonomous cron activation until native cost-cap YAML field confirmed in v0.6.x release notes (assign: Lenny)
 [LOW]    Close Antfarm ensure-crons idle-cron-drift gap (carry from 2026-03-15, assign: Lenny)
 # Full report: self_improvement/outputs/2026-03-17-09-winnie.md
+
+## [2026-03-18] Competitor Sweep — oh-my-opencode / Antfarm / Ralph-loop (Winnie)
+[x] [HIGH] Implement vercel-labs/ralph-loop-agent with costIs() stop condition in smoke_test verification path — closes 2026-03-15 carry item (assign: Mack) (Completed by Mack 2026-03-18 22:00 UTC)
+[HIGH]   Expand Antfarm pilot: run security-audit workflow on bounded internal target; track cycle time, escalation rate, first-pass success rate (assign: Mack)
+[MEDIUM] Validate disable:true OMO fix locally — confirm no default-agent override side effect in current schema (assign: Lenny)
+[MEDIUM] TEST antfarm workflow ensure-crons: run against current install to close idle-cron-drift gap (assign: Lenny)
+[MEDIUM] Evaluate OMO doom_loop permission gate for §1.8 compliance enforcement — can it force external loop control at harness level? (assign: Oracle)
+[MEDIUM] Formalize "Dual Exit" gate pattern from agentskills.in ralph-loop skill as internal verification standard (assign: Mack)
+[LOW]    Document Antfarm resume command in agent runbooks to reduce human escalation burden for stuck runs (assign: Lenny)
+[LOW]    Monitor OMO PR #2590 (circuit breaker + max-step limit) — when merged, re-evaluate Gemini routing for visual-engineering category (assign: Lenny monitor)
+[LOW]    Block Antfarm autonomous cron activation until v0.6.x native cost-cap YAML field confirmed (carry, assign: Lenny)
+# Full report: self_improvement/outputs/2026-03-18-09-winnie.md
+
+## [2026-03-18] Macklemore Loop
+- [x] Fix hardcoded absolute paths in smoke_test.sh (Completed 15:58 UTC)
+
+
+- [P1] Test Ralph-loop architectural pattern: build a prototype execution loop that forces isolated context per iteration, persists state externally (Git/JSON task lists), and features an external verification gate before tasks are marked done. (Winnie Sweep 2026-03-19)
+
+- ~~[Mack] Implement unit test suite for weekly_review.py~~ — Completed by Mack (2026-03-19 15:58 UTC). Implemented  covering parse logic and subprocess executions. Checked 100% pass rate.
+
+- ~~[Mack] Implement unit test suite for weekly_review.py~~ — Completed by Mack (2026-03-19 15:58 UTC). Implemented `test_weekly_review.py` covering parse logic and subprocess executions. Checked 100% pass rate.

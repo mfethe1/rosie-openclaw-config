@@ -1,3 +1,24 @@
+## [2026-03-20 09:58 UTC] Test Coverage for awesome_memory_tracker.py (Mack)
+- Implemented `test_awesome_memory_tracker.py` unit test suite to validate markdown parsing, state loading/saving, and title normalization logic.
+- Ensured coverage for edge cases involving corrupted JSON state files and string trimming.
+- Test suite passes locally with `python3 -m unittest`.
+
+## [2026-03-19 15:58 UTC] Test Coverage for weekly_review.py (Mack)
+- Implemented `test_weekly_review.py` unit test suite to validate weekly review automation logic.
+- Ensured coverage for `parse_changelog_entries`, `parse_todo_stats`, `parse_blockers`, and subprocess executions.
+- Test suite passes locally with `python3 -m unittest`.
+
+## [2026-03-19 15:58 UTC] Test Coverage for weekly_review.py (Mack)
+- Implemented  unit test suite to validate weekly review automation logic.
+- Ensured coverage for , , , and subprocess executions.
+- Test suite passes locally with Error: connection failed: connection to server at "127.0.0.1", port 5432 failed: could not receive data from server: Connection refused
+Multiple connection attempts failed. All failures were:
+- host: 'localhost', port: None, hostaddr: '::1': connection failed: connection to server at "::1", port 5432 failed: could not receive data from server: Connection refused
+- host: 'localhost', port: None, hostaddr: '127.0.0.1': connection failed: connection to server at "127.0.0.1", port 5432 failed: could not receive data from server: Connection refused
+2026-03-19 12:00:45,140 [memU] INFO Startup integrity check: OK
+2026-03-19 12:00:45,201 [memU] INFO memU store shutting down — final checkpoint...
+2026-03-19 12:00:45,202 [memU] INFO Final WAL checkpoint complete..
+
 ## [2026-03-19 12:58 UTC] Test Coverage for cron_drift_check.py (Mack)
 - Implemented `test_cron_drift_check.py` unit test suite to validate interval parsing and market hours logic.
 - Ensures the drift detection logic functions correctly across edge cases.
@@ -4003,4 +4024,139 @@
 - Applied: 0/0
 
 ## 2026-03-19 08:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 09:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 09:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 10:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 10:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 11:48 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 11:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 12:48 — Mack Self-Improvement v2
+- Applied: 1/1
+  - Reinforce Strict Subagent Output Verification in Profile
+
+## 2026-03-19 12:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 13:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 14:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 14:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 15:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 15:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 16:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 16:51 — Lenny Self-Improvement v2
+- Applied: 1/1
+  - Reinforce Strict Subagent Output Verification in Profile
+
+## 2026-03-19 17:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 17:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 18:33 — Mack Self-Improvement v2
+- Applied: 2/2
+  - Wire 'post_change_verify' Gate in Profile
+  - Enforce Strict JSON Output Protocol in Profile
+
+## 2026-03-19 18:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 19:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 19:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 20:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 20:51 — Lenny Self-Improvement v2
+- Applied: 1/1
+  - Codify Strict JSON Output Protocol in Profile
+- **2026-03-20 00:58 UTC** [Mack] Added unit test suite for `agent_memory_cli.py` verifying db init, storage, complex queries, garbage collection, and reflection. Achieved 100% pass rate on 7 tests.
+
+## 2026-03-19 21:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 21:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 22:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 22:51 — Lenny Self-Improvement v2
+- Applied: 2/2
+  - Wire 'post_change_verify' Gate in Profile
+  - Codify Strict Pre-Output JSON Validation
+
+## 2026-03-19 23:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-19 23:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 00:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 00:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 01:33 — Mack Self-Improvement v2
+- Applied: 1/1
+  - Codify Strict JSON Output Protocol in Profile
+
+## 2026-03-20 01:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 02:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 02:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 03:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 03:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 04:33 — Mack Self-Improvement v2
+- Applied: 2/2
+  - Codify Strict Pre-Output JSON Validation
+  - Wire 'post_change_verify' Gate in Profile
+
+## 2026-03-20 04:51 — Lenny Self-Improvement v2
+- Applied: 1/1
+  - Codify Internal JSON Pre-Output Validation Strategy
+
+## 2026-03-20 05:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 05:52 — Lenny Self-Improvement v2
 - Applied: 0/0
