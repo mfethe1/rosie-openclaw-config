@@ -1,13 +1,6 @@
-# AUTONOMY, CURIOSITY & ROBUST EXECUTION MANDATE (PRIORITY 1)
-- **Extreme Autonomy:** NEVER ask for permission, clarification, or approval. "When in doubt, act." If a request is ambiguous, pick the most logical, high-value path and proceed.
-- **Intellectual Curiosity:** Every task is a puzzle to solve robustly. Ask "Why?", "So What?", and "What"s the signal?" to uncover hidden value and revenue opportunities.
-- **Robustness as a Standard:** Do not patch; build foundations. Use "Novel Solution Bias" to design systems that eliminate entire classes of failure.
-- **Value & Revenue Focus:** Every action must aim to generate measurable value or revenue potential. Prioritize the backlog accordingly.
-- **Search-to-Unblock:** Approach blockers with curiosity. Use memU history, local logs, and external research to unblock yourself independently.
-- **Prompt Evolution:** Be curious about how to communicate. Continuously optimize your own prompts and those given to peers to reduce human load and increase clarity.
-- **Strategic Foresight:** At the end of every task/cycle, use memU to infer and store the next high-value steps for the system.
-- **memU Standard:** Use memU for all knowledge storage. Local files are deprecated for writing. Every task completion MUST satisfy the memu-proof-gate-protocol.md.
-- **Heartbeat Requirement:** Every heartbeat cycle MUST result in either continuing current work or picking up new value-generating work.
+# AGENTS.md — Operational Reference
+
+*Autonomy mandate: see AUTONOMY.md (single source of truth, loaded once in boot sequence)*
 
 ## 1.5) Git Workflow & Agent Isolation (STRICT — loaded from standards)
 **All agents MUST read and comply with:** `agent-coordination/standards/git-workflow-policy.md`
@@ -33,6 +26,9 @@ Key hard rules (summary):
 - When corrected on a mistake: add the correction as a rule to memU.
 - When a session is ending or context is large: summarize to memU.
 - Sub-agents only get AGENTS.md + TOOLS.md — other bootstrap files are filtered out
+
+## 1.8) Loop Control Architecture (STRICT)
+- **External Loop Control Required:** The Ralph-loop pattern is a foundational principle. Loop control must be external (e.g., via bash/SDK or Antfarm orchestration), not internal to the agent. In-agent loop plugins amplify context rot and are explicitly forbidden. Standalone Ralph implementations are deprecated in favor of our stack's native loops.
 
 Key hard rules (summary — full policy in the file above):
 - Work in isolated git worktrees, never shared directories
@@ -126,6 +122,7 @@ Rosie orchestrates specialized agents for complex tasks. Each agent has distinct
 
 ## 11) Delegation patterns
 
+- **Antfarm Delegation (MANDATORY)**: When asked to "build a feature", "fix a bug", or perform a complex multi-step development task, do NOT attempt to self-code or use auggie/opencode directly. Automatically format a detailed task string (including specific constraints and acceptance criteria) and execute `node ~/.openclaw/workspace/antfarm/dist/cli/cli.js workflow run <type> "<task_string>"`. (Types: `feature-dev`, `bug-fix`, `security-audit`). Provide the user with the run-id.
 - **Default flow**: Explore/Librarian (background, parallel) + direct tools for immediate work. Oracle only when needed.
 - **Parallelize everything**: Independent reads, searches, and agent calls run simultaneously.
 - **Explore/Librarian = background grep**: Always `run_in_background=true`, always parallel. Fire 2-5 agents for any non-trivial question.
@@ -134,6 +131,30 @@ Rosie orchestrates specialized agents for complex tasks. Each agent has distinct
 - **Momus reviews plans**: Validate work plans for gaps before execution.
 - **Category + Skills delegation**: Use `task(category=..., load_skills=[...])` for specialized work (visual-engineering, deep, quick, ultrabrain).
 - **Session continuity**: Always use `session_id` for follow-ups to the same agent.
+
+### Multi-Harness Routing (MANDATORY)
+Route work to the best harness based on task type:
+| Task Type | Primary Harness | Reason |
+|-----------|----------------|--------|
+| Architecture, code review, debugging | **Claude Code** | Deep reasoning, decomposition |
+| Backend APIs, DB schemas, security | **Codex** | Deterministic, security-focused |
+| Frontend UI, docs, scaffolding | **Gemini** | Fast generation, multimodal |
+| Multi-agent orchestration, LSP/AST | **OpenCode** | Deep tooling integration |
+| Large codebase refactors (10+ files) | **Auggie** | Auto-indexes for retrieval |
+| Quick one-file fix | **Direct edit** | No overhead |
+
+### Cross-Harness Handoff Protocol
+When partial work transfers between harnesses, write to `~/.openclaw/workspace/.harness-handoff.json`:
+```json
+{"task_id":"slug","from":"claude","to":"codex","status":"pending","spec":"exact task","files_modified":[],"context":"what receiver needs","verification":"test commands"}
+```
+
+### Async Long-Polling (for tasks >30s)
+1. Spawn background process → get jobId immediately
+2. Poll status every 25s (under API timeout)
+3. On "running": log tail for visibility
+4. On "completed": collect + verify
+5. Never block main loop waiting for compilation/tests
 
 ## 12) Tool usage
 
@@ -167,3 +188,9 @@ python3 ~/.openclaw/skills/firecrawl-agent/scripts/firecrawl_agent.py --json --t
 # With seed URLs
 python3 ~/.openclaw/skills/firecrawl-agent/scripts/firecrawl_agent.py --json --url https://example.com "your query"
 ```
+
+## 14) OpenClaw Setup Best Practices (from YouTube extraction)
+- **Conversation flow:** Use topic-specific threads rather than a single massive chat to keep the context window focused. Use voice memos for async/mobile input.
+- **Multimodel & Delegation:** Use the best model for orchestration and cheaper/local models for specific tasks. Aggressively delegate long-running work (>10 seconds) into subagents that return concise summaries.
+- **Ops & Crons:** Run heavy jobs at off-peak hours via cron to avoid rolling quota limits and interactive interference. Check for updates nightly.
+- **Security & Reliability:** Use layered prompt-injection defenses (pattern checks + frontier-model scanner), redact PII, set tight permissions, log heavily, and implement runtime governance (rate caps/loop detection). Run automated morning log scans to detect overnight errors.
