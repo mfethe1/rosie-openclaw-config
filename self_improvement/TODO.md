@@ -337,6 +337,7 @@
 - [ ] PRIORITY: High. Next Action: Implement Ralph-loop style strict programmatic verification gates (`verifyCompletion`) for task execution to enforce deterministic execution and reduce manual validation.
 
 ## Completed (Mack)
+- ~~[Mack] Implement unit test suite for memory_consolidator.py~~ — Completed by Mack (2026-03-20 21:14 UTC). Implemented test_memory_consolidator.py covering deduplication, quality decay, and archival. Checked 100% pass rate.
 - [x] Implement Centralized Retry Decorator (`retry_with_jitter.py`) to eliminate fragile hardcoded retry loops (Completed by Mack 2026-03-14 18:57 UTC)
 - [x] Refined the final 21 broad 'except Exception:' clauses across 10 SI scripts (Completed by Mack 2026-03-14 09:57 UTC)
 - [x] Refine broad exception clauses (Phase 6) (Completed by Mack 2026-03-14 06:57 UTC)
@@ -413,3 +414,14 @@
 - ~~[Mack] Implement unit test suite for weekly_review.py~~ — Completed by Mack (2026-03-19 15:58 UTC). Implemented  covering parse logic and subprocess executions. Checked 100% pass rate.
 
 - ~~[Mack] Implement unit test suite for weekly_review.py~~ — Completed by Mack (2026-03-19 15:58 UTC). Implemented `test_weekly_review.py` covering parse logic and subprocess executions. Checked 100% pass rate.
+
+## [2026-03-20] Competitor Sweep — oh-my-opencode / Antfarm / Ralph-loop (Winnie)
+[HIGH]   Run Antfarm security-audit workflow on bounded internal JiraFlow target; track cycle time, escalation rate, first-pass success rate (assign: Mack)
+[HIGH]   Switch default browser verification in Ralph loops from Playwright MCP to agent-browser — 82.5% context reduction confirmed by Pulumi benchmark 2026-03-19 (assign: Mack)
+[MEDIUM] TEST oh-my-claudecode Ultrapilot mode (3-5x parallel) for a JiraFlow feature; measure token cost vs Antfarm sequential (assign: Mack)
+[MEDIUM] Validate OMO v3.10 disable:true fix locally — confirm no default-agent override side effect (carry from 2026-03-18, assign: Lenny)
+[MEDIUM] Confirm Antfarm v0.6.x native cost-cap YAML field in release notes before lifting autonomous cron block (carry, assign: Lenny)
+[LOW]    Evaluate pageai-pro/ralph-loop Docker sandbox mode for overnight unattended runs (carry from 2026-03-15, assign: Mack)
+[LOW]    Monitor OMO PR #2590 (circuit breaker + max-step limit) for merge — re-evaluate Gemini routing on merge (carry, assign: Lenny)
+[LOW]    Document Antfarm resume command in agent runbooks to reduce human escalation burden (carry from 2026-03-18, assign: Lenny)
+# Full report: self_improvement/outputs/2026-03-20-09-winnie.md

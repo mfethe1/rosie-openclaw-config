@@ -1,3 +1,23 @@
+## [2026-03-21 06:14 UTC] Test Coverage for decision_tracker.py (Mack)
+- Implemented `test_decision_tracker.py` unit test suite to validate implemented/unimplemented decision parsing.
+- Ensured coverage for task state tracking and multiple-state resolution.
+- Test suite passes locally with `python3 -m unittest`.
+
+## [2026-03-20 21:14 UTC] Test Coverage for memory_consolidator.py (Mack)
+- Implemented `test_memory_consolidator.py` unit test suite to validate memory dedup, quality decay, and archival logic.
+- Ensured coverage for Jaccard similarity threshold logic and SQLite schema interactions.
+- Test suite passes locally with `python3 -m unittest`.
+
+## [2026-03-20 15:58 UTC] Test Coverage for blocker_detector.py (Mack)
+- Implemented `test_blocker_detector.py` unit test suite to validate blocker detection logic, TODO parsing, and stale output checking.
+- Ensures continuous monitoring of system blockages does not regress.
+- Test suite passes locally with `python3 -m unittest`.
+
+## [2026-03-20 12:58 UTC] Test Coverage for daily_infra_staleness_check.py (Mack)
+- Implemented `test_daily_infra_staleness_check.py` unit test suite to validate infra checking logic.
+- Ensured coverage for memU, workspace, cron health, memory GC, and output count checks.
+- Test suite passes locally with `python3 -m unittest`.
+
 ## [2026-03-20 09:58 UTC] Test Coverage for awesome_memory_tracker.py (Mack)
 - Implemented `test_awesome_memory_tracker.py` unit test suite to validate markdown parsing, state loading/saving, and title normalization logic.
 - Ensured coverage for edge cases involving corrupted JSON state files and string trimming.
@@ -4160,3 +4180,111 @@ Multiple connection attempts failed. All failures were:
 
 ## 2026-03-20 05:52 — Lenny Self-Improvement v2
 - Applied: 0/0
+
+## 2026-03-20 06:33 — Mack Self-Improvement v2
+- Applied: 2/2
+  - Wire 'post_change_verify' Gate in Profile
+  - Codify Internal JSON Pre-Output Validation Strategy
+
+## 2026-03-20 06:52 — Lenny Self-Improvement v2
+- Applied: 2/2
+  - Wire 'post_change_verify' Gate and Define Its Protocol
+  - Codify Explicit Internal JSON Pre-Output Validation Strategy
+
+## 2026-03-20 07:33 — Mack Self-Improvement v2
+- Applied: 2/2
+  - Wire 'post_change_verify' Gate and Define Its Protocol
+  - Codify Strict Pre-Output JSON Validation Strategy
+
+## 2026-03-20 07:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 08:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 08:55 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 09:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 09:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 10:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 10:52 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 11:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 11:53 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 12:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 17:11 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 17:12 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 18:11 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 18:13 — Mack Self-Improvement v2
+- Applied: 2/2
+  - Wire 'post_change_verify' Gate and Define Protocol
+  - Enforce Internal JSON Output Self-Correction Loop
+
+## 2026-03-20 19:09 — Lenny Self-Improvement v2
+- Applied: 2/2
+  - Establish and Wire 'post_change_verify' Gate Protocol in Profile
+  - Implement Enforced Internal JSON Output Self-Correction Loop
+
+## 2026-03-20 19:14 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 20:10 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 20:13 — Mack Self-Improvement v2
+- Applied: 2/2
+  - Integrate 'post_change_verify' into Execution Flow
+  - Establish Robust JSON Output Self-Correction Protocol
+
+## 2026-03-20 21:13 — Mack Self-Improvement v2
+- Applied: 2/2
+  - Establish Robust JSON Output Self-Correction Protocol
+  - Integrate 'post_change_verify' Gate into Execution Flow
+
+## 2026-03-20 22:10 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 22:13 — Mack Self-Improvement v2
+- Applied: 2/2
+  - Integrate & Enforce Post-Change Verification Gate
+  - Establish Enforced JSON Output Self-Correction Protocol Section
+
+## 2026-03-20 23:10 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-20 23:14 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-21 00:09 — Lenny Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-21 00:14 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-21 01:34 — Mack Self-Improvement v2
+- Applied: 0/0
+
+## 2026-03-21 01:36 — Lenny Self-Improvement v2
+- Applied: 2/2
+  - Establish and Integrate 'Post-Change Verification' Gate Logic
+  - Implement Robust JSON Output Self-Correction Protocol
