@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 import json, requests, time
-from datetime import datetime
+from datetime import datetime, timezone
 
 MODELS = ['anthropic/claude-sonnet-4-6', 'anthropic/claude-opus-4-6', 'anthropic/claude-haiku-4-6', 'openai/gpt-4-turbo', 'google/gemini-2.0-pro']
 THRESHOLD_LATENCY_MS = 3000
 THRESHOLD_ERROR_RATE = 0.05
 
 def health_check():
-    results = {'timestamp': datetime.utcnow().isoformat(), 'models': {}}
+    results = {'timestamp': datetime.now(timezone.utc).isoformat(), 'models': {}}
     for model in MODELS:
         retries = 3
         while retries > 0:
