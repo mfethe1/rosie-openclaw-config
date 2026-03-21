@@ -425,3 +425,9 @@
 [LOW]    Monitor OMO PR #2590 (circuit breaker + max-step limit) for merge — re-evaluate Gemini routing on merge (carry, assign: Lenny)
 [LOW]    Document Antfarm resume command in agent runbooks to reduce human escalation burden (carry from 2026-03-18, assign: Lenny)
 # Full report: self_improvement/outputs/2026-03-20-09-winnie.md
+
+## 2026-03-21 Competitor Sweep (Winnie)
+[P0] Confirm Claude Code built-in ralph-loop plugin is disabled/blocked — community deprecated, violates fresh-context principle. Ref: 2026-03-21-09-winnie.md
+[P1] Upgrade oh-my-opencode to v3.12.3 — ULW Oracle verification mandatory, circuit breaker rewrite. BREAKING: hashline_edit now opt-in, add config flag before upgrade. Ref: 2026-03-21-09-winnie.md
+[P1] Add Oracle-style verification gate to antfarm feature-dev and bug-fix workflow types — gap vs ULW pattern identified. Ref: 2026-03-21-09-winnie.md
+[P2] Sandbox test @pageai/ralph-loop PRD-creator skill — evaluate tasks.json format for antfarm adoption. Ref: 2026-03-21-09-winnie.md
