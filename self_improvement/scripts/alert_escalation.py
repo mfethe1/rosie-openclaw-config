@@ -53,7 +53,7 @@ def _load_json(path: Path, default: Any) -> Any:
     try:
         with path.open() as f:
             return json.load(f)
-    except Exception:
+    except (json.JSONDecodeError, OSError):
         return default
 
 
@@ -239,6 +239,6 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         raise SystemExit(main())
-    except Exception as exc:
+    except Exception as exc:  # Keep broad catch for main entry point
         print(f"ERROR: {exc}", file=sys.stderr)
         raise SystemExit(1)
