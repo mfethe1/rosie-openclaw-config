@@ -13,7 +13,7 @@ Rosie agent's OpenClaw configuration, settings, and upstream tracking.
 - `AGENTS.md` — operating rules
 - `WORKFLOW_AUTO.md` — startup protocol
 - memU endpoint: `localhost:12345`
-- NATS: Railway primary (`gondola.proxy.rlwy.net:22393`)
+- NATS: Railway primary (`maglev.proxy.rlwy.net:55041`)
 - Model: `anthropic/claude-sonnet-4-6`
 
 ## How to apply upstream recommendations

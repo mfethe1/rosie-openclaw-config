@@ -44,7 +44,7 @@ except ImportError:
 import subprocess
 
 NATS_LOCAL_URL = os.environ.get("NATS_LOCAL_URL", "nats://localhost:4222")
-NATS_RAILWAY_URL = os.environ.get("NATS_RAILWAY_URL", "nats://gondola.proxy.rlwy.net:22393")
+NATS_RAILWAY_URL = os.environ.get("NATS_RAILWAY_URL", "nats://maglev.proxy.rlwy.net:55041")
 NATS_URL = os.environ.get("NATS_URL", NATS_RAILWAY_URL)
 NATS_USER = os.environ.get("NATS_USER", "system")
 NATS_PASS = os.environ.get("NATS_PASS", "openclaw-system-2026")

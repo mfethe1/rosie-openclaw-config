@@ -22,7 +22,7 @@ import sys
 from datetime import datetime, timezone
 
 NATS_LOCAL = os.environ.get("NATS_LOCAL_URL", "nats://system:openclaw-system-2026@127.0.0.1:4222")
-NATS_RAILWAY = os.environ.get("NATS_RAILWAY_URL", "nats://gondola.proxy.rlwy.net:22393")
+NATS_RAILWAY = os.environ.get("NATS_RAILWAY_URL", "nats://maglev.proxy.rlwy.net:55041")
 # Railway-first policy with explicit local fallback.
 NATS_SERVERS = [NATS_RAILWAY, NATS_LOCAL]
 
