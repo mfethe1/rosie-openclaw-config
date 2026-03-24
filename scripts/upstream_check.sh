@@ -115,7 +115,7 @@ else:
 report += """
 ## Protected Settings (never auto-overwritten)
 - SOUL.md, AGENTS.md, IDENTITY.md, USER.md, WORKFLOW_AUTO.md, HEARTBEAT.md
-- memU endpoint: localhost:12345 (+ Railway backup)
+- memU endpoint: localhost:8711 (canonical bridge)
 - NATS: maglev.proxy.rlwy.net:55041
 - Model: anthropic/claude-sonnet-4-6
 - All agent crons, skills, and custom scripts

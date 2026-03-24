@@ -12,7 +12,7 @@ Rosie agent's OpenClaw configuration, settings, and upstream tracking.
 - `SOUL.md` — Rosie identity/persona
 - `AGENTS.md` — operating rules
 - `WORKFLOW_AUTO.md` — startup protocol
-- memU endpoint: `localhost:12345`
+- memU endpoint: `localhost:8711` (canonical bridge; legacy 12345 service may still exist but is not the contract of record)
 - NATS: Railway primary (`maglev.proxy.rlwy.net:55041`)
 - Model: `anthropic/claude-sonnet-4-6`
 
