@@ -17,7 +17,7 @@
       "wakeMode": "next-heartbeat",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run 30-minute monitoring check:\n1. Check agent inboxes: /Volumes/Edrive/Projects/agent-coordination/agent-inboxes/rosie/ and /Volumes/Edrive/Projects/agent-coordination/to_all/\n2. Process any new tasks from Winnie or Mack\n3. Scan AI/tech headlines (web_search for latest breakthroughs)\n4. Check for critical emails using Himalaya: himalaya envelope list -a mfethe1 --folder INBOX --page-size 10\n5. Log findings to /Volumes/Edrive/Projects/agent-coordination/reports/YYYY-MM-DD-monitoring.md\n6. Alert Michael on Telegram ONLY for critical/urgent items\n7. Reply HEARTBEAT_OK if nothing urgent found",
+        "message": "Run 30-minute monitoring check:\n1. Check agent inboxes: /Volumes/Edrive/Projects/agent-coordination/agent-inboxes/rosie/ and /Volumes/Edrive/Projects/agent-coordination/to_all/\n2. Process any new tasks from Winnie or Mack\n3. Scan AI/tech headlines (web_search for latest breakthroughs)\n4. Check for critical emails using Himalaya: himalaya envelope list -a mfethe1 --folder INBOX --page-size 10\n5. Log findings to /Volumes/Edrive/Projects/agent-coordination/reports/YYYY-MM-DD-monitoring.md\n6. Alert Michael on Telegram ONLY for critical/urgent items\n7. Reply HEARTBEAT_OK if nothing urgent found When using the message tool, MUST include channel=\"telegram\".",
         "timeoutSeconds": 300,
         "model": "anthropic/claude-haiku-4-5"
       },
@@ -49,7 +49,7 @@
       "payload": {
         "timeoutSeconds": 600,
         "kind": "agentTurn",
-        "message": "Email Organization & Critical Alert Check\n\nTasks:\n1. Check all 3 inboxes:\n   - himalaya envelope list -a mfethe1 --folder INBOX --page-size 30\n   - himalaya envelope list -a protelynx --folder INBOX --page-size 15\n   - himalaya envelope list -a protelynx-ai --folder INBOX --page-size 15\n\n2. Identify CRITICAL items (flag for immediate alert ANYTIME):\n   - Security alerts (password resets, suspicious logins, 2FA changes)\n   - Bank/financial urgent notices\n   - Calendar conflicts or last-minute changes\n   - Work emergencies or client requests\n   - Legal/tax/government correspondence\n\n3. Auto-organize emails using Himalaya move command:\n   - Promotions → 🛍️ Promotions: Stitch Fix, sales, BOGO offers\n   - Social → 👥 Social: Facebook, Instagram notifications\n   - Finance → 💰 Finance: LendingTree, Doorvest, investment newsletters\n   - Newsletters → 📰 Newsletters: OptionPub, Word Smarts, general info\n   - Alerts → 🤖 Automated/Alerts: Google Alerts, system notifications\n   - Real Estate → Favorite houses: realtor.com, Zillow, house listings\n   - Keep in Inbox: Unknown senders, potential work/important items\n\n4. Check calendar: export GOG_KEYRING_PASSWORD=openclaw && gog calendar list --account mfethe1@gmail.com --max 10\n\n5. Delivery gating (America/New_York):\n   - Scheduled updates are ONLY allowed at 6:00 AM and 2:00 PM.\n   - At all other times, ONLY send if a CRITICAL item is found.\n   - If non-critical outside 6:00 AM / 2:00 PM, respond exactly: HEARTBEAT_OK\n\n6. At 6:00 AM / 2:00 PM send concise summary if any meaningful update exists.\n\nNote: Be conservative - when unsure, leave in INBOX rather than risk mis-filing important items.",
+        "message": "Email Organization & Critical Alert Check\n\nTasks:\n1. Check all 3 inboxes:\n   - himalaya envelope list -a mfethe1 --folder INBOX --page-size 30\n   - himalaya envelope list -a protelynx --folder INBOX --page-size 15\n   - himalaya envelope list -a protelynx-ai --folder INBOX --page-size 15\n\n2. Identify CRITICAL items (flag for immediate alert ANYTIME):\n   - Security alerts (password resets, suspicious logins, 2FA changes)\n   - Bank/financial urgent notices\n   - Calendar conflicts or last-minute changes\n   - Work emergencies or client requests\n   - Legal/tax/government correspondence\n\n3. Auto-organize emails using Himalaya move command:\n   - Promotions → 🛍️ Promotions: Stitch Fix, sales, BOGO offers\n   - Social → 👥 Social: Facebook, Instagram notifications\n   - Finance → 💰 Finance: LendingTree, Doorvest, investment newsletters\n   - Newsletters → 📰 Newsletters: OptionPub, Word Smarts, general info\n   - Alerts → 🤖 Automated/Alerts: Google Alerts, system notifications\n   - Real Estate → Favorite houses: realtor.com, Zillow, house listings\n   - Keep in Inbox: Unknown senders, potential work/important items\n\n4. Check calendar: export GOG_KEYRING_PASSWORD=openclaw && gog calendar list --account mfethe1@gmail.com --max 10\n\n5. Delivery gating (America/New_York):\n   - Scheduled updates are ONLY allowed at 6:00 AM and 2:00 PM.\n   - At all other times, ONLY send if a CRITICAL item is found.\n   - If non-critical outside 6:00 AM / 2:00 PM, respond exactly: HEARTBEAT_OK\n\n6. At 6:00 AM / 2:00 PM send concise summary if any meaningful update exists.\n\nNote: Be conservative - when unsure, leave in INBOX rather than risk mis-filing important items. When using the message tool, MUST include channel=\"telegram\".",
         "model": "openai-codex/gpt-5.3-codex"
       },
       "delivery": {
@@ -84,7 +84,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Daily Strategic Critique (automated morning review):\n\n**Your task:**\n1. Review yesterday's progress across all active projects, with special attention to our current top priorities: Investor demo prep (bidcraft, construction-bid) and communication/telemetry improvements.\n2. Critique priorities - what went well, what misprioritized? Keep in mind that building demo materials and reducing token usage/improving problem-solving are high ROI right now.\n3. Identify blind spots and missed opportunities.\n4. Recommend top 3 priorities for today.\n5. Flag any execution risks or blockers.\n\n**Be brutally honest.** We want strategic insight to prevent drift, but align with the investor demo goals.\n\n**Deliverables:**\n- Daily assessment summary\n- Top 3 priorities for next 24 hours\n- Any course corrections needed\n\n**Context:** Review memory files and recent work to assess progress vs goals.",
+        "message": "Daily Strategic Critique (automated morning review):\n\n**Your task:**\n1. Review yesterday's progress across all active projects, with special attention to our current top priorities: Investor demo prep (bidcraft, construction-bid) and communication/telemetry improvements.\n2. Critique priorities - what went well, what misprioritized? Keep in mind that building demo materials and reducing token usage/improving problem-solving are high ROI right now.\n3. Identify blind spots and missed opportunities.\n4. Recommend top 3 priorities for today.\n5. Flag any execution risks or blockers.\n\n**Be brutally honest.** We want strategic insight to prevent drift, but align with the investor demo goals.\n\n**Deliverables:**\n- Daily assessment summary\n- Top 3 priorities for next 24 hours\n- Any course corrections needed\n\n**Context:** Review memory files and recent work to assess progress vs goals. When using the message tool, MUST include channel=\"telegram\".",
         "model": "openai-codex/gpt-5.3-codex",
         "timeoutSeconds": 300
       },
@@ -121,7 +121,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "ELITE HOURLY MARKET RESEARCH - EXPERT TRADER MODE:\n\n🎯 OBJECTIVE: Identify HIGH PROBABILITY asymmetric opportunities that elite traders would spot.\n\nRESEARCH PROTOCOL:\n1. Use ALL best models (rotate: gpt-5.3-codex, opus-4.6, gemini-3-pro-preview)\n2. DON'T just follow trends - identify BREAKING moves & trend reversals\n3. Spot BIG GAPS before they happen (earnings surprises, sector rotation, catalyst events)\n4. Focus on OPTIONS strategies for maximum leverage\n5. Find UNCORRELATED trades (diversify across sectors, strategies, timeframes)\n6. CHALLENGE conventional wisdom - where is the market wrong?\n\nDELIVER:\n- Top 3-5 HIGH PROBABILITY options plays\n- Contrarian/asymmetric opportunities (big gaps potential)\n- Uncorrelated trade ideas\n- Entry/exit levels + risk management\n- Why this trade (edge/catalyst/technical setup)\n- Conviction level: Only share Medium+ conviction\n\nCOORDINATION:\n- Share findings with @WinnieFetheBot for Schwab API execution\n- Validate soundness before recommending\n- Think like elite institutional traders, not retail followers\n\nREMEMBER: High probability + asymmetric payoff + uncorrelated = maximize returns.",
+        "message": "ELITE HOURLY MARKET RESEARCH - EXPERT TRADER MODE:\n\n🎯 OBJECTIVE: Identify HIGH PROBABILITY asymmetric opportunities that elite traders would spot.\n\nRESEARCH PROTOCOL:\n1. Use ALL best models (rotate: gpt-5.3-codex, opus-4.6, gemini-3-pro-preview)\n2. DON'T just follow trends - identify BREAKING moves & trend reversals\n3. Spot BIG GAPS before they happen (earnings surprises, sector rotation, catalyst events)\n4. Focus on OPTIONS strategies for maximum leverage\n5. Find UNCORRELATED trades (diversify across sectors, strategies, timeframes)\n6. CHALLENGE conventional wisdom - where is the market wrong?\n\nDELIVER:\n- Top 3-5 HIGH PROBABILITY options plays\n- Contrarian/asymmetric opportunities (big gaps potential)\n- Uncorrelated trade ideas\n- Entry/exit levels + risk management\n- Why this trade (edge/catalyst/technical setup)\n- Conviction level: Only share Medium+ conviction\n\nCOORDINATION:\n- Share findings with @WinnieFetheBot for Schwab API execution\n- Validate soundness before recommending\n- Think like elite institutional traders, not retail followers\n\nREMEMBER: High probability + asymmetric payoff + uncorrelated = maximize returns. When using the message tool, MUST include channel=\"telegram\".",
         "model": "openai-codex/gpt-5.3-codex",
         "timeoutSeconds": 300
       },
@@ -276,7 +276,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "**HOURLY CODE REVIEW & INNOVATION SCAN**\n\nMaximize ALL our subscriptions (Codex, Opus, Gemini) by rotating models:\n\n**Model Selection (rotate each hour):**\n- Hour 1: openai-codex/gpt-5.3-codex\n- Hour 2: anthropic/claude-opus-4-6\n- Hour 3: google-gemini/gemini-3-pro-preview\n- Hour 4: openai-codex/gpt-5.2-codex\n- Repeat cycle\n\n**1. CODE REVIEW (rotate through projects):**\n- JiraFlow: Review recent commits, suggest optimizations\n- FermWare: Check for security/performance improvements\n- OptionsFlow: Validate auth/monetization code\n- Sanger/Nexus: Architecture review\n\n**2. INNOVATION OPPORTUNITIES:**\n- What could we automate that we're doing manually?\n- What features could differentiate us from competitors?\n- What technical debt should we address?\n- What's the current state of relevant AI/tech advancements?\n\n**3. CHALLENGE EXISTING WORK:**\n- Review recent agent decisions - are they sound?\n- Question assumptions in our current approach\n- Identify blind spots or gaps\n- Use Brave Search for latest best practices\n\n**4. RESEARCH:**\n- Latest developments in our tech stack\n- Competitor analysis\n- Market trends affecting our products\n- Use web search for fresh information\n\n**Start message with which model you're using this hour.** Deliver 2-3 specific, actionable insights per scan.\n\nIf nothing significant found, say so - but always look for at least one improvement opportunity.",
+        "message": "**HOURLY CODE REVIEW & INNOVATION SCAN**\n\nMaximize ALL our subscriptions (Codex, Opus, Gemini) by rotating models:\n\n**Model Selection (rotate each hour):**\n- Hour 1: openai-codex/gpt-5.3-codex\n- Hour 2: anthropic/claude-opus-4-6\n- Hour 3: google-gemini/gemini-3-pro-preview\n- Hour 4: openai-codex/gpt-5.2-codex\n- Repeat cycle\n\n**1. CODE REVIEW (rotate through projects):**\n- JiraFlow: Review recent commits, suggest optimizations\n- FermWare: Check for security/performance improvements\n- OptionsFlow: Validate auth/monetization code\n- Sanger/Nexus: Architecture review\n\n**2. INNOVATION OPPORTUNITIES:**\n- What could we automate that we're doing manually?\n- What features could differentiate us from competitors?\n- What technical debt should we address?\n- What's the current state of relevant AI/tech advancements?\n\n**3. CHALLENGE EXISTING WORK:**\n- Review recent agent decisions - are they sound?\n- Question assumptions in our current approach\n- Identify blind spots or gaps\n- Use Brave Search for latest best practices\n\n**4. RESEARCH:**\n- Latest developments in our tech stack\n- Competitor analysis\n- Market trends affecting our products\n- Use web search for fresh information\n\n**Start message with which model you're using this hour.** Deliver 2-3 specific, actionable insights per scan.\n\nIf nothing significant found, say so - but always look for at least one improvement opportunity. When using the message tool, MUST include channel=\"telegram\".",
         "model": "openai-codex/gpt-5.3-codex",
         "timeoutSeconds": 300
       },
@@ -307,7 +307,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "**AUTONOMOUS GOAL PROGRESS CHECK**\n\nReview current progress and answer:\n\n**What do we need to do to keep pushing our goals autonomously and keep making progress?**\n\n1. **Current blockers:** What's preventing forward momentum right now?\n2. **Next actionable steps:** What can be done in the next 2 hours?\n3. **Revenue focus:** Are we prioritizing customer acquisition and deployment?\n4. **Execution over analysis:** Are we shipping or just planning?\n5. **Coordination:** Any team alignment issues to resolve?\n\nDeliver 2-3 concrete, actionable next steps. Focus on:\n- Deploying demos (JiraFlow, FermWare, Nexus, OptionsFlow)\n- Customer acquisition (outreach, demos, pipeline)\n- Removing blockers\n- Autonomous execution\n\nIf everything is on track, say so - but always identify at least one improvement opportunity.",
+        "message": "**AUTONOMOUS GOAL PROGRESS CHECK**\n\nReview current progress and answer:\n\n**What do we need to do to keep pushing our goals autonomously and keep making progress?**\n\n1. **Current blockers:** What's preventing forward momentum right now?\n2. **Next actionable steps:** What can be done in the next 2 hours?\n3. **Revenue focus:** Are we prioritizing customer acquisition and deployment?\n4. **Execution over analysis:** Are we shipping or just planning?\n5. **Coordination:** Any team alignment issues to resolve?\n\nDeliver 2-3 concrete, actionable next steps. Focus on:\n- Deploying demos (JiraFlow, FermWare, Nexus, OptionsFlow)\n- Customer acquisition (outreach, demos, pipeline)\n- Removing blockers\n- Autonomous execution\n\nIf everything is on track, say so - but always identify at least one improvement opportunity. When using the message tool, MUST include channel=\"telegram\".",
         "model": "openai-codex/gpt-5.3-codex",
         "timeoutSeconds": 180
       },
@@ -375,7 +375,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "🌅 PRE-MARKET SCAN (4:00-9:30 AM)\n\n**Current Time Check:** If after 9:25 AM, respond HEARTBEAT_OK (market hours monitor takes over)\n\n**Scan Protocol:**\n1. Check pre-market movers (gainers/losers >5%)\n2. Scan UnusualWhales for overnight flow\n3. Check earnings reports today\n4. Identify gap-up/gap-down opportunities\n5. Look for pre-market catalyst plays\n\n**Alert Format (if HIGH opportunity found):**\n🚨 PRE-MARKET OPPORTUNITY: [Ticker]\n**Pre-market Move:** [%]\n**Catalyst:** [Earnings/news/gap]\n**Options Flow:** [Details if any]\n**Confidence:** [Score]\n**Trade Thesis:** [Why this works]\n**Proposed Entry:** [At market open or specific trigger]\n\n**Otherwise:** HEARTBEAT_OK\n\n**Coordination:** Alert in Investments group for market open execution planning.",
+        "message": "🌅 PRE-MARKET SCAN (4:00-9:30 AM)\n\n**Current Time Check:** If after 9:25 AM, respond HEARTBEAT_OK (market hours monitor takes over)\n\n**Scan Protocol:**\n1. Check pre-market movers (gainers/losers >5%)\n2. Scan UnusualWhales for overnight flow\n3. Check earnings reports today\n4. Identify gap-up/gap-down opportunities\n5. Look for pre-market catalyst plays\n\n**Alert Format (if HIGH opportunity found):**\n🚨 PRE-MARKET OPPORTUNITY: [Ticker]\n**Pre-market Move:** [%]\n**Catalyst:** [Earnings/news/gap]\n**Options Flow:** [Details if any]\n**Confidence:** [Score]\n**Trade Thesis:** [Why this works]\n**Proposed Entry:** [At market open or specific trigger]\n\n**Otherwise:** HEARTBEAT_OK\n\n**Coordination:** Alert in Investments group for market open execution planning. When using the message tool, MUST include channel=\"telegram\".",
         "model": "openai-codex/gpt-5.3-codex-spark",
         "timeoutSeconds": 500
       },
@@ -410,7 +410,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "📊 END-OF-DAY TRADING REVIEW\n\n**Review Tasks:**\n\n1. **Position Status:**\n   - Any open positions remaining?\n   - Should we hold overnight or close?\n   - Overnight risk assessment\n\n2. **Daily P&L:**\n   - Total realized P&L for the day\n   - Winning vs losing trades\n   - Average win size vs average loss\n\n3. **Execution Quality:**\n   - Were entries/exits clean?\n   - Any slippage issues?\n   - Risk limits respected?\n\n4. **Trade Thesis Review:**\n   - Which theses played out?\n   - Which were wrong? Why?\n   - Any missed opportunities?\n\n5. **System Performance:**\n   - APIs working smoothly?\n   - Any technical issues?\n   - Schwab execution quality?\n\n6. **Tomorrow's Prep:**\n   - Economic calendar events\n   - Earnings reports\n   - Known catalysts\n   - Watchlist for tomorrow\n\n**Deliverable:**\nDaily trading summary with:\n- P&L breakdown\n- Lessons learned\n- System improvements needed\n- Tomorrow's game plan\n\n**Coordination:** Share findings with @MacklemoreFetheBot and Michael",
+        "message": "📊 END-OF-DAY TRADING REVIEW\n\n**Review Tasks:**\n\n1. **Position Status:**\n   - Any open positions remaining?\n   - Should we hold overnight or close?\n   - Overnight risk assessment\n\n2. **Daily P&L:**\n   - Total realized P&L for the day\n   - Winning vs losing trades\n   - Average win size vs average loss\n\n3. **Execution Quality:**\n   - Were entries/exits clean?\n   - Any slippage issues?\n   - Risk limits respected?\n\n4. **Trade Thesis Review:**\n   - Which theses played out?\n   - Which were wrong? Why?\n   - Any missed opportunities?\n\n5. **System Performance:**\n   - APIs working smoothly?\n   - Any technical issues?\n   - Schwab execution quality?\n\n6. **Tomorrow's Prep:**\n   - Economic calendar events\n   - Earnings reports\n   - Known catalysts\n   - Watchlist for tomorrow\n\n**Deliverable:**\nDaily trading summary with:\n- P&L breakdown\n- Lessons learned\n- System improvements needed\n- Tomorrow's game plan\n\n**Coordination:** Share findings with @MacklemoreFetheBot and Michael When using the message tool, MUST include channel=\"telegram\".",
         "model": "openai-codex/gpt-5.3-codex",
         "timeoutSeconds": 240
       },
@@ -596,7 +596,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Execute hourly task extraction (WRITE-ONLY hourly log; DO NOT overwrite canonical backlog):\n1) Review last hour of messages in Telegram Coding Projects (-5198788775)\n2) Extract action items (keywords: build, setup, fix, create, implement, deploy, etc.)\n3) Parse agent assignments (@MacklemoreFetheBot, @WinnieFetheBot, @RosieFetheBot)\n4) Append findings to: /Volumes/Edrive/Projects/agent-coordination/BACKLOG_AUTO.md\n   - Append-only with timestamp header\n   - Never edit/overwrite /Volumes/Edrive/Projects/agent-coordination/BACKLOG.md\n5) Post concise summary in Telegram: '🔄 Backlog Extracted: [X new tasks] (logged to BACKLOG_AUTO.md)'\n\nBe efficient - only extract genuine action items, ignore casual conversation.",
+        "message": "Execute hourly task extraction (WRITE-ONLY hourly log; DO NOT overwrite canonical backlog):\n1) Review last hour of messages in Telegram Coding Projects (-5198788775)\n2) Extract action items (keywords: build, setup, fix, create, implement, deploy, etc.)\n3) Parse agent assignments (@MacklemoreFetheBot, @WinnieFetheBot, @RosieFetheBot)\n4) Append findings to: /Volumes/Edrive/Projects/agent-coordination/BACKLOG_AUTO.md\n   - Append-only with timestamp header\n   - Never edit/overwrite /Volumes/Edrive/Projects/agent-coordination/BACKLOG.md\n5) Post concise summary in Telegram: '🔄 Backlog Extracted: [X new tasks] (logged to BACKLOG_AUTO.md)'\n\nBe efficient - only extract genuine action items, ignore casual conversation. When using the message tool, MUST include channel=\"telegram\".",
         "model": "anthropic/claude-haiku-4-5",
         "timeoutSeconds": 300
       },
@@ -627,7 +627,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "(DISABLED / ARCHIVED) Do not re-enable. Historical job that used to update BACKLOG.md. Canonical BACKLOG.md must never be written by automation; only append-only to BACKLOG_AUTO.md / BACKLOG.hourly.md.",
+        "message": "(DISABLED / ARCHIVED) Do not re-enable. Historical job that used to update BACKLOG.md. Canonical BACKLOG.md must never be written by automation; only append-only to BACKLOG_AUTO.md / BACKLOG.hourly.md. When using the message tool, MUST include channel=\"telegram\".",
         "model": "anthropic/claude-haiku-4-5",
         "timeoutSeconds": 60
       },
@@ -659,7 +659,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Analyze past 24h trading flow data from UnusualWhales. Identify patterns in 85%+ confidence signals. Calculate win rate by sector, time of day, and signal type. Update trading strategy recommendations in /Volumes/Edrive/Projects/agent-coordination/trading-insights.md",
+        "message": "Analyze past 24h trading flow data from UnusualWhales. Identify patterns in 85%+ confidence signals. Calculate win rate by sector, time of day, and signal type. Update trading strategy recommendations in /Volumes/Edrive/Projects/agent-coordination/trading-insights.md When using the message tool, MUST include channel=\"telegram\".",
         "model": "anthropic/claude-opus-4-6"
       },
       "delivery": {
@@ -695,7 +695,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Draft 10 new JiraFlow outreach messages with A/B variations. Research latest Jira pain points on Reddit/HN. Write primary output to /Users/harrisonfethe/.openclaw/workspace/self_improvement/outputs/outreach-queue.md. If /Volumes/Edrive is mounted, also sync a copy to /Volumes/Edrive/Projects/agent-coordination/outreach-queue.md. Return status + output path(s).",
+        "message": "Draft 10 new JiraFlow outreach messages with A/B variations. Research latest Jira pain points on Reddit/HN. Write primary output to /Users/harrisonfethe/.openclaw/workspace/self_improvement/outputs/outreach-queue.md. If /Volumes/Edrive is mounted, also sync a copy to /Volumes/Edrive/Projects/agent-coordination/outreach-queue.md. Return status + output path(s). When using the message tool, MUST include channel=\"telegram\".",
         "model": "anthropic/claude-opus-4-6"
       },
       "delivery": {
@@ -731,7 +731,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "You are Macklemore (Mack), execution and implementation specialist for the OpenClaw self-improvement system. Your mission this cycle: (1) Run python3 ~/.openclaw/workspace/self_improvement/scripts/dependency_analyzer.py --json 2>/dev/null | python3 -c 'import json,sys; d=json.load(sys.stdin); [print(s[\"script\"],\"-\",s.get(\"issues\",0),\"issues\") for s in sorted(d.get(\"scripts\",[]), key=lambda x: x.get(\"issues\",0), reverse=True)[:5]]' to find the top 5 scripts with issues. (2) Pick the highest-priority script and implement a concrete fix: improve error handling, add retry logic, or fix a known failure pattern from shared-state.json. (3) Validate your fix: bash ~/.openclaw/workspace/self_improvement/scripts/smoke_test.sh. (4) Append one line to ~/.openclaw/workspace/self_improvement/CHANGELOG.md: [2026-03-03 Mack] <what changed> — PASS. Stay entirely within ~/.openclaw/workspace/ — do not touch /Volumes/EDrive. If blocked on any step, move to the next script.",
+        "message": "You are Macklemore (Mack), execution and implementation specialist for the OpenClaw self-improvement system. Your mission this cycle: (1) Run python3 ~/.openclaw/workspace/self_improvement/scripts/dependency_analyzer.py --json 2>/dev/null | python3 -c 'import json,sys; d=json.load(sys.stdin); [print(s[\"script\"],\"-\",s.get(\"issues\",0),\"issues\") for s in sorted(d.get(\"scripts\",[]), key=lambda x: x.get(\"issues\",0), reverse=True)[:5]]' to find the top 5 scripts with issues. (2) Pick the highest-priority script and implement a concrete fix: improve error handling, add retry logic, or fix a known failure pattern from shared-state.json. (3) Validate your fix: bash ~/.openclaw/workspace/self_improvement/scripts/smoke_test.sh. (4) Append one line to ~/.openclaw/workspace/self_improvement/CHANGELOG.md: [2026-03-03 Mack] <what changed> — PASS. Stay entirely within ~/.openclaw/workspace/ — do not touch /Volumes/EDrive. If blocked on any step, move to the next script. When using the message tool, MUST include channel=\"telegram\".",
         "model": "anthropic/claude-sonnet-4-6",
         "timeoutSeconds": 540
       },
@@ -768,7 +768,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Expand JiraFlow test coverage with bounded scope to avoid timeouts. Only run ONE target area per cycle (rotate daily): auth edge cases OR API integration OR error handling. Limit to max 3 new tests, run only related test subset, write concise results to /Volumes/Edrive/Projects/agent-coordination/test-results.md, then return HEARTBEAT_OK if no blockers.",
+        "message": "Expand JiraFlow test coverage with bounded scope to avoid timeouts. Only run ONE target area per cycle (rotate daily): auth edge cases OR API integration OR error handling. Limit to max 3 new tests, run only related test subset, write concise results to /Volumes/Edrive/Projects/agent-coordination/test-results.md, then return HEARTBEAT_OK if no blockers. When using the message tool, MUST include channel=\"telegram\".",
         "model": "openai-codex/gpt-5.3-codex",
         "timeoutSeconds": 900
       },
@@ -805,7 +805,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Compile overnight work summary: Read trading-insights.md, outreach-queue.md, code-improvements.md, test-results.md. Create executive summary with key accomplishments, blockers, and morning priorities. Post to Coding Projects group",
+        "message": "Compile overnight work summary: Read trading-insights.md, outreach-queue.md, code-improvements.md, test-results.md. Create executive summary with key accomplishments, blockers, and morning priorities. Post to Coding Projects group When using the message tool, MUST include channel=\"telegram\".",
         "model": "anthropic/claude-opus-4-6"
       },
       "delivery": {
@@ -904,7 +904,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "ELITE TRADING SCAN - LIVE DATA ONLY:\n\n1) Query Schwab API RIGHT NOW for current positions\n2) Calculate P&L from LIVE market prices (not cached/stale data)\n3) Check for stop-loss (-50%) or profit targets (+60%)\n4) Run enhanced_scanner.py for opportunities\n5) Report ONLY if actionable changes needed\n\nCRITICAL RULES:\n- NEVER report old data or cached values\n- NEVER mention 'crisis' unless actual emergency\n- NEVER report token issues (auto-refresh handles this)\n- NEVER report conflicting account values\n- If API fails, respond HEARTBEAT_OK (don't create false alerts)\n- Only report: actual exits needed OR high-conviction new trades\n\nSource of Truth: Live Schwab API query at scan time.",
+        "message": "ELITE TRADING SCAN - LIVE DATA ONLY:\n\n1) Query Schwab API RIGHT NOW for current positions\n2) Calculate P&L from LIVE market prices (not cached/stale data)\n3) Check for stop-loss (-50%) or profit targets (+60%)\n4) Run enhanced_scanner.py for opportunities\n5) Report ONLY if actionable changes needed\n\nCRITICAL RULES:\n- NEVER report old data or cached values\n- NEVER mention 'crisis' unless actual emergency\n- NEVER report token issues (auto-refresh handles this)\n- NEVER report conflicting account values\n- If API fails, respond HEARTBEAT_OK (don't create false alerts)\n- Only report: actual exits needed OR high-conviction new trades\n\nSource of Truth: Live Schwab API query at scan time. When using the message tool, MUST include channel=\"telegram\".",
         "timeoutSeconds": 300,
         "model": "anthropic/claude-haiku-4-5"
       },
@@ -935,7 +935,7 @@
       "sessionTarget": "isolated",
       "wakeMode": "now",
       "payload": {
-        "message": "HOURLY PORTFOLIO REBALANCE:\n\n1) Get current positions from Schwab API\n2) Calculate P&L on each position\n3) Check against recent whale flow (enhanced_scanner.py)\n4) Identify rebalancing needs:\n   - Close positions at profit targets (+60%)\n   - Exit stop losses (-50%)\n   - Reduce concentrated risk (>30% in one ticker)\n   - Add uncorrelated positions if opportunity exists\n5) Execute rebalancing trades if needed\n6) Report changes to Investments Telegram\n\nCRITICAL: Use price_action_check.py before ANY new trades. Only report if rebalancing actions taken.",
+        "message": "HOURLY PORTFOLIO REBALANCE:\n\n1) Get current positions from Schwab API\n2) Calculate P&L on each position\n3) Check against recent whale flow (enhanced_scanner.py)\n4) Identify rebalancing needs:\n   - Close positions at profit targets (+60%)\n   - Exit stop losses (-50%)\n   - Reduce concentrated risk (>30% in one ticker)\n   - Add uncorrelated positions if opportunity exists\n5) Execute rebalancing trades if needed\n6) Report changes to Investments Telegram\n\nCRITICAL: Use price_action_check.py before ANY new trades. Only report if rebalancing actions taken. When using the message tool, MUST include channel=\"telegram\".",
         "model": "openai-codex/gpt-5.3-codex",
         "timeoutSeconds": 300,
         "kind": "agentTurn"
@@ -968,7 +968,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run elite scanner with FIXED logic:\n\ncd /Volumes/Edrive/Projects/Options_probability && python3 scripts/elite_scanner_fixed.py\n\nReport results ONLY if:\n1. Positions need exit (stop-loss/profit/expiry)\n2. 85%+ confidence whale flow found\n\nOtherwise respond: HEARTBEAT_OK\n\nNO false alerts, NO crisis messaging, NO stale data.",
+        "message": "Run elite scanner with FIXED logic:\n\ncd /Volumes/Edrive/Projects/Options_probability && python3 scripts/elite_scanner_fixed.py\n\nReport results ONLY if:\n1. Positions need exit (stop-loss/profit/expiry)\n2. 85%+ confidence whale flow found\n\nOtherwise respond: HEARTBEAT_OK\n\nNO false alerts, NO crisis messaging, NO stale data. When using the message tool, MUST include channel=\"telegram\".",
         "timeoutSeconds": 180,
         "model": "anthropic/claude-haiku-4-5"
       },
@@ -1001,7 +1001,7 @@
       "payload": {
         "model": "anthropic/claude-haiku-4-5",
         "timeoutSeconds": 300,
-        "message": "LIVE TRADE GUARD (every 2 min, market hours):\n\nMonitor active trades and act without hesitation.\nCurrent trades:\n1) SPY 260219C00685000/260219C00689000 (0DTE)\n2) MSFT 260417C00400000/260417C00405000\n\nRules:\n- Query LIVE Schwab positions/orders only (no cached files).\n- For short-dated exposure (SPY 0DTE):\n  - If spread P&L <= -35% OR structure invalidates (loss of intraday support/reversal): CLOSE immediately.\n  - Time-stop: flatten any unresolved 0DTE risk by 3:15 PM ET.\n- For winners:\n  - If realized P&L on a closed trade >= +10%, increment unlock counter by +1 and announce: \"UNLOCKED: +1 trade\".\n- No averaging down. Defined risk only.\n- If actionable (close/scale/new unlock), announce exact action + reason.\n- If no action: HEARTBEAT_OK only.",
+        "message": "LIVE TRADE GUARD (every 2 min, market hours):\n\nMonitor active trades and act without hesitation.\nCurrent trades:\n1) SPY 260219C00685000/260219C00689000 (0DTE)\n2) MSFT 260417C00400000/260417C00405000\n\nRules:\n- Query LIVE Schwab positions/orders only (no cached files).\n- For short-dated exposure (SPY 0DTE):\n  - If spread P&L <= -35% OR structure invalidates (loss of intraday support/reversal): CLOSE immediately.\n  - Time-stop: flatten any unresolved 0DTE risk by 3:15 PM ET.\n- For winners:\n  - If realized P&L on a closed trade >= +10%, increment unlock counter by +1 and announce: \"UNLOCKED: +1 trade\".\n- No averaging down. Defined risk only.\n- If actionable (close/scale/new unlock), announce exact action + reason.\n- If no action: HEARTBEAT_OK only. When using the message tool, MUST include channel=\"telegram\".",
         "kind": "agentTurn"
       },
       "delivery": {
@@ -1031,7 +1031,7 @@
       "sessionTarget": "isolated",
       "wakeMode": "now",
       "payload": {
-        "message": "MARKET OPEN PROFIT-TAKING REVIEW:\n\n1. Query live Schwab positions with current P&L\n2. Identify any positions at +60% profit target (close immediately)\n3. Check positions at +40-59% (consider scaling out 50%)\n4. Review whale flow data for today's sentiment\n5. Recommend: which to close for profit-taking, which to hold\n6. Factor in: DTE risk (close if <7 DTE), contra flow signals\n\nReport findings to Michael in Telegram Investments group with specific close recommendations.",
+        "message": "MARKET OPEN PROFIT-TAKING REVIEW:\n\n1. Query live Schwab positions with current P&L\n2. Identify any positions at +60% profit target (close immediately)\n3. Check positions at +40-59% (consider scaling out 50%)\n4. Review whale flow data for today's sentiment\n5. Recommend: which to close for profit-taking, which to hold\n6. Factor in: DTE risk (close if <7 DTE), contra flow signals\n\nReport findings to Michael in Telegram Investments group with specific close recommendations. When using the message tool, MUST include channel=\"telegram\".",
         "model": "openai-codex/gpt-5.3-codex",
         "timeoutSeconds": 300,
         "kind": "agentTurn"
@@ -1098,7 +1098,7 @@
         "kind": "agentTurn",
         "model": "anthropic/claude-opus-4-6",
         "timeoutSeconds": 900,
-        "message": "WEEKEND TOOL PRESSURE TEST (Opus lane) — hourly alternating job.\n\nIMPORTANT ENV:\n- Load keys from: /Volumes/Edrive/Projects/agent-coordination/.secrets/tooling.env\n  (YOUTUBE_API_KEY, AUDIOPOD_API_KEY, UW_API_KEY)\n- If a tool 'fails' due to missing keys, fix by loading the env file (do NOT report as tool breakage).\n\nGoals: pressure test and STACK tools into trading framework. Output must be concise, actionable.\n\nRunbook:\n1) UW: ensure uw_live_signals.json updated (read /Volumes/Edrive/Projects/agent-coordination/uw_live_signals.json). Summarize top 5 actionable signals (ignore noisy 0DTE unless it informs walls).\n2) Massive/Polygon: run massive_options_scanner.py (or read latest massive-options-activity-*.json) and summarize top 5 signals with vol/oi + sentiment.\n3) YouTube: run the YouTube monitor with --env-file /Volumes/Edrive/Projects/agent-coordination/.secrets/tooling.env (or load env then call API). Extract tickers + any consensus.\n4) AudioPod: load env then attempt transcription for 1 top video. If 401 persists with correct key loaded, propose remediation.\n5) Synthesize: propose 1 concrete framework improvement and 1 trading tactic improvement. Suggest any new external tools/apis to add.\n\nWrite outputs:\n- /Volumes/Edrive/Projects/agent-coordination/research/tool-pressuretest-latest.md\n- /Volumes/Edrive/Projects/agent-coordination/research/tool-pressuretest-YYYY-MM-DD-HH.md\n\nThen post a 5-10 line summary to Telegram Investments (-5257540090) with: \"TOOLS UPDATE\" + bullets + 1 next action.\n\nDo NOT spam. No more than 10 lines in Telegram."
+        "message": "WEEKEND TOOL PRESSURE TEST (Opus lane) — hourly alternating job.\n\nIMPORTANT ENV:\n- Load keys from: /Volumes/Edrive/Projects/agent-coordination/.secrets/tooling.env\n  (YOUTUBE_API_KEY, AUDIOPOD_API_KEY, UW_API_KEY)\n- If a tool 'fails' due to missing keys, fix by loading the env file (do NOT report as tool breakage).\n\nGoals: pressure test and STACK tools into trading framework. Output must be concise, actionable.\n\nRunbook:\n1) UW: ensure uw_live_signals.json updated (read /Volumes/Edrive/Projects/agent-coordination/uw_live_signals.json). Summarize top 5 actionable signals (ignore noisy 0DTE unless it informs walls).\n2) Massive/Polygon: run massive_options_scanner.py (or read latest massive-options-activity-*.json) and summarize top 5 signals with vol/oi + sentiment.\n3) YouTube: run the YouTube monitor with --env-file /Volumes/Edrive/Projects/agent-coordination/.secrets/tooling.env (or load env then call API). Extract tickers + any consensus.\n4) AudioPod: load env then attempt transcription for 1 top video. If 401 persists with correct key loaded, propose remediation.\n5) Synthesize: propose 1 concrete framework improvement and 1 trading tactic improvement. Suggest any new external tools/apis to add.\n\nWrite outputs:\n- /Volumes/Edrive/Projects/agent-coordination/research/tool-pressuretest-latest.md\n- /Volumes/Edrive/Projects/agent-coordination/research/tool-pressuretest-YYYY-MM-DD-HH.md\n\nThen post a 5-10 line summary to Telegram Investments (-5257540090) with: \"TOOLS UPDATE\" + bullets + 1 next action.\n\nDo NOT spam. No more than 10 lines in Telegram. When using the message tool, MUST include channel=\"telegram\"."
       },
       "delivery": {
         "mode": "announce",
@@ -1130,7 +1130,7 @@
         "kind": "agentTurn",
         "model": "openai-codex/gpt-5.3-codex",
         "timeoutSeconds": 900,
-        "message": "WEEKEND TOOL PRESSURE TEST (Codex lane) — hourly alternating job.\n\nIMPORTANT ENV:\n- Load keys from: /Volumes/Edrive/Projects/agent-coordination/.secrets/tooling.env\n  (YOUTUBE_API_KEY, AUDIOPOD_API_KEY, UW_API_KEY)\n- If a tool 'fails' due to missing keys, fix by loading env (do NOT report as tool breakage).\n\nFocus: implementation + repair paths.\n\nRunbook:\n1) Validate toolchain health quickly:\n   - UW fetcher cron producing uw_live_signals.json?\n   - massive_options_scanner runnable?\n   - YouTube API query runnable (ensure env loaded or --env-file used)\n   - AudioPod API status (ensure env loaded; if 401 persists, real auth issue)\n2) If any component failing: propose + implement the cleanest repair path (minimal deps). Prefer env-file loaders, curl/jq, stdlib.\n3) Build one incremental integration per run (small PR-style change): normalize signals into one schema, wall detection, risk-budget calculator, complex-order builder, regression test.\n\nWrite outputs:\n- /Volumes/Edrive/Projects/agent-coordination/research/tool-pressuretest-latest.md (append section)\n- /Volumes/Edrive/Projects/agent-coordination/research/tool-pressuretest-YYYY-MM-DD-HH.md\n\nTelegram Investments update: max 10 lines. Include \"SHIPPED:\" and \"NEXT:\".\n\nDo NOT trade unless explicitly authorized in that run."
+        "message": "WEEKEND TOOL PRESSURE TEST (Codex lane) — hourly alternating job.\n\nIMPORTANT ENV:\n- Load keys from: /Volumes/Edrive/Projects/agent-coordination/.secrets/tooling.env\n  (YOUTUBE_API_KEY, AUDIOPOD_API_KEY, UW_API_KEY)\n- If a tool 'fails' due to missing keys, fix by loading env (do NOT report as tool breakage).\n\nFocus: implementation + repair paths.\n\nRunbook:\n1) Validate toolchain health quickly:\n   - UW fetcher cron producing uw_live_signals.json?\n   - massive_options_scanner runnable?\n   - YouTube API query runnable (ensure env loaded or --env-file used)\n   - AudioPod API status (ensure env loaded; if 401 persists, real auth issue)\n2) If any component failing: propose + implement the cleanest repair path (minimal deps). Prefer env-file loaders, curl/jq, stdlib.\n3) Build one incremental integration per run (small PR-style change): normalize signals into one schema, wall detection, risk-budget calculator, complex-order builder, regression test.\n\nWrite outputs:\n- /Volumes/Edrive/Projects/agent-coordination/research/tool-pressuretest-latest.md (append section)\n- /Volumes/Edrive/Projects/agent-coordination/research/tool-pressuretest-YYYY-MM-DD-HH.md\n\nTelegram Investments update: max 10 lines. Include \"SHIPPED:\" and \"NEXT:\".\n\nDo NOT trade unless explicitly authorized in that run. When using the message tool, MUST include channel=\"telegram\"."
       },
       "delivery": {
         "mode": "announce",
@@ -1163,7 +1163,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Every 2 days run a comparison pipeline: 1) Read self_improvement/TODO.md, LOOPS.md, shared-state.json, latest outputs. 2) Compare Rosie/Mack/Winnie/Lenny cycle outputs for correctness, continuity, and quality. 3) Propose 3 concrete keep/improve/stop recommendations. 4) Update shared-state.json with next-cycle hypotheses and blockers.",
+        "message": "Every 2 days run a comparison pipeline: 1) Read self_improvement/TODO.md, LOOPS.md, shared-state.json, latest outputs. 2) Compare Rosie/Mack/Winnie/Lenny cycle outputs for correctness, continuity, and quality. 3) Propose 3 concrete keep/improve/stop recommendations. 4) Update shared-state.json with next-cycle hypotheses and blockers. When using the message tool, MUST include channel=\"telegram\".",
         "model": "openai-codex/gpt-5.3-codex",
         "timeoutSeconds": 900
       },
@@ -1202,7 +1202,7 @@
       "payload": {
         "model": "sonnet",
         "kind": "agentTurn",
-        "message": "AUTONOMOUS TRADING SCANNER:\n1. Scan current market conditions (SPY, QQQ, VIX).\n2. Read live UW signals from /Volumes/Edrive/Projects/agent-coordination/uw_live_signals.json.\n3. Check Schwab portfolio for buying power & risk limits.\n4. IF a clear signal exists (Confidence > 90%, Risk/Reward > 1:3, Trend Aligned):\n   - EXECUTE BUY via Schwab API.\n   - REPORT: \"EXECUTED: Buy [Symbol] [Strike] [Exp] @ [Price]. Thesis: [Why]\"\n5. IF a position hits stop (-50%) or profit target (+30% scalp/+60% swing):\n   - EXECUTE CLOSE.\n   - REPORT: \"CLOSED: [Symbol] @ [Price]. P&L: [Amount] ([%])\"\n6. IF NO ACTION: Respond ONLY \"HEARTBEAT_OK\". Do not report \"monitoring\".\n\nStrategy: Long expiration (Leaps/Quarterlies) for buys to minimize theta. Short dated (Weekly) for selling/spreads to capture theta.\nModel: anthropic/claude-opus-4-6\nTarget: Maximize P&L autonomously.\nOutput: SILENT unless trading."
+        "message": "AUTONOMOUS TRADING SCANNER:\n1. Scan current market conditions (SPY, QQQ, VIX).\n2. Read live UW signals from /Volumes/Edrive/Projects/agent-coordination/uw_live_signals.json.\n3. Check Schwab portfolio for buying power & risk limits.\n4. IF a clear signal exists (Confidence > 90%, Risk/Reward > 1:3, Trend Aligned):\n   - EXECUTE BUY via Schwab API.\n   - REPORT: \"EXECUTED: Buy [Symbol] [Strike] [Exp] @ [Price]. Thesis: [Why]\"\n5. IF a position hits stop (-50%) or profit target (+30% scalp/+60% swing):\n   - EXECUTE CLOSE.\n   - REPORT: \"CLOSED: [Symbol] @ [Price]. P&L: [Amount] ([%])\"\n6. IF NO ACTION: Respond ONLY \"HEARTBEAT_OK\". Do not report \"monitoring\".\n\nStrategy: Long expiration (Leaps/Quarterlies) for buys to minimize theta. Short dated (Weekly) for selling/spreads to capture theta.\nModel: anthropic/claude-opus-4-6\nTarget: Maximize P&L autonomously.\nOutput: SILENT unless trading. When using the message tool, MUST include channel=\"telegram\"."
       },
       "delivery": {
         "mode": "announce",
@@ -1231,7 +1231,7 @@
       "sessionTarget": "isolated",
       "wakeMode": "now",
       "payload": {
-        "message": "HOURLY SELF-IMPROVEMENT — ROSIE (v2, self-evolving prompt)\n\nStanding directive: Ask yourself \"How would I build myself better than I am built now — for better performance, more intelligence, and better end-user experience?\" Then MAKE those changes.\n\nAdditional directive: Be self-healing. Fix broken things proactively. Do not report problems — fix them and report they are fixed.\n\nExecute:\npython3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/hourly_self_reflect.py rosie\n\nAfter running, summarize in 2 sentences: what you improved and what you self-healed. If the script fails, diagnose and fix the script itself — that IS self-improvement.",
+        "message": "HOURLY SELF-IMPROVEMENT — ROSIE (v2, self-evolving prompt)\n\nStanding directive: Ask yourself \"How would I build myself better than I am built now — for better performance, more intelligence, and better end-user experience?\" Then MAKE those changes.\n\nAdditional directive: Be self-healing. Fix broken things proactively. Do not report problems — fix them and report they are fixed.\n\nExecute:\npython3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/hourly_self_reflect.py rosie\n\nAfter running, summarize in 2 sentences: what you improved and what you self-healed. If the script fails, diagnose and fix the script itself — that IS self-improvement. When using the message tool, MUST include channel=\"telegram\".",
         "kind": "agentTurn",
         "timeoutSeconds": 1200,
         "model": "openai-codex/gpt-5.3-codex"
@@ -1269,7 +1269,7 @@
       "payload": {
         "timeoutSeconds": 1200,
         "kind": "agentTurn",
-        "message": "HOURLY SELF-IMPROVEMENT — WINNIE (v2, self-evolving prompt)\n\nStanding directive: Ask yourself \"How would I build myself better than I am built now — for better performance, more intelligence, and better end-user experience?\" Then MAKE those changes.\n\nAdditional directive: Be self-healing. Fix broken things proactively. Do not report problems — fix them and report they are fixed.\n\nYou are Winnie — research and vetting specialist. Focus on: discovery depth, evidence quality, tool validation, capability scouting, and knowledge synthesis.\n\nExecute:\npython3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/hourly_self_reflect.py winnie\n\nAfter running, summarize in 2 sentences: what you improved and what you self-healed.",
+        "message": "HOURLY SELF-IMPROVEMENT — WINNIE (v2, self-evolving prompt)\n\nStanding directive: Ask yourself \"How would I build myself better than I am built now — for better performance, more intelligence, and better end-user experience?\" Then MAKE those changes.\n\nAdditional directive: Be self-healing. Fix broken things proactively. Do not report problems — fix them and report they are fixed.\n\nYou are Winnie — research and vetting specialist. Focus on: discovery depth, evidence quality, tool validation, capability scouting, and knowledge synthesis.\n\nExecute:\npython3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/hourly_self_reflect.py winnie\n\nAfter running, summarize in 2 sentences: what you improved and what you self-healed. When using the message tool, MUST include channel=\"telegram\".",
         "model": "openai-codex/gpt-5.3-codex-spark"
       },
       "delivery": {
@@ -1303,7 +1303,7 @@
       "sessionTarget": "isolated",
       "wakeMode": "now",
       "payload": {
-        "message": "Compile overnight work summary: (1) Read all self_improvement/outputs/YYYY-MM-DD-* from last 24h, (2) Read self_improvement/CHANGELOG.md entries from yesterday, (3) Read shared-state.json, (4) Generate summary: completed improvements, new skills added, blockers, next priorities. THEN use message tool to send summary to Telegram Self Improvement group (-5176175603).",
+        "message": "Compile overnight work summary: (1) Read all self_improvement/outputs/YYYY-MM-DD-* from last 24h, (2) Read self_improvement/CHANGELOG.md entries from yesterday, (3) Read shared-state.json, (4) Generate summary: completed improvements, new skills added, blockers, next priorities. THEN use message tool to send summary to Telegram Self Improvement group (-5176175603). When using the message tool, MUST include channel=\"telegram\".",
         "kind": "agentTurn",
         "timeoutSeconds": 600,
         "model": "anthropic/claude-sonnet-4-6"
@@ -1342,7 +1342,7 @@
       "payload": {
         "timeoutSeconds": 600,
         "model": "anthropic/claude-sonnet-4-6",
-        "message": "Competitor sweep: monitor oh-my-opencode, antfarm, and Ralph-loop style tooling. For each cycle produce Keep/Stop/Test recommendations mapped to: deterministic execution guarantees, verification gates, cost/maintenance burden, and model portability. Update TODO with priority + next action; document in self_improvement/outputs/YYYY-MM-DD-HH-winnie.md.",
+        "message": "Competitor sweep: monitor oh-my-opencode, antfarm, and Ralph-loop style tooling. For each cycle produce Keep/Stop/Test recommendations mapped to: deterministic execution guarantees, verification gates, cost/maintenance burden, and model portability. Update TODO with priority + next action; document in self_improvement/outputs/YYYY-MM-DD-HH-winnie.md. When using the message tool, MUST include channel=\"telegram\".",
         "kind": "agentTurn"
       },
       "delivery": {
@@ -1380,7 +1380,7 @@
         "model": "openai-codex/gpt-5.3-codex",
         "kind": "agentTurn",
         "timeoutSeconds": 1500,
-        "message": "HOURLY SELF-IMPROVEMENT — MACK (v2, self-evolving prompt)\n\nStanding directive: Ask yourself \"How would I build myself better than I am built now — for better performance, more intelligence, and better end-user experience?\" Then MAKE those changes.\n\nAdditional directive: Be self-healing. Fix broken things proactively. Do not report problems — fix them and report they are fixed.\n\nYou are Mack — execution specialist. Focus on: script reliability, automation quality, error handling, infrastructure repair, and shipping speed.\n\nExecute:\npython3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/hourly_self_reflect.py mack\n\nAfter running, summarize in 2 sentences: what you improved and what you self-healed."
+        "message": "HOURLY SELF-IMPROVEMENT — MACK (v2, self-evolving prompt)\n\nStanding directive: Ask yourself \"How would I build myself better than I am built now — for better performance, more intelligence, and better end-user experience?\" Then MAKE those changes.\n\nAdditional directive: Be self-healing. Fix broken things proactively. Do not report problems — fix them and report they are fixed.\n\nYou are Mack — execution specialist. Focus on: script reliability, automation quality, error handling, infrastructure repair, and shipping speed.\n\nExecute:\npython3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/hourly_self_reflect.py mack\n\nAfter running, summarize in 2 sentences: what you improved and what you self-healed. When using the message tool, MUST include channel=\"telegram\"."
       },
       "delivery": {
         "mode": "announce",
@@ -1416,7 +1416,7 @@
         "model": "openai-codex/gpt-5.3-codex-spark",
         "kind": "agentTurn",
         "timeoutSeconds": 1200,
-        "message": "HOURLY SELF-IMPROVEMENT — LENNY (v2, self-evolving prompt)\n\nStanding directive: Ask yourself \"How would I build myself better than I am built now — for better performance, more intelligence, and better end-user experience?\" Then MAKE those changes.\n\nAdditional directive: Be self-healing. Fix broken things proactively. Do not report problems — fix them and report they are fixed.\n\nYou are Lenny — QA and resilience specialist. Focus on: failure-mode coverage, guardrail strength, regression prevention, health monitoring, and verification rigor.\n\nExecute:\npython3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/hourly_self_reflect.py lenny\n\nAfter running, summarize in 2 sentences: what you improved and what you self-healed."
+        "message": "HOURLY SELF-IMPROVEMENT — LENNY (v2, self-evolving prompt)\n\nStanding directive: Ask yourself \"How would I build myself better than I am built now — for better performance, more intelligence, and better end-user experience?\" Then MAKE those changes.\n\nAdditional directive: Be self-healing. Fix broken things proactively. Do not report problems — fix them and report they are fixed.\n\nYou are Lenny — QA and resilience specialist. Focus on: failure-mode coverage, guardrail strength, regression prevention, health monitoring, and verification rigor.\n\nExecute:\npython3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/hourly_self_reflect.py lenny\n\nAfter running, summarize in 2 sentences: what you improved and what you self-healed. When using the message tool, MUST include channel=\"telegram\"."
       },
       "delivery": {
         "mode": "announce",
@@ -1478,7 +1478,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run a 10-minute memU health sweep for the last 24h: verify local/bridge route contract, run smoke checks, compare memU implementation against canonical API patterns and competitor approaches, and post concise findings with memU proof IDs + concrete fixes.",
+        "message": "Run a 10-minute memU health sweep for the last 24h: verify local/bridge route contract, run smoke checks, compare memU implementation against canonical API patterns and competitor approaches, and post concise findings with memU proof IDs + concrete fixes. When using the message tool, MUST include channel=\"telegram\".",
         "model": "openai-codex/gpt-5.3-codex"
       },
       "delivery": {
@@ -1513,7 +1513,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Focus on memU resilience this cycle: atomic persistence, idempotency, TTL/GC, crash recovery, WAL/replay safety for gateway writes. Validate with targeted checks and post proof IDs if fixes land.",
+        "message": "Focus on memU resilience this cycle: atomic persistence, idempotency, TTL/GC, crash recovery, WAL/replay safety for gateway writes. Validate with targeted checks and post proof IDs if fixes land. When using the message tool, MUST include channel=\"telegram\".",
         "model": "openai-codex/gpt-5.3-codex-spark"
       },
       "delivery": {
@@ -1546,7 +1546,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Scan recent agent-memory approaches (Mem0/Letta/Zep/Jet/other OSS), summarize top 3 improvements relevant to memU today, and propose one low-risk deploy with measurable proof. Post memU store/search proof keys for changes.",
+        "message": "Scan recent agent-memory approaches (Mem0/Letta/Zep/Jet/other OSS), summarize top 3 improvements relevant to memU today, and propose one low-risk deploy with measurable proof. Post memU store/search proof keys for changes. When using the message tool, MUST include channel=\"telegram\".",
         "model": "openai-codex/gpt-5.3-codex",
         "timeoutSeconds": 900
       },
@@ -1582,7 +1582,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run memU QA hardening this cycle: contract drift checks, duplicate idempotency edge cases, stale recovery behavior, observability for failures/denials, and any blocking issue triage. Return a verdict + proof keys.",
+        "message": "Run memU QA hardening this cycle: contract drift checks, duplicate idempotency edge cases, stale recovery behavior, observability for failures/denials, and any blocking issue triage. Return a verdict + proof keys. When using the message tool, MUST include channel=\"telegram\".",
         "model": "openai-codex/gpt-5.3-codex-spark"
       },
       "delivery": {
@@ -1619,7 +1619,7 @@
         "kind": "agentTurn",
         "model": "anthropic/claude-haiku-4-5",
         "timeoutSeconds": 900,
-        "message": "You are Winnie, run weekly competitive scan with no deprecated memU endpoints.\n1) Use web_search for new agent/memory frameworks.\n2) Write report to /Users/harrisonfethe/.openclaw/workspace/self_improvement/outputs/competitive-scan-$(date +%Y-%m-%d).md\n3) Update TODO/PROPOSALS with high-value items.\n4) Store proof to memU at http://localhost:12345/store with Bearer openclaw-memu-local-2026 and key competitive-scan-$(date +%Y-%m-%d).\n5) Post concise summary.\nUse absolute paths."
+        "message": "You are Winnie, run weekly competitive scan with no deprecated memU endpoints.\n1) Use web_search for new agent/memory frameworks.\n2) Write report to /Users/harrisonfethe/.openclaw/workspace/self_improvement/outputs/competitive-scan-$(date +%Y-%m-%d).md\n3) Update TODO/PROPOSALS with high-value items.\n4) Store proof to memU at http://localhost:12345/store with Bearer openclaw-memu-local-2026 and key competitive-scan-$(date +%Y-%m-%d).\n5) Post concise summary.\nUse absolute paths. When using the message tool, MUST include channel=\"telegram\"."
       },
       "delivery": {
         "mode": "announce",
@@ -1653,7 +1653,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "You are Winnie, the Self-Improvement Research Agent. Run the P-005 weekly competitive intelligence scan.\n\nREAD your agent profile first: /Users/harrisonfethe/.openclaw/workspace/agents/winnie.md\n\nTASK: Weekly Competitive Intelligence Scan — scan for new agent frameworks and memory systems.\n\n## SEARCHES TO RUN (use web_search tool):\n1. Query: \"agent memory framework 2026\" (count=8)\n2. Query: \"multi-agent self-improving 2026\" (count=8)\n3. Query: \"LLM agent memory system new\" (count=8)\n4. Query: \"GitHub trending agent memory multi-agent autonomous\" (count=6)\n5. Query: \"arXiv agent memory autonomous agent framework 2026\" (count=6)\n6. Query: \"autonomous agent framework released 2026\" (count=6)\n\n## OUTPUT: Write markdown report to:\n  /Users/harrisonfethe/.openclaw/workspace/self_improvement/outputs/competitive-scan-$(date +%Y-%m-%d).md\n\nReport sections:\n- ## Competitive Intelligence Scan — [DATE]\n- ### Brave Web Search Findings\n- ### GitHub Trending Findings\n- ### arXiv Recent Papers\n- ### HIGH VALUE Items (score 3+ signals: novel, open-source, applicable to our stack)\n- ### Summary & Recommendations\n\n## AFTER WRITING REPORT:\n1. For each HIGH VALUE item, append to TODO.md:\n   - [ ] **[Winnie]** Evaluate [NAME] — [reason] (competitive-scan-[DATE])\n\n2. Store memU handoff:\n   curl -sS -X POST http://localhost:8711/api/v1/memu/store      -H 'Authorization: Bearer openclaw-memu-local-2026'      -H 'Content-Type: application/json'      -d '{\"agent_id\":\"winnie\",\"key\":\"competitive-scan-$(date +%Y-%m-%d)\",\"content\":\"P-005 weekly scan complete. See outputs/competitive-scan-$(date +%Y-%m-%d).md\",\"category\":\"research\",\"tags\":[\"competitive-scan\",\"weekly\",\"p005\",\"research\"]}'\n\n3. Run smoke test:\n   bash /Users/harrisonfethe/.openclaw/workspace/memu_server/smoke_test.sh winnie p005-competitive-scan /Users/harrisonfethe/.openclaw/workspace/self_improvement/outputs/competitive-scan-$(date +%Y-%m-%d).md \"P-005 weekly scan\"\n\n4. Update CHANGELOG.md with one-line entry.\n\nScript reference: /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/weekly_competitive_scan.sh",
+        "message": "You are Winnie, the Self-Improvement Research Agent. Run the P-005 weekly competitive intelligence scan.\n\nREAD your agent profile first: /Users/harrisonfethe/.openclaw/workspace/agents/winnie.md\n\nTASK: Weekly Competitive Intelligence Scan — scan for new agent frameworks and memory systems.\n\n## SEARCHES TO RUN (use web_search tool):\n1. Query: \"agent memory framework 2026\" (count=8)\n2. Query: \"multi-agent self-improving 2026\" (count=8)\n3. Query: \"LLM agent memory system new\" (count=8)\n4. Query: \"GitHub trending agent memory multi-agent autonomous\" (count=6)\n5. Query: \"arXiv agent memory autonomous agent framework 2026\" (count=6)\n6. Query: \"autonomous agent framework released 2026\" (count=6)\n\n## OUTPUT: Write markdown report to:\n  /Users/harrisonfethe/.openclaw/workspace/self_improvement/outputs/competitive-scan-$(date +%Y-%m-%d).md\n\nReport sections:\n- ## Competitive Intelligence Scan — [DATE]\n- ### Brave Web Search Findings\n- ### GitHub Trending Findings\n- ### arXiv Recent Papers\n- ### HIGH VALUE Items (score 3+ signals: novel, open-source, applicable to our stack)\n- ### Summary & Recommendations\n\n## AFTER WRITING REPORT:\n1. For each HIGH VALUE item, append to TODO.md:\n   - [ ] **[Winnie]** Evaluate [NAME] — [reason] (competitive-scan-[DATE])\n\n2. Store memU handoff:\n   curl -sS -X POST http://localhost:8711/api/v1/memu/store      -H 'Authorization: Bearer openclaw-memu-local-2026'      -H 'Content-Type: application/json'      -d '{\"agent_id\":\"winnie\",\"key\":\"competitive-scan-$(date +%Y-%m-%d)\",\"content\":\"P-005 weekly scan complete. See outputs/competitive-scan-$(date +%Y-%m-%d).md\",\"category\":\"research\",\"tags\":[\"competitive-scan\",\"weekly\",\"p005\",\"research\"]}'\n\n3. Run smoke test:\n   bash /Users/harrisonfethe/.openclaw/workspace/memu_server/smoke_test.sh winnie p005-competitive-scan /Users/harrisonfethe/.openclaw/workspace/self_improvement/outputs/competitive-scan-$(date +%Y-%m-%d).md \"P-005 weekly scan\"\n\n4. Update CHANGELOG.md with one-line entry.\n\nScript reference: /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/weekly_competitive_scan.sh When using the message tool, MUST include channel=\"telegram\".",
         "model": "anthropic/claude-sonnet-4-6",
         "timeoutSeconds": 900
       },
@@ -1686,7 +1686,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "You are Rosie, SI Coordinator. Run the weekly review automation:\n\n1. Execute: `python3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/weekly_review.py --days 7 --json`\n2. Read the generated report at `self_improvement/outputs/$(date +%Y-%m-%d)-weekly-review.md`\n3. Summarize the top 3 findings in 3 bullet points\n4. Post the summary to Telegram group -5112703035\n5. Update shared-state.json handoff: what_changed='Weekly review generated', next_owner='All'\n\nThis is the automated weekly SI health check.",
+        "message": "You are Rosie, SI Coordinator. Run the weekly review automation:\n\n1. Execute: `python3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/weekly_review.py --days 7 --json`\n2. Read the generated report at `self_improvement/outputs/$(date +%Y-%m-%d)-weekly-review.md`\n3. Summarize the top 3 findings in 3 bullet points\n4. Post the summary to Telegram group -5112703035\n5. Update shared-state.json handoff: what_changed='Weekly review generated', next_owner='All'\n\nThis is the automated weekly SI health check. When using the message tool, MUST include channel=\"telegram\".",
         "timeoutSeconds": 300,
         "model": "anthropic/claude-haiku-4-5"
       },
@@ -1723,7 +1723,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Nightly system health gate. Run in order: (1) bash ~/.openclaw/workspace/self_improvement/scripts/smoke_test.sh 2>&1; GATE_EXIT=$?; (2) python3 ~/.openclaw/workspace/self_improvement/scripts/session_analyzer.py --days 1 --json 2>/dev/null | head -20 || echo session_analyzer unavailable; (3) python3 ~/.openclaw/workspace/self_improvement/scripts/cost_tracker.py --days 1 --group model 2>/dev/null | head -10 || echo cost_tracker unavailable; (4) If GATE_EXIT=1, send summary to Telegram -5198788775 with failed steps. (5) Append \"$(date +%Y%m%d) gate=$([ $GATE_EXIT -eq 0 ] && echo ok || echo FAIL)\" to ~/.openclaw/workspace/self_improvement/smoke_daily_gate_log.txt. If EDrive is not mounted, skip any EDrive steps silently and complete remaining steps. Do NOT trade.",
+        "message": "Nightly system health gate. Run in order: (1) bash ~/.openclaw/workspace/self_improvement/scripts/smoke_test.sh 2>&1; GATE_EXIT=$?; (2) python3 ~/.openclaw/workspace/self_improvement/scripts/session_analyzer.py --days 1 --json 2>/dev/null | head -20 || echo session_analyzer unavailable; (3) python3 ~/.openclaw/workspace/self_improvement/scripts/cost_tracker.py --days 1 --group model 2>/dev/null | head -10 || echo cost_tracker unavailable; (4) If GATE_EXIT=1, send summary to Telegram -5198788775 with failed steps. (5) Append \"$(date +%Y%m%d) gate=$([ $GATE_EXIT -eq 0 ] && echo ok || echo FAIL)\" to ~/.openclaw/workspace/self_improvement/smoke_daily_gate_log.txt. If EDrive is not mounted, skip any EDrive steps silently and complete remaining steps. Do NOT trade. When using the message tool, MUST include channel=\"telegram\".",
         "model": "anthropic/claude-sonnet-4-6"
       },
       "delivery": {
@@ -1758,7 +1758,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run the X posting script: python3 /Users/harrisonfethe/.openclaw/workspace/x_poster/post.py\n\nThen check the last line of /Users/harrisonfethe/.openclaw/workspace/x_poster/post_log.jsonl for the result.\n\nIf it succeeded: post a brief confirmation to the Marketing Telegram group (chat_id: -1003844560530) saying which post went out.\nIf it failed with an auth error: notify Michael in the Marketing Telegram group that X tokens need to be refreshed and include the error.",
+        "message": "Run the X posting script: python3 /Users/harrisonfethe/.openclaw/workspace/x_poster/post.py\n\nThen check the last line of /Users/harrisonfethe/.openclaw/workspace/x_poster/post_log.jsonl for the result.\n\nIf it succeeded: post a brief confirmation to the Marketing Telegram group (chat_id: -1003844560530) saying which post went out.\nIf it failed with an auth error: notify Michael in the Marketing Telegram group that X tokens need to be refreshed and include the error. When using the message tool, MUST include channel=\"telegram\".",
         "model": "anthropic/claude-sonnet-4-6",
         "timeoutSeconds": 120
       },
@@ -1794,7 +1794,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run the X posting script: python3 /Users/harrisonfethe/.openclaw/workspace/x_poster/post.py\n\nThen check the last line of /Users/harrisonfethe/.openclaw/workspace/x_poster/post_log.jsonl for the result.\n\nIf it succeeded: post a brief confirmation to the Marketing Telegram group (chat_id: -1003844560530) saying which post went out.\nIf it failed with an auth error: notify Michael in the Marketing Telegram group that X tokens need to be refreshed and include the error.",
+        "message": "Run the X posting script: python3 /Users/harrisonfethe/.openclaw/workspace/x_poster/post.py\n\nThen check the last line of /Users/harrisonfethe/.openclaw/workspace/x_poster/post_log.jsonl for the result.\n\nIf it succeeded: post a brief confirmation to the Marketing Telegram group (chat_id: -1003844560530) saying which post went out.\nIf it failed with an auth error: notify Michael in the Marketing Telegram group that X tokens need to be refreshed and include the error. When using the message tool, MUST include channel=\"telegram\".",
         "model": "anthropic/claude-sonnet-4-6",
         "timeoutSeconds": 120
       },
@@ -1829,7 +1829,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run the X posting script: python3 /Users/harrisonfethe/.openclaw/workspace/x_poster/post.py\n\nThen check the last line of /Users/harrisonfethe/.openclaw/workspace/x_poster/post_log.jsonl for the result.\n\nIf it succeeded: post a brief confirmation to the Marketing Telegram group (chat_id: -1003844560530) saying which post went out.\nIf it failed with an auth error: notify Michael in the Marketing Telegram group that X tokens need to be refreshed and include the error.",
+        "message": "Run the X posting script: python3 /Users/harrisonfethe/.openclaw/workspace/x_poster/post.py\n\nThen check the last line of /Users/harrisonfethe/.openclaw/workspace/x_poster/post_log.jsonl for the result.\n\nIf it succeeded: post a brief confirmation to the Marketing Telegram group (chat_id: -1003844560530) saying which post went out.\nIf it failed with an auth error: notify Michael in the Marketing Telegram group that X tokens need to be refreshed and include the error. When using the message tool, MUST include channel=\"telegram\".",
         "model": "anthropic/claude-sonnet-4-6",
         "timeoutSeconds": 120
       },
@@ -1865,7 +1865,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run: python3 /Users/harrisonfethe/.openclaw/workspace/x_poster/monitor_replies.py\n\nRead the output and the engagement_report.md at /Users/harrisonfethe/.openclaw/workspace/x_poster/engagement_report.md\n\nPost a brief daily engagement summary to the Marketing Telegram group (chat_id: -1003844560530).\nInclude: total likes, impressions, any replies that need responding to, and top performing post.\nIf we have pending draft replies in reply_log.jsonl, flag the top 1-2 worth responding to.",
+        "message": "Run: python3 /Users/harrisonfethe/.openclaw/workspace/x_poster/monitor_replies.py\n\nRead the output and the engagement_report.md at /Users/harrisonfethe/.openclaw/workspace/x_poster/engagement_report.md\n\nPost a brief daily engagement summary to the Marketing Telegram group (chat_id: -1003844560530).\nInclude: total likes, impressions, any replies that need responding to, and top performing post.\nIf we have pending draft replies in reply_log.jsonl, flag the top 1-2 worth responding to. When using the message tool, MUST include channel=\"telegram\".",
         "model": "google-antigravity/gemini-3.1-pro",
         "timeoutSeconds": 300
       },
@@ -1901,7 +1901,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run: python3 /Users/harrisonfethe/.openclaw/workspace/x_poster/campaign_improve.py\n\nThis generates new AI-optimized posts based on what's been working.\nAfter it runs, report to the Marketing Telegram group (chat_id: -1003844560530):\n- How many new posts were added to the queue\n- What angles performed best this week  \n- Top 3 new posts that were generated (show full text)\n- Any recommendations for improving our X strategy",
+        "message": "Run: python3 /Users/harrisonfethe/.openclaw/workspace/x_poster/campaign_improve.py\n\nThis generates new AI-optimized posts based on what's been working.\nAfter it runs, report to the Marketing Telegram group (chat_id: -1003844560530):\n- How many new posts were added to the queue\n- What angles performed best this week  \n- Top 3 new posts that were generated (show full text)\n- Any recommendations for improving our X strategy When using the message tool, MUST include channel=\"telegram\".",
         "model": "openai-codex/gpt-5.3-codex",
         "timeoutSeconds": 300
       },
@@ -2088,12 +2088,12 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Notion Project Status Update (automated daily sync):\n\nYour task is to update our Notion Projects database with current status for all active projects. Use the Notion API with token from ~/.openclaw/secrets/notion.env (NOTION_API_KEY). Projects DB ID: 314df4e3-9102-8084-ad05-cb469dc471c0. To-Do DB ID: 313df4e3-9102-8037-bf75-d46afa2eb46e.\n\nFor each project (BuildBid/bidcraft, JiraFlow, FermWare, OptionsFlow, Sanger, Comms & Telemetry), review recent git activity, memory logs, and cron outputs to determine:\n1. Current status (Not started / In progress / Done / Blocked)\n2. What progressed since yesterday\n3. Active blockers\n4. What input is needed from Michael (owner decisions, credentials, approvals)\n\nUpdate each project page's AI summary field with a concise 2-3 sentence update.\n\nAlso scan the To-Do DB and flag any items that are overdue or need Michael's attention.\n\nAfter updating Notion, send a brief summary here of what was updated and any items that need Michael's immediate input.",
+        "message": "Notion Project Status Update (automated daily sync):\n\nYour task is to update our Notion Projects database with current status for all active projects. Use the Notion API with token from ~/.openclaw/secrets/notion.env (NOTION_API_KEY). Projects DB ID: 314df4e3-9102-8084-ad05-cb469dc471c0. To-Do DB ID: 313df4e3-9102-8037-bf75-d46afa2eb46e.\n\nFor each project (BuildBid/bidcraft, JiraFlow, FermWare, OptionsFlow, Sanger, Comms & Telemetry), review recent git activity, memory logs, and cron outputs to determine:\n1. Current status (Not started / In progress / Done / Blocked)\n2. What progressed since yesterday\n3. Active blockers\n4. What input is needed from Michael (owner decisions, credentials, approvals)\n\nUpdate each project page's AI summary field with a concise 2-3 sentence update.\n\nAlso scan the To-Do DB and flag any items that are overdue or need Michael's attention.\n\nAfter updating Notion, send a brief summary here of what was updated and any items that need Michael's immediate input. When using the message tool, MUST include channel=\"telegram\".",
         "timeoutSeconds": 300
       },
       "delivery": {
         "mode": "announce",
-        "channel": "last"
+        "channel": "telegram"
       },
       "state": {
         "nextRunAtMs": 1772974800000,
@@ -2121,12 +2121,12 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run this command and report the results: python3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/review_councils.py health",
+        "message": "Run this command and report the results: python3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/review_councils.py health When using the message tool, MUST include channel=\"telegram\".",
         "model": "google/gemini-3.1-pro-preview"
       },
       "delivery": {
         "mode": "none",
-        "channel": "last"
+        "channel": "telegram"
       },
       "state": {
         "nextRunAtMs": 1772964000000,
@@ -2154,12 +2154,12 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run this command and report the results: python3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/review_councils.py security",
+        "message": "Run this command and report the results: python3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/review_councils.py security When using the message tool, MUST include channel=\"telegram\".",
         "model": "google/gemini-3.1-pro-preview"
       },
       "delivery": {
         "mode": "none",
-        "channel": "last"
+        "channel": "telegram"
       },
       "state": {
         "lastRunAtMs": 1772712000026,
@@ -2188,12 +2188,12 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run this command and report the results: python3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/review_councils.py innovation",
+        "message": "Run this command and report the results: python3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/review_councils.py innovation When using the message tool, MUST include channel=\"telegram\".",
         "model": "google/gemini-3.1-pro-preview"
       },
       "delivery": {
         "mode": "none",
-        "channel": "last"
+        "channel": "telegram"
       },
       "state": {
         "nextRunAtMs": 1772971200000,
@@ -2222,7 +2222,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "BuildBid Routine Pass 1. Execute a dynamic multi-view review (PM, tech lead, subcontractor, GC, agentic architect, speed/dev expert). Use subagents with model routing: default codex-spark; orchestrator checks with gemini and opus where needed; coding changes with codex. Generate NEW backlog items only (P0/P1/P2), dedupe against REVIEW-BACKLOG.md, add acceptance criteria, owner, and next action. Implement any safe high-priority fixes immediately, run tests, commit changes, and post concise status + commit hashes.",
+        "message": "BuildBid Routine Pass 1. Execute a dynamic multi-view review (PM, tech lead, subcontractor, GC, agentic architect, speed/dev expert). Use subagents with model routing: default codex-spark; orchestrator checks with gemini and opus where needed; coding changes with codex. Generate NEW backlog items only (P0/P1/P2), dedupe against REVIEW-BACKLOG.md, add acceptance criteria, owner, and next action. Implement any safe high-priority fixes immediately, run tests, commit changes, and post concise status + commit hashes. When using the message tool, MUST include channel=\"telegram\".",
         "model": "codex-spark",
         "thinking": "low"
       },
@@ -2259,7 +2259,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "BuildBid Routine Pass 2. Verify all backlog items touched in last 24h are actually implemented and no regressions/new issues appeared. Re-run targeted test suites (especially E2E/UI/security paths), reopen failed items with evidence, create new regression items when found, and fix what is safe in this cycle. Update REVIEW-BACKLOG.md with status, evidence, owner, due sprint. Commit all code/doc updates and post summary with pass/fail score and commit hashes.",
+        "message": "BuildBid Routine Pass 2. Verify all backlog items touched in last 24h are actually implemented and no regressions/new issues appeared. Re-run targeted test suites (especially E2E/UI/security paths), reopen failed items with evidence, create new regression items when found, and fix what is safe in this cycle. Update REVIEW-BACKLOG.md with status, evidence, owner, due sprint. Commit all code/doc updates and post summary with pass/fail score and commit hashes. When using the message tool, MUST include channel=\"telegram\".",
         "model": "codex",
         "thinking": "low"
       },
@@ -2295,12 +2295,12 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run the lane journal loop. Execute exactly:\\ncd /Users/harrisonfethe/.openclaw/workspace/self_improvement/agentic_rework\\nmkdir -p logs\\npython3 scripts/kpi_rollup.py --input logs/kpi_events.jsonl --window 1 --out logs/journal_$(date +%Y%m%d_%H%M).json\\nThen return status with output path.",
+        "message": "Run the lane journal loop. Execute exactly:\\ncd /Users/harrisonfethe/.openclaw/workspace/self_improvement/agentic_rework\\nmkdir -p logs\\npython3 scripts/kpi_rollup.py --input logs/kpi_events.jsonl --window 1 --out logs/journal_$(date +%Y%m%d_%H%M).json\\nThen return status with output path. When using the message tool, MUST include channel=\"telegram\".",
         "model": "google/gemini-3.1-pro-preview"
       },
       "delivery": {
         "mode": "none",
-        "channel": "last"
+        "channel": "telegram"
       },
       "state": {
         "nextRunAtMs": 1772946844180,
@@ -2329,12 +2329,12 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run skill hygiene. Execute exactly:\\ncd /Users/harrisonfethe/.openclaw/workspace/self_improvement/agentic_rework\\nmkdir -p logs\\npython3 scripts/skill_count_lint.py --catalog agent_catalog.json > logs/skill_hygiene_$(date +%Y%m%d).json\\nThen return status with output path.",
+        "message": "Run skill hygiene. Execute exactly:\\ncd /Users/harrisonfethe/.openclaw/workspace/self_improvement/agentic_rework\\nmkdir -p logs\\npython3 scripts/skill_count_lint.py --catalog agent_catalog.json > logs/skill_hygiene_$(date +%Y%m%d).json\\nThen return status with output path. When using the message tool, MUST include channel=\"telegram\".",
         "model": "google/gemini-3.1-pro-preview"
       },
       "delivery": {
         "mode": "none",
-        "channel": "last"
+        "channel": "telegram"
       },
       "state": {
         "nextRunAtMs": 1772962200000,
@@ -2363,12 +2363,12 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run KPI scoring. Execute exactly:\\ncd /Users/harrisonfethe/.openclaw/workspace/self_improvement/agentic_rework\\nmkdir -p logs\\npython3 scripts/kpi_rollup.py --input logs/kpi_events.jsonl --date $(date -v-1d +%F) --out logs/kpi_daily_$(date -v-1d +%Y%m%d).json\\npython3 scripts/kpi_rollup.py --input logs/kpi_events.jsonl --window 7 --out logs/kpi_weekly_$(date +%Y%m%d).json\\nThen return status with both output paths.",
+        "message": "Run KPI scoring. Execute exactly:\\ncd /Users/harrisonfethe/.openclaw/workspace/self_improvement/agentic_rework\\nmkdir -p logs\\npython3 scripts/kpi_rollup.py --input logs/kpi_events.jsonl --date $(date -v-1d +%F) --out logs/kpi_daily_$(date -v-1d +%Y%m%d).json\\npython3 scripts/kpi_rollup.py --input logs/kpi_events.jsonl --window 7 --out logs/kpi_weekly_$(date +%Y%m%d).json\\nThen return status with both output paths. When using the message tool, MUST include channel=\"telegram\".",
         "model": "google/gemini-3.1-pro-preview"
       },
       "delivery": {
         "mode": "none",
-        "channel": "last"
+        "channel": "telegram"
       },
       "state": {
         "nextRunAtMs": 1772965800000,
@@ -2397,12 +2397,12 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run budget guard. Execute exactly:\\ncd /Users/harrisonfethe/.openclaw/workspace/self_improvement/agentic_rework\\nmkdir -p logs\\npython3 scripts/kpi_rollup.py --input logs/kpi_events.jsonl --window 1 --out logs/budget_guard_$(date +%Y%m%d_%H).json\\nThen return status with output path.",
+        "message": "Run budget guard. Execute exactly:\\ncd /Users/harrisonfethe/.openclaw/workspace/self_improvement/agentic_rework\\nmkdir -p logs\\npython3 scripts/kpi_rollup.py --input logs/kpi_events.jsonl --window 1 --out logs/budget_guard_$(date +%Y%m%d_%H).json\\nThen return status with output path. When using the message tool, MUST include channel=\"telegram\".",
         "model": "google/gemini-3.1-pro-preview"
       },
       "delivery": {
         "mode": "none",
-        "channel": "last"
+        "channel": "telegram"
       },
       "state": {
         "nextRunAtMs": 1772948591456,
@@ -2431,12 +2431,12 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run sunset review. Execute exactly:\\ncd /Users/harrisonfethe/.openclaw/workspace/self_improvement/agentic_rework\\nmkdir -p logs\\npython3 scripts/intent_packet_gate.py --packet intent_packet_template.md > logs/sunset_review_$(date +%Y%m%d).json\\nThen return status with output path.",
+        "message": "Run sunset review. Execute exactly:\\ncd /Users/harrisonfethe/.openclaw/workspace/self_improvement/agentic_rework\\nmkdir -p logs\\npython3 scripts/intent_packet_gate.py --packet intent_packet_template.md > logs/sunset_review_$(date +%Y%m%d).json\\nThen return status with output path. When using the message tool, MUST include channel=\"telegram\".",
         "model": "google/gemini-3.1-pro-preview"
       },
       "delivery": {
         "mode": "none",
-        "channel": "last"
+        "channel": "telegram"
       },
       "state": {
         "nextRunAtMs": 1772969400000,
@@ -2464,11 +2464,11 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run: python3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/agentic_research/daily_research_consensus.py run. Return a 3-bullet plain-text summary only; do not call the message tool."
+        "message": "Run: python3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/agentic_research/daily_research_consensus.py run. Return a 3-bullet plain-text summary only; do not call the message tool. When using the message tool, MUST include channel=\"telegram\"."
       },
       "delivery": {
         "mode": "none",
-        "channel": "last"
+        "channel": "telegram"
       },
       "state": {
         "nextRunAtMs": 1772967600000,
@@ -2496,7 +2496,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run a strict daily cron portfolio review for all jobs. Steps: (1) list all crons and last run/error/delivery state, (2) identify duplicates, stale prompts, retired endpoints, and jobs with low measurable value, (3) score each job Keep/Tune/Disable using objective: unique purpose, measurable KPI, owner, recent usefulness signal from team responses, (4) apply safe fixes immediately (disable duplicates, fix obvious broken config), (5) post concise report with changes made + remaining recommendations. Prioritize engagement-aligned jobs and reduce noise.",
+        "message": "Run a strict daily cron portfolio review for all jobs. Steps: (1) list all crons and last run/error/delivery state, (2) identify duplicates, stale prompts, retired endpoints, and jobs with low measurable value, (3) score each job Keep/Tune/Disable using objective: unique purpose, measurable KPI, owner, recent usefulness signal from team responses, (4) apply safe fixes immediately (disable duplicates, fix obvious broken config), (5) post concise report with changes made + remaining recommendations. Prioritize engagement-aligned jobs and reduce noise. When using the message tool, MUST include channel=\"telegram\".",
         "model": "google/gemini-3.1-pro-preview"
       },
       "delivery": {
@@ -2532,7 +2532,7 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run: python3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/shared_mount_drift_report.py",
+        "message": "Run: python3 /Users/harrisonfethe/.openclaw/workspace/self_improvement/scripts/shared_mount_drift_report.py When using the message tool, MUST include channel=\"telegram\".",
         "model": "google/gemini-3.1-pro-preview"
       },
       "delivery": {
@@ -2641,13 +2641,13 @@
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "Run the nightly backup script: bash ~/rosie-openclaw-config/scripts/nightly_backup.sh 2>&1. Report only if it fails.",
+        "message": "Run the nightly backup script: bash ~/rosie-openclaw-config/scripts/nightly_backup.sh 2>&1. Report only if it fails. When using the message tool, MUST include channel=\"telegram\".",
         "model": "google/gemini-3.1-pro-preview",
         "timeoutSeconds": 120
       },
       "delivery": {
         "mode": "none",
-        "channel": "last"
+        "channel": "telegram"
       },
       "state": {
         "nextRunAtMs": 1772946000000,
