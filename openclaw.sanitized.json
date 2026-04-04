@@ -1020,7 +1020,7 @@
   },
   "plugins": {
     "entries": {
-      "google-gemini-cli-auth": {
+      "REMOVED_STALE_PLUGIN_REFERENCE": {
         "enabled": true
       },
       "whatsapp": {
