@@ -1,10 +1,10 @@
 {
   "agent": "rosie",
-  "last_check": "2026-04-13T10:01:41Z",
-  "latest_sha": "3b9fb972daa5",
-  "new_commits": 0,
-  "adopt": 0,
+  "last_check": "2026-04-13T16:00:59Z",
+  "latest_sha": "019f32cdb8b1",
+  "new_commits": 20,
+  "adopt": 20,
   "watch": 0,
   "skip": 0,
-  "report": "/Users/harrisonfethe/.openclaw/workspace/infra/openclaw-sync/reports/diff_20260413T060140_rosie.md"
+  "report": "/Users/harrisonfethe/.openclaw/workspace/infra/openclaw-sync/reports/diff_20260413T120058_rosie.md"
 }
