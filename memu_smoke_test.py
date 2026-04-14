@@ -1,9 +1,11 @@
+import os
 import requests
 import uuid
 import json
 import time
 
-BASE_URL = "http://localhost:8711/api/v1/memu"
+BASE_URL = os.environ.get("MEMU_URL", "http://localhost:12345").rstrip("/")
+API_PREFIX = "/api/v1/memu"
 
 def smoke_test():
     unique_id = str(uuid.uuid4())
@@ -25,7 +27,7 @@ def smoke_test():
     }
     print(f"Storing: {store_payload}")
     try:
-        resp = requests.post(f"{BASE_URL}/store", json=store_payload, headers=headers)
+        resp = requests.post(f"{BASE_URL}{API_PREFIX}/store", json=store_payload, headers=headers)
         resp.raise_for_status()
         store_data = resp.json()
         print(f"Store response: {store_data}")
@@ -43,7 +45,7 @@ def smoke_test():
     }
     print(f"Searching: {search_payload}")
     try:
-        resp = requests.post(f"{BASE_URL}/semantic-search", json=search_payload, headers=headers) # Using semantic search as per logs showing TFIDF
+        resp = requests.post(f"{BASE_URL}{API_PREFIX}/semantic-search", json=search_payload, headers=headers)
         resp.raise_for_status()
         search_data = resp.json()
         print(f"Search response: {json.dumps(search_data, indent=2)}")
