@@ -16,11 +16,12 @@ def smoke_test():
     # 1. Store
     store_payload = {
         "agent": agent,
-        "content": content,
+        "value": content,
         "key": key,
-        "user_id": "smoke-tester",
         "session_id": "smoke-session",
-        "category": "eval"
+        "category": "eval",
+        "dedup": False,
+        "metadata": {"nonce": unique_id, "source": "infra/openclaw-sync/memu_smoke_test.py"}
     }
     headers = {
         "Authorization": "Bearer openclaw-memu-local-2026"
@@ -40,30 +41,21 @@ def smoke_test():
 
     # 2. Search
     search_payload = {
-        "query": f"Smoke test content {unique_id}",
-        "limit": 1
+        "query": unique_id,
+        "limit": 3
     }
     print(f"Searching: {search_payload}")
     try:
-        resp = requests.post(f"{BASE_URL}{API_PREFIX}/semantic-search", json=search_payload, headers=headers)
+        resp = requests.post(f"{BASE_URL}{API_PREFIX}/search", json=search_payload, headers=headers)
         resp.raise_for_status()
         search_data = resp.json()
         print(f"Search response: {json.dumps(search_data, indent=2)}")
-        
-        found = False
-        if isinstance(search_data, list):
-             for item in search_data:
-                 if item.get("id") == proof_id:
-                     found = True
-                     break
-        elif isinstance(search_data, dict) and "results" in search_data:
-             for item in search_data["results"]:
-                 if item.get("id") == proof_id:
-                     found = True
-                     break
-        
+
+        results = search_data.get("results", []) if isinstance(search_data, dict) else search_data
+        found = any(item.get("id") == proof_id for item in results)
+
         if found:
-            print("Smoke test PASSED: Memory stored and retrieved.")
+            print(f"Smoke test PASSED: Memory stored and retrieved. proof_id={proof_id}")
         else:
             print("Smoke test FAILED: Memory stored but not found in search results.")
 
